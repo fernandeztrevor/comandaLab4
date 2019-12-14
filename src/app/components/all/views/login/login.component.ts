@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
 				break;
 		}
 		if (!isNull)
-			this.loginForm.get('password').setValue('asdasd1');
+			this.loginForm.get('password').setValue('password1');
 	}
 
 }

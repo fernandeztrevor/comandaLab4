@@ -11,18 +11,18 @@ export class TableService {
 
 	public GetAll(): any
 	{
-		return this.db.collection("tables");
+		return this.db.collection("mesas");
 	}
 
 	public UpdateStatus(tableID: string, newState: TableState): Promise<boolean>
 	{
-		let document = this.db.collection("tables", ref => ref.where('tableID', '==', tableID));
+		let document = this.db.collection("mesas", ref => ref.where('tableID', '==', tableID));
 		return document.get().toPromise()
 			.then(doc => {
 				let table: Table = doc.docs[0].data() as Table;
 				table.id = doc.docs[0].id;
 				table.state = newState;
-				return this.db.collection("tables").doc(table.id).update(table)
+				return this.db.collection("mesas").doc(table.id).update(table)
 					.then(() => {
 						return true;
 					})
@@ -37,7 +37,7 @@ export class TableService {
 
 	public FindAvailable(): Promise<Table>
 	{
-		let documents = this.db.collection('tables', ref => ref.where('state', '==', TableState.available));
+		let documents = this.db.collection('mesas', ref => ref.where('state', '==', TableState.available));
 		return documents.get().toPromise()
 			.then(doc => {
 				let newTable: Table;

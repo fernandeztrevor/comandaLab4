@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row top-row page-title">
         <div class="col-3"></div>
-        <div class="col-6">- Menu -</div>
+        <div class="col-6"></div>
         <div class="col-3"></div>
     </div>
     <hr>
@@ -9,7 +9,7 @@
         <div class="col-3 align-center">
             <div class="btn-group full-width" *ngIf="order">
                 <button class="btn btn-info" disabled>${{order.totalPrice}}</button>
-                <button class="btn btn-info" disabled>{{order.tableID | table}}</button>
+                <!-- <button class="btn btn-info" disabled>{{order.tableID | table}}</button> -->
             </div>
             <app-spinner *ngIf="!order"></app-spinner>
         </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="ordered align-center" *ngIf="hasOrder">
+    <div class="ordered align-center" *ngIf="hasOrder" style="color:#FFFFFF">
         <hr>
         Tu código de pedido es <b>{{order.codeID}}</b> y tu mozo es <b>{{order.waiter.name}} {{order.waiter.lastname}}</b>.
     </div>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div *ngIf="!somethingOrdered" class="align-center">
-                            <span>Todavía no pediste nada. ¡Pedí algo!</span>
+                            <span>Todavía no hay nada pedido</span>
                         </div>
                     </div>
                     <div class="col-1"></div>

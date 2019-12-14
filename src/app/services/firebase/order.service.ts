@@ -16,17 +16,17 @@ export class OrderService {
 
 	public Add(order: Order): void
 	{
-		this.db.collection("orders").add(CommonHelper.ConvertToObject(order));
+		this.db.collection("pedidos").add(CommonHelper.ConvertToObject(order));
 	}
 
 	public GetAllOrderByTime(): AngularFirestoreCollection<Order>
 	{
-		return this.db.collection("orders", ref => ref.where('completed', '==', false));
+		return this.db.collection("pedidos", ref => ref.where('completed', '==', false));
 	}
 
 	public GetAllCompletedOrders_InArray(): Promise<Order[]>
 	{
-		return this.db.collection("orders", ref => ref.where('completed', '==', true)).get().toPromise()
+		return this.db.collection("pedidos", ref => ref.where('completed', '==', true)).get().toPromise()
 		.then(doc => {
 
 			let orders: Order[] = [];
@@ -42,12 +42,12 @@ export class OrderService {
 	{
 		// It's not order by time yet. It requires to create an index.
 		//return this.db.collection("orders", ref => ref.where('waiter.email', '==', email).orderBy('timestamp', 'desc'));
-		return this.db.collection("orders", ref => ref.where('waiter.email', '==', email).where('completed', '==', false));
+		return this.db.collection("pedidos", ref => ref.where('waiter.email', '==', email).where('completed', '==', false));
 	}
 
 	public GetAllByCook(cook: Cook): Observable<Order[]>
 	{
-    let documents = this.db.collection("orders", ref => ref.where('completed', '==', false).orderBy('timestamp', 'desc'))  as AngularFirestoreCollection<Order>;
+    let documents = this.db.collection("pedidos", ref => ref.where('completed', '==', false).orderBy('timestamp', 'desc'))  as AngularFirestoreCollection<Order>;
 		return documents.valueChanges().pipe(
 			map(orders => {
         return orders.filter(order => {
@@ -68,7 +68,7 @@ export class OrderService {
 	{
 		this.GetByCodeID(orderCode).then(order => {
 			order.state = state;
-			this.db.collection("orders").doc(order.id).update(order);
+			this.db.collection("pedidos").doc(order.id).update(order);
 		});
 	}
 
@@ -76,7 +76,7 @@ export class OrderService {
 	{
 		return this.GetByCodeID(order.codeID).then(or => {
 			let obj = CommonHelper.ConvertToObject(order);
-			this.db.collection("orders").doc(or.id).update(obj);
+			this.db.collection("pedidos").doc(or.id).update(obj);
 		})
 			.then(() => {
 				return true;
@@ -88,7 +88,7 @@ export class OrderService {
 
 	public GetByCodeID(code: string): Promise<Order>
 	{
-		let documents = this.db.collection("orders", ref => ref.where('codeID', '==', code));
+		let documents = this.db.collection("pedidos", ref => ref.where('codeID', '==', code));
 		return documents.get().toPromise().then(doc => {
 			return new Promise((resolve, reject) => {
 				if(doc.docs[0])

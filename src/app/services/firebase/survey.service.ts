@@ -13,13 +13,13 @@ export class SurveyService {
 
 	public GetAll(): any
 	{
-		return this.db.collection('surveys');
+		return this.db.collection('encuestas');
 	}
 
 	public Add(surv: Survey): Promise<void>
 	{
 		return new Promise((resolve, reject) => {
-			this.db.collection('surveys').add(CommonHelper.ConvertToObject(surv))
+			this.db.collection('encuestas').add(CommonHelper.ConvertToObject(surv))
 				.then(() => resolve())
 				.catch(() => reject());
 		})

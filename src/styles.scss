@@ -4,7 +4,8 @@
 body {
     background-repeat: no-repeat;
     background-size: cover;
-    background: linear-gradient(silver, white) fixed;
+    //background: linear-gradient(silver, white) fixed;
+     background-image: url(./assets/img/backgroundLogin.jpg);
     font-family: 'Raleway', sans-serif;
 }
 
@@ -94,7 +95,7 @@ nav {
 }
 
 .top-row {
-    margin-top: 8rem;
+    margin-top: 2rem;
 }
 
 .separate-top-input {

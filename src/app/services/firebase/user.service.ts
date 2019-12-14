@@ -15,7 +15,7 @@ export class UserService {
 
 	public GetAll_InArray(): Promise<User[]>
 	{
-		return this.db.collection('users').get().toPromise()
+		return this.db.collection('usuarios').get().toPromise()
 			.then(doc => {
 				let users: User[] = [];
 				doc.docs.forEach(el => {
@@ -35,7 +35,7 @@ export class UserService {
 
 	public Add(user: User): void
 	{
-		this.db.collection("users").add(CommonHelper.ConvertToObject(user));
+		this.db.collection("usuarios").add(CommonHelper.ConvertToObject(user));
 	}
 
 	private SetRoleInCloudFunctions(email: string, role: string): void
@@ -50,14 +50,14 @@ export class UserService {
 		this.GetUserByEmail(email).then(doc => {
 			let user = doc;
 			user.role = role as Role;
-			this.db.collection('users').doc(doc.id).update(user);
+			this.db.collection('usuarios').doc(doc.id).update(user);
 			console.log('User role updated on firebase!')
 		})
 	}
 
 	public GetUserByEmail(email: string): Promise<User>
 	{
-		let docRef = this.db.collection('users', ref => ref.where('email', '==', email));
+		let docRef = this.db.collection('usuarios', ref => ref.where('email', '==', email));
 		return docRef.get().toPromise().then(doc => {
 			let user = doc.docs[0].data() as User;
 			user.id = doc.docs[0].id;
@@ -67,7 +67,7 @@ export class UserService {
 	
 	public GetAllWaiters(): Promise<User[]>
 	{
-		let documents = this.db.collection('users', ref => ref.where('role', '==', 'mozo'));
+		let documents = this.db.collection('usuarios', ref => ref.where('role', '==', 'mozo'));
 		return documents.get().toPromise().then(doc => {
 			var waiters: User[] = [];
 			doc.docs.forEach(user => {
@@ -85,7 +85,7 @@ export class UserService {
 			let user = doc;
 			user.image = image;
 			console.log('new token', image);
-			this.db.collection('users').doc(doc.id).update(user);
+			this.db.collection('usuarios').doc(doc.id).update(user);
 		})
 	}
 }

@@ -1,16 +1,16 @@
-<div class="container">
+<div class="container" >
 	<div class="row top-row">
 		<div class="col-6"></div>
 		<div class="col-6">
 			<div class="card">
 				<div class="card-body align-center">
-					<h4 class="form-title">Ingresar</h4>
+					<h4 class="form-title">Bienvenido al Restaurant</h4>
 					<hr>
 					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 						<input type="text" formControlName="email" class="form-control separate-top-input align-center"
-							placeholder="Email" autofocus>
+							placeholder="Ingrese su email" autofocus>
 						<input type="password" formControlName="password"
-							class="form-control separate-top-input align-center" placeholder="Contraseña">
+							class="form-control separate-top-input align-center" placeholder="Ingrese su contraseña">
 						<div class="row mar-top-2">
 							<div class="col-2"></div>
 							<div class="col-8 align-center">
@@ -34,19 +34,8 @@
 		<!-- <div class="col-3"></div> -->
 	</div>
 	<div class="row middle-row" [isProd]>
-		<div class="col-3"></div>
+		<div class="col-6"></div>
 		<div class="col-6">
-			<!-- <select class="form-control" [(ngModel)]="userOption" (change)="LoadUser()">
-				<option value="none"> - Usuarios de prueba - </option>
-				<option value="juan">Juan - Cliente</option>
-				<option value="mario">Mario - Cliente</option>
-				<option value="jose">José - Mozo</option>
-				<option value="pablo">Pablo - Cocinero</option>
-				<option value="martin">Martin - Bartender</option>
-				<option value="roman">Román - Cervecero</option>
-				<option value="ivan">Iván - Socio</option>
-			</select> -->
-
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<label class="btn btn-secondary">
 					<input type="radio" name="opJuan" value="juan" (click)="BindUser('juan')">Juan -
