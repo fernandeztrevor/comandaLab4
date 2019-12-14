@@ -1,0 +1,19 @@
+<div *ngIf="product" class="card outside-shadow">
+    <div class="card-body align-center">
+        <div class="card-title">{{product.name}}</div>
+        <img src="{{product.pathImg}}" class="img-shadow" (click)="AddToOrder(product)">
+        <div class="price">
+            <div class="row">
+                <div class="col-3">
+                    <span class="ordered" *ngIf="ordered"><i class="fas fa-clipboard-check"></i></span>
+                </div>
+                <div class="col-6">
+                    ${{product.price}}.00
+                </div>
+                <div class="col-3">
+                    <span class="quant" *ngIf="quantity > 1">x{{quantity}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

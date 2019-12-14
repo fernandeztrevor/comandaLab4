@@ -1,0 +1,21 @@
+select {
+    text-align-last: center;
+}
+
+input {
+    text-align: center;
+}
+
+input::placeholder {
+    text-align: center;
+}
+
+h5 {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.or {
+    text-align: center;
+    margin: 0.5rem 0 0.5rem 0;
+}

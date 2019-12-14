@@ -1,0 +1,142 @@
+<div class="card outside-shadow">
+    <div class="card-body align-center">
+        <h5 class="card-title">Pedido</h5>
+        <hr>
+        <div *ngIf="order" class="order-body align-center">
+
+            <div class="row">
+                <div class="col-12">
+                    <b>Código:</b> {{order.codeID}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Cliente:</b> {{order.client.name}} {{order.client.lastname}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Mozo:</b> {{order.waiter.name}} {{order.waiter.lastname}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Está:</b> {{order.state}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Tiempo restante: </b> 
+                    <span *ngIf="remainingTime">{{remainingTime | timeleft}}</span>
+                    <span *ngIf="!remainingTime">No tiene un tiempo asignado.</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Mesa:</b> {{order.tableID}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <select class="form-control" [ngModel]="selectedItem" (ngModelChange)="SelectItem($event)">
+                        <option [ngValue]="it" *ngFor="let it of order.items">{{it.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mar-top-1" *ngIf="!selectedItem">
+                <div class="col-12">
+                    <label>No se seleccionó nada.</label>
+                </div>
+            </div>
+            <div class="item mar-top-1" *ngIf="selectedItem">
+                <div class="row">
+                    <div class="col-12">
+                        <b>Es para un {{selectedItem.cook}}.</b>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <b>Estado:</b> {{selectedItem.state}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <b>Lo tiene:</b> 
+                        <span *ngIf="selectedItem.worker">
+                        {{selectedItem.worker.name}} {{selectedItem.worker.lastname}} 
+                        </span>
+                        <span *ngIf="!selectedItem.worker">
+                            Nadie por ahora.
+                        </span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mar-top-1" *ngIf="IsAvailableForMe()">
+                    <div class="col-12">
+                        <div class="btn-group">
+                            <button [disabled]="!IsPending()" class="btn btn-sm btn-info full-width" data-toggle="modal" data-target="#prodModal">Comenzar a preparar</button>
+                            <button [disabled]="!IsCooking()" (click)="ReadyToServe()" class="btn btn-sm btn-success full-width">Listo para servir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!order">
+            <div class="col-12">
+                <label>Seleccione un pedido.</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="prodModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <h5>Empezar a preparar</h5>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8" *ngIf="order">
+                            <b>Tiempo restante actual:</b> {{remainingTime | timeleft}}
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row middle-row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            ¿Llegás a completarlo en este tiempo o necesitás agregar más?
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                    <div class="row middle-row">
+                        <div class="col-6">
+                            <input type="number" class="form-control full-width form-control-sm" [(ngModel)]="addedTime" placeholder="Minutos">
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-success full-width btn-sm" (click)="BeginCook(true)" data-dismiss="modal">Agregar tiempo</button>
+                        </div>
+                    </div>
+                    <div class="or">
+                        o
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-primary full-width btn-sm" (click)="BeginCook(false)" data-dismiss="modal">El tiempo actual es suficiente</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

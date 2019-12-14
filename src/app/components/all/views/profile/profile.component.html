@@ -1,0 +1,48 @@
+<div class="container" *ngIf="user">
+    <div class="row top-row">
+        <div class="col-4 align-center">
+            <img src="{{user.image}}">
+        </div>
+        <div class="col-6">
+            <h1 class="page-title">
+                {{user.name}} {{user.lastname}}
+            </h1>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row middle-row">
+        <p>Tu privacidad está segura en este sitio. La información detallada anteriormente no se expone ni es visible
+            para nadie público. Solamente un administrador del sistema tiene acceso a estos datos.</p>
+    </div>
+    <div class="row middle-row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="card outside-shadow">
+                <div class="card-header align-center">
+                    <b>Editar perfil</b>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 align-center">
+                            <h5 class="card-title">Foto</h5>
+                            <p class="card-text">Cambia la foto de tu perfil en solo dos pasos: elegir y cargar.</p>
+                            <div class="btn-group">
+                                <button class="btn btn-primary" (click)="fileInput.click()">Elegir imagen</button>
+                                <button [disabled]="!isLoaded" class="btn btn-success" (click)="Upload()">Cargar imagen</button>
+                            </div>
+                        </div>
+                        <div class="col-6 align-center">
+                            <h5 class="card-title">Nombre</h5>
+                            <p class="card-text">Modificá tu nombre, apellido y/o email de una forma simple.</p>
+                            <button class="btn btn-primary" disabled>Cambiar mis datos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <input accept=".png,.jpg" type="file" #fileInput style="display: none;" (change)="OnFileSelected($event)">
+</div>
+
+<app-footer></app-footer>

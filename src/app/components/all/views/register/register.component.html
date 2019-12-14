@@ -1,0 +1,36 @@
+<div class="container">
+	<div class="row top-row">
+		<div class="col-3"></div>
+		<div class="col-6">
+			<div class="card">
+				<div class="card-body align-center">
+					<h4 class="form-title">Registrarse</h4>
+					<hr>
+					<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <input type="text" formControlName="name" class="form-control separate-top-input align-center" placeholder="Nombre" autofocus>
+                        <input type="text" formControlName="lastname" class="form-control separate-top-input align-center" placeholder="Apellido">
+						<input type="text" formControlName="email" class="form-control separate-top-input align-center" placeholder="Email">
+                        <input type="password" formControlName="password" class="form-control separate-top-input align-center" placeholder="Contraseña">
+						<input type="password" formControlName="repPassword" class="form-control separate-top-input align-center" placeholder="Repita la contraseña">
+						<div class="row mar-top-2">
+							<div class="col-2"></div>
+							<div class="col-8 align-center">
+								<ngx-recaptcha2  formControlName="captcha" #captchaElem [siteKey]="'6Le9VcYUAAAAAK4z-Fj0YlhKfrNIc9eqvsNuMSsy'" [useGlobalDomain]="false"></ngx-recaptcha2>
+							</div>
+							<div class="col-2"></div>
+						</div>
+						<button *ngIf="!loading" [disabled]="!registerForm.valid" type="submit" class="btn btn-success full-width separate-top-input">Registrarse</button>
+						<div class="mar-top-2" *ngIf="loading">
+							<app-spinner></app-spinner>
+						</div>
+					</form>
+					<hr>
+					<button routerLink="/app/login" class="btn btn-secondary full-width">¿Ya tenés una cuenta?</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-3"></div>
+	</div>
+</div>
+
+<app-footer></app-footer>

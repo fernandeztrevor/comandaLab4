@@ -1,0 +1,2 @@
+<button *ngIf="!logOut" class="btn btn-outline-secondary full-width option" [ngClass]="lastOne ? 'last' : ''" routerLink="{{link}}">{{name}}</button>
+<button *ngIf="logOut" class="btn btn-outline-primary full-width option last" (click)="LogOut()">Salir</button>

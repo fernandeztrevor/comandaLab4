@@ -1,0 +1,196 @@
+<div class="container">
+    <div class="row top-row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h1 class="page-title">- Buscar un pedido -</h1>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row middle-row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <input [(ngModel)]="orderID" class="form-control full-width" type="text"
+                placeholder="Ingrese el código de su pedido">
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row mar-top-1">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <button [disabled]="!orderID" class="btn btn-outline-primary full-width"
+                (click)="FindOrder()">Buscar</button>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row mar-top-1" *ngIf="alreadyPaid">
+    <!-- <div class="row mar-top-1"> -->
+        <div class="col-3"></div>
+        <div class="col-6">
+            <button [disabled]="surveyDone" class="btn btn-info full-width" data-toggle="modal"
+                data-target="#questionsModal">Hacer encuesta</button>
+        </div>
+        <div class="col-3"></div>
+    </div>
+
+    <div class="row middle-row" *ngIf="waitingOrder">
+        <div class="col-4"></div>
+        <div class="col-4 align-center">
+            <app-spinner></app-spinner>
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+    <div class="row middle-row" *ngIf="order">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="card outside-shadow">
+                <div class="card-body align-center">
+                    <h5 class="card-title">Pedido</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <b>Código: </b>{{order.codeID}}
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <b>Mozo: </b>{{order.waiter.name}} {{order.waiter.lastname}}
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row" *ngIf="!IsServed()">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <b>Tiempo estimado: </b>{{remainingTime | timeleft}}
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <b>Comida</b>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <ul>
+                                <li *ngFor="let i of order.items">{{i.name}} - ${{i.price}}</li>
+                            </ul>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <b>Precio total: </b> <span class="price">${{order.totalPrice}}</span>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <button [disabled]="!CanPayNow()" (click)="Pay()"
+                                class="btn btn-success full-width">Pagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="questionsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <h3 class="align-center">Encuesta</h3>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <hr class="mar-top-1">
+                    <form [formGroup]="surveyForm" (ngSubmit)="SendAnswers()">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <input formControlName="tableScore" class="form-control full-width align-center"
+                                    type="number" placeholder="Puntée del 1 al 10 a la mesa.">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="row middle-row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <input formControlName="waiterScore" class="form-control full-width align-center"
+                                    type="number" placeholder="Puntée del 1 al 10 al mozo.">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="row middle-row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <input formControlName="restaurantScore" class="form-control full-width align-center"
+                                    type="number" placeholder="Puntée del 1 al 10 al restaurante.">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="row middle-row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <input formControlName="cookScore" class="form-control full-width align-center"
+                                    type="number" placeholder="Puntée del 1 al 10 al cocinero.">
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="row middle-row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <textarea class="form-control" cols="30" rows="3" maxlength="66" formControlName="comment"
+                                    placeholder="Escribe un breve comentario (máximo de 66 caracteres)."></textarea>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="row mar-top-1">
+                            <div class="col-2"></div>
+                            <div class="col-4 align-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="commentType" name="commentType"
+                                        id="negative" value="false">
+                                    <label class="form-check-label negative" for="negative">Malo</label>
+                                </div>
+                            </div>
+                            <div class="col-4 align-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="commentType" name="commentType"
+                                        id="positive" value="true">
+                                    <label class="form-check-label positive" for="positive">Bueno</label>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="row middle-row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <button [disabled]="!surveyForm.valid" class="btn btn-success full-width"
+                                    data-dismiss="modal" (click)="SendAnswers()">Enviar encuesta</button>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

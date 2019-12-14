@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row top-row page-title">
+        <div class="col-3"></div>
+        <div class="col-6">- Menu -</div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3 align-center">
+            <div class="btn-group full-width" *ngIf="order">
+                <button class="btn btn-info" disabled>${{order.totalPrice}}</button>
+                <button class="btn btn-info" disabled>{{order.tableID | table}}</button>
+            </div>
+            <app-spinner *ngIf="!order"></app-spinner>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#orderModal">Ver pedido</button>
+        </div>
+        <div class="col-3">
+            <div class="btn-group full-width">
+                <button title="Todo" class="btn btn-outline-success" (click)="ClearFilters()"><i class="fas fa-asterisk"></i></button>
+                <button title="Comida" class="btn btn-outline-success" (click)="Filter('comida')"><i class="fas fa-utensils"></i></button>
+                <button title="Bebidas" class="btn btn-outline-success" (click)="Filter('bebida')"><i class="fas fa-wine-glass-alt"></i></button>
+                <button title="Postres" class="btn btn-outline-success" (click)="Filter('postre')"><i class="fas fa-ice-cream"></i></button>
+                <button title="Alcohol" class="btn btn-outline-success" (click)="Filter('alcohol')"><i class="fas fa-beer"></i></button>
+                <button title="Sin TACC" class="btn btn-outline-success" (click)="Filter('celiaco')"><i class="fas fa-seedling"></i></button>
+                <button title="Vegana" class="btn btn-outline-success" (click)="Filter('vegano')"><i class="fas fa-carrot"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="ordered align-center" *ngIf="hasOrder">
+        <hr>
+        Tu código de pedido es <b>{{order.codeID}}</b> y tu mozo es <b>{{order.waiter.name}} {{order.waiter.lastname}}</b>.
+    </div>
+    <hr>
+    <div class="row card-group">
+        <div class="col-3 mar-top-2"  *ngFor="let prod of showingProducts">
+            <app-food-card (added)="AddToOrder($event)" [resetEvent]="onReset" [product]="prod"></app-food-card>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<!-- Order modal -->
+<div class="modal fade" id="orderModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <h3 class="align-center">Pedido</h3>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <hr class="mar-top-1">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div *ngIf="somethingOrdered" class="resume">
+                            <ul>
+                                <li *ngFor="let item of order.items">
+                                        {{item.name}} - 
+                                    <span class="price">
+                                        ${{item.price}}
+                                    </span>
+                                </li>
+                            </ul>
+                            <div class="align-center">
+                                <span style="font-weight: bold;">Precio total: </span>
+                                <span class="price" style="font-weight: bold;">${{order.totalPrice}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="!somethingOrdered" class="align-center">
+                            <span>Todavía no pediste nada. ¡Pedí algo!</span>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <hr class="mar-top-1">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="btn-group full-width">
+                            <button class="btn btn-outline-danger" title="Borrar pedido" (click)="CancelOrder()" data-dismiss="modal"><i class="fas fa-times"></i></button>
+                            <button class="btn btn-outline-success" title="Confirmar pedido" (click)="MakeOrder()"><i class="fas fa-check"></i></button>
+                            <button class="btn btn-outline-secondary" title="Seguir pidiendo" data-dismiss="modal"><i class="fas fa-long-arrow-alt-left"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

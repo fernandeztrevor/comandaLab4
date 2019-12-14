@@ -1,0 +1,22 @@
+<nav class="bottom-shadow">
+    <div class="row main-bar general-color">
+        <div class="col-6">
+            <h1 class="main-title">La Comanda</h1>
+        </div>
+        <div class="col-6 profile">
+            <img *ngIf="user" src="{{user.image}}" class="profile-pic" [ngClass]="open ? 'active': ''" (click)="toggleSidebar()">
+        </div>
+    </div>
+</nav>
+
+<div class="sidebar" [ngClass]="open ? '' : 'collapsed'">
+    <div class="top-row">
+        <app-sidebar-option name="Perfil" link="/cliente/profile"></app-sidebar-option>
+        <app-sidebar-option name="Pedir algo" link="/cliente"></app-sidebar-option>
+        <app-sidebar-option name="Buscar pedido" link="buscar"></app-sidebar-option>
+        <app-sidebar-option logOut=true></app-sidebar-option>
+    </div>
+</div>
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,24 @@
+table {
+    background: silver;
+    border: 1px solid black;
+
+    th {
+        border: none;
+    }
+}
+
+.red {
+    color: red;
+}
+
+.yellow {
+    color: rgb(216, 184, 0);
+}
+
+.green {
+    color: rgb(1, 179, 1);
+}
+
+.survey {
+    cursor: pointer;
+}

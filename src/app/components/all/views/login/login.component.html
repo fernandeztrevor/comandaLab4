@@ -1,0 +1,114 @@
+<div class="container">
+	<div class="row top-row">
+		<div class="col-6"></div>
+		<div class="col-6">
+			<div class="card">
+				<div class="card-body align-center">
+					<h4 class="form-title">Ingresar</h4>
+					<hr>
+					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+						<input type="text" formControlName="email" class="form-control separate-top-input align-center"
+							placeholder="Email" autofocus>
+						<input type="password" formControlName="password"
+							class="form-control separate-top-input align-center" placeholder="Contraseña">
+						<div class="row mar-top-2">
+							<div class="col-2"></div>
+							<div class="col-8 align-center">
+								<ngx-recaptcha2 formControlName="captcha" #captchaElem
+									[siteKey]="'6Le9VcYUAAAAAK4z-Fj0YlhKfrNIc9eqvsNuMSsy'" [useGlobalDomain]="false">
+								</ngx-recaptcha2>
+							</div>
+							<div class="col-2"></div>
+						</div>
+						<button *ngIf="!loading" [disabled]="!loginForm.valid" type="submit"
+							class="btn btn-success full-width separate-top-input">Entrar</button>
+						<div class="mar-top-1">
+							<app-spinner *ngIf="loading"></app-spinner>
+						</div>
+					</form>
+					<hr>
+					<button routerLink="/app/register" class="btn btn-primary full-width">Registrarse</button>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="col-3"></div> -->
+	</div>
+	<div class="row middle-row" [isProd]>
+		<div class="col-3"></div>
+		<div class="col-6">
+			<!-- <select class="form-control" [(ngModel)]="userOption" (change)="LoadUser()">
+				<option value="none"> - Usuarios de prueba - </option>
+				<option value="juan">Juan - Cliente</option>
+				<option value="mario">Mario - Cliente</option>
+				<option value="jose">José - Mozo</option>
+				<option value="pablo">Pablo - Cocinero</option>
+				<option value="martin">Martin - Bartender</option>
+				<option value="roman">Román - Cervecero</option>
+				<option value="ivan">Iván - Socio</option>
+			</select> -->
+
+			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-secondary">
+					<input type="radio" name="opJuan" value="juan" (click)="BindUser('juan')">Juan -
+					Cliente
+				</label>
+				<label class="btn btn-secondary">
+					<input type="radio" name="opJose" value="jose" (click)="BindUser('jose')">Jose -
+					Mozo
+				</label>
+				<label class="btn btn-secondary">
+					<input type="radio" name="opPablo" value="pablo" (click)="BindUser('pablo')">Pablo
+					- Cocinero
+				</label>
+				<label class="btn btn-secondary">
+					<input type="radio" name="opMartin" value="martin" (click)="BindUser('martin')">Martin - Bartender
+				</label>
+				<label class="btn btn-secondary">
+					<input type="radio" name="opRoman" value="roman" (click)="BindUser('roman')">Roman
+					- Cervecero
+				</label>
+				<label class="btn btn-secondary">
+					<input type="radio" name="opIvan" value="ivan" (click)="BindUser('ivan')">Ivan -
+					Socio
+				</label>
+			</div>
+
+
+
+			<!-- <div class="radio">
+				<label><input type="radio" name="opJuan" value="juan" [(ngModel)]="userOption" (click)="LoadUser()">Juan
+					- Cliente</label>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="opMario" value="mario" [(ngModel)]="userOption"
+						(click)="LoadUser()">Mario - Cliente</label>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="opJose" value="jose" [(ngModel)]="userOption" (click)="LoadUser()">Jose
+					- Mozo</label>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="opPablo" value="pablo" [(ngModel)]="userOption"
+						(click)="LoadUser()">Pablo - Cocinero</label>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="opMartin" value="martin" [(ngModel)]="userOption"
+						(click)="LoadUser()">Martin - Bartender</label>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="opRoman" value="roman" [(ngModel)]="userOption"
+						(click)="LoadUser()">Roman - Cervecero</label>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="opIvan" value="ivan" [(ngModel)]="userOption" (click)="LoadUser()">ivan
+					- Socio</label>
+			</div> -->
+
+
+
+		</div>
+		<div class="col-3"></div>
+	</div>
+</div>
+
+<app-footer></app-footer>

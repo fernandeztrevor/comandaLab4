@@ -1,0 +1,38 @@
+<div class="card outside-shadow">
+    <div class="card-body align-center">
+        <div class="card-title">Mesa {{table.tableID}}</div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8 icon" [ngSwitch]="table.state">
+                <i class="fas fa-user-check green" *ngSwitchCase="'Disponible'"></i>
+                <i class="fas fa-user-clock orange" *ngSwitchCase="'Cliente esperando pedido'"></i>
+                <i class="fas fa-utensils orange" *ngSwitchCase="'Cliente comiendo'"></i>
+                <i class="fas fa-money-bill-wave orange" *ngSwitchCase="'Cliente pagando'"></i>
+                <i class="fas fa-window-close red" *ngSwitchCase="'Cerrada'"></i>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row mar-top-half">
+            <div class="col-12">
+                {{table.state}}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <b>Cambiar estado</b>
+            </div>
+        </div>
+        <div class="row mar-top-1">
+            <div class="col-12">
+                <div class="btn-group">
+                    <button class="btn btn-primary" (click)="ChangeStatus(1)"><i class="fas fa-user-check"></i></button>
+                    <button class="btn btn-primary" (click)="ChangeStatus(2)"><i class="fas fa-user-clock"></i></button>
+                    <button class="btn btn-primary" (click)="ChangeStatus(3)"><i class="fas fa-utensils"></i></button>
+                    <button class="btn btn-primary" (click)="ChangeStatus(4)"><i class="fas fa-money-bill-wave"></i></button>
+                    <button *ngIf="isAdmin" class="btn btn-danger" (click)="ChangeStatus(5)"><i class="fas fa-window-close"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

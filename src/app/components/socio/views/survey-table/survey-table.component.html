@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="row top-row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h1 class="page-title">
+                - Encuestas -
+            </h1>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row middle-row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <p>Cada encuesta está coloreada según el promedio de puntaje realizado sobre las cuatro categorías: el color es <span class="red">rojo</span> si el promedio está por debajo del 4, el color es <span class="yellow">amarillo</span> si es mayor o igual que 4 pero menor a 7 y por último <span class="green">verde</span>, si el promedio es mayor a 7. Haga click en una encuesta para ver más detalles.</p>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row middle-row">
+        <div class="col-12">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="align-center">
+                        <tr>
+                            <th scope="col">Pedido</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Mesa</th>
+                            <th scope="col">Mozo</th>
+                            <th scope="col">Punt. mesa</th>
+                            <th scope="col">Punt. mozo</th>
+                            <th scope="col">Punt. restaurante</th>
+                            <th scope="col">Punt. cocinero</th>
+                            <th scope="col">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr [surveyAverage]="sur" *ngFor="let sur of surveys | async" class="survey align-center" data-toggle="modal" data-target="#surveyModal" (click)="SelectSurvey(sur)">
+                            <td>{{sur.order.codeID}}</td>
+                            <td>{{sur.order.client.name}} {{sur.order.client.lastname}}</td>
+                            <td>{{sur.order.tableID}}</td>
+                            <td>{{sur.order.waiter.name}} {{sur.order.waiter.lastname}}</td>
+                            <td>{{sur.tableScore}}</td>
+                            <td>{{sur.waiterScore}}</td>
+                            <td>{{sur.restaurantScore}}</td>
+                            <td>{{sur.cookScore}}</td>
+                            <td>{{sur.order.timeLeft | neatDate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="surveyModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container-fluid" *ngIf="survey">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <h3 class="align-center">Pedido {{survey.order.codeID}}</h3>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <hr class="mar-top-1">
+                <div class="row">
+                    <div class="col-12 align-center">
+                        <b>Promedio de los puntajes: </b> <span [surveyAverage]="survey" returnAverage="true"></span>
+                    </div>
+                </div>
+                <div class="row middle-row">
+                    <div class="col-12 align-center" [surveyComment]='survey.commentType'></div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <span [surveyComment]="survey.commentType" isIcon="true"></span> - {{survey.comment}}
+                    </div>
+                </div>
+                <div class="row mar-top-1">
+                    <div class="col-1"></div>
+                    <div class="col-10 align-right">
+                        {{survey.order.client.name}} {{survey.order.client.lastname}}
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

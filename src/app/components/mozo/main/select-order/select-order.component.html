@@ -1,0 +1,88 @@
+<div class="card outside-shadow">
+    <div class="card-body align-center">
+        <h5 class="card-title">Pedido</h5>
+        <hr>
+        <div *ngIf="order" class="order-body align-center">
+
+            <div class="row">
+                <div class="col-12">
+                    <b>Código:</b> {{order.codeID}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Cliente:</b> {{order.client.name}} {{order.client.lastname}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Mesa:</b> {{order.tableID}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Precio total:</b> ${{order.totalPrice}}
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-12">
+                    <b>Está:</b> {{order.state}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Mozo:</b> {{order.waiter.name}} {{order.waiter.lastname}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <b>Tiempo restante:</b> {{remainingTime | timeleft}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <select class="form-control" [ngModel]="selectedItem" (ngModelChange)="SelectItem($event)">
+                        <option [ngValue]="it" *ngFor="let it of order.items">{{it.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mar-top-1" *ngIf="!selectedItem">
+                <div class="col-12">
+                    <label>No se seleccionó nada.</label>
+                </div>
+            </div>
+            <div class="item mar-top-1" *ngIf="selectedItem">
+                <div class="row">
+                    <div class="col-12">
+                        <b>Estado:</b> {{selectedItem.state}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <b>Lo tiene:</b> 
+                        <span *ngIf="selectedItem.worker">
+                        {{selectedItem.worker.name}} {{selectedItem.worker.lastname}} 
+                        </span>
+                        <span *ngIf="!selectedItem.worker">
+                            Nadie por ahora.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <button [disabled]="!CanBeServed()" (click)="CompleteOrder()" class="btn btn-success full-width">Pasar a servido</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!order">
+            <div class="col-12">
+                <label>Seleccione un pedido.</label>
+            </div>
+        </div>
+    </div>
+</div>
