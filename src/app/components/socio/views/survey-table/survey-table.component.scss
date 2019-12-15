@@ -1,10 +1,18 @@
 table {
     background: silver;
-    border: 1px solid black;
+    border: 2px solid black;
+    border-radius: 10px;
 
     th {
         border: none;
     }
+}
+
+label{
+    margin-top: 3rem;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid black;
 }
 
 .red {
