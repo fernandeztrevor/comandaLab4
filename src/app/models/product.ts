@@ -10,6 +10,7 @@ export class Product
     public state: FoodState;
     public cook: Cook;
     public worker: User;
+    public description: string;
 
     constructor()
     {
@@ -26,7 +27,7 @@ export class Product
         return this.foodTypes.includes(type as FoodType);
     }
 
-    public static Create(code: string, name: string, pathImg: string, price: number, foodTypes: FoodType[], cook: Cook)
+    public static Create(code: string, name: string, pathImg: string, price: number, foodTypes: FoodType[], cook: Cook, description:string)
     {
         let newProd = new Product();
         newProd.codeID = code;
@@ -35,6 +36,7 @@ export class Product
         newProd.price = price;
         newProd.foodTypes = foodTypes;
         newProd.cook = cook;
+        newProd.description = description;
         return newProd;
     }
 }
