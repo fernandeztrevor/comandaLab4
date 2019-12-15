@@ -105,4 +105,6 @@ export class SearchOrderComponent implements OnInit {
 			.catch(() => this.toastr.error('Se ha producido un error al enviar la encuesta.'))
 			.finally(() => this.surveyDone = true);
 	}
+
+	
 }

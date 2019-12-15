@@ -1,7 +1,7 @@
 <nav class="bottom-shadow">
-    <div class="row main-bar mozo-color">
+    <div class="row main-bar">
         <div class="col-6">
-            <h1 class="main-title">La Comanda</h1>
+            <!-- <h1 class="main-title">La Comanda</h1> -->
         </div>
         <div class="col-6 profile">
             <img *ngIf="user" src="{{user.image}}" class="profile-pic" [ngClass]="open ? 'active': ''" (click)="toggleSidebar()">
@@ -10,7 +10,8 @@
 </nav>
 
 <div class="sidebar" [ngClass]="open ? '' : 'collapsed'">
-    <div class="top-row">
+    <div class="top-row align-center">
+        <br><br>
         <app-sidebar-option name="Perfil" link="/mozo/profile"></app-sidebar-option>
         <app-sidebar-option name="Gestión de pedidos" link="/mozo"></app-sidebar-option>
         <app-sidebar-option name="Gestión de mesas" link="/mozo/tables"></app-sidebar-option>
