@@ -30,6 +30,8 @@ export class SearchOrderComponent implements OnInit {
 	public user: User;
 	public orders: any;
 
+	//public misOrders: string[];
+
 	constructor(private authService: AuthService, private surveyService: SurveyService, private toastr: ToastrService, private orderService: OrderService, private tableService: TableService) { }
 
 	ngOnInit() {
@@ -80,16 +82,13 @@ export class SearchOrderComponent implements OnInit {
 			.finally(() => this.waitingOrder = false);
 	}
 
-	public FindPending(): void {		
-		// this.authService.GetCurrentUser().then(user => this.user = user).then(() => {
-		// 	this.orders = this.orderService.GetAllOrderByTime().valueChanges();
-		// });
+	public FindPending(): void {
 		this.waitingOrder = true;
 		this.orderService.GetByCodeUser(this.user.email)
 			.then(ord => this.order = ord)
 			.catch(error => this.toastr.error(error, 'Error'))
 			.finally(() => this.waitingOrder = false);
-	}
+	}	
 
 	public CanPayNow(): boolean {
 		let can = false;
@@ -115,6 +114,18 @@ export class SearchOrderComponent implements OnInit {
 			.then(() => this.toastr.success('Encuesta enviada correctamente!'))
 			.catch(() => this.toastr.error('Se ha producido un error al enviar la encuesta.'))
 			.finally(() => this.surveyDone = true);
+	}
+
+
+
+	///////////////////////////
+	//public currentOrder: Order;
+
+	
+
+	public SelectOrder(order: Order): void
+	{
+		this.order = order;
 	}
 
 

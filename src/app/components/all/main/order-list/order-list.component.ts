@@ -37,6 +37,11 @@ export class OrderListComponent implements OnInit {
 			case Role.socio:
 				this.orders = this.orderService.GetAllOrderByTime().valueChanges();
 				break;
+			case Role.cliente:
+				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
+					this.orders = this.orderService.GetAllByWaiterOrderByTime2(this.me.email).valueChanges();
+					//this.orders = this.orderService.GetAllOrderByTime();
+				});
 		}
 	}
 

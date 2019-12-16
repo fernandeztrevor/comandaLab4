@@ -10,23 +10,26 @@
     <div class="row middle-row">
         <div class="col-3"></div>
         <div class="col-6">
-            <input [(ngModel)]="orderID" class="form-control full-width" type="text"
-                placeholder="Ingrese el código de su pedido">
+            <!-- <input [(ngModel)]="orderID" class="form-control full-width" type="text"
+                placeholder="Ingrese el código de su pedido"> -->
         </div>
         <div class="col-3"></div>
     </div>
     <div class="row mar-top-1">
         <div class="col-3"></div>
-        <div class="col-6">
+        <!-- <div class="col-6">
             <button [disabled]="!orderID" class="btn btn-outline-primary full-width"
                 (click)="FindOrder()">Buscar</button>
-        </div>
-        <div class="col-3">
+        </div> -->
+        <!-- <div class="col-3">
             <button class="btn btn-outline-primary full-width"
                 (click)="FindPending()">Buscar</button>
             <select class="form-control" [ngModel]="selectedItem" (ngModelChange)="SelectItem($event)">
                 <option *ngFor="let order of orders">{{order.orderID}}</option>
             </select>
+        </div> -->
+        <div class="col-6">
+            <app-order-list role="cliente" (orderSelected)="SelectOrder($event)"></app-order-list>
         </div>
         
     </div>

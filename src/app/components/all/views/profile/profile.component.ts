@@ -51,8 +51,8 @@ export class ProfileComponent implements OnInit {
 			this.userService.ModifyProfileImage(this.user.email, img).then(() => {
 				this.toastr.success('Imagen cargada con éxito.');
 				setTimeout(() => {
-					//location.reload();
-					location.assign('https://ivan-rojas.github.io/TP_Lab4_2c_2019/');
+					location.reload();
+					//location.assign('https://github.com/fernandeztrevor/comandaLab4');
 				},1000)
 			})
 		});

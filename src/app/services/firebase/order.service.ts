@@ -14,68 +14,69 @@ export class OrderService {
 
 	constructor(private db: AngularFirestore) { }
 
-	public Add(order: Order): void
-	{
+	public Add(order: Order): void {
 		this.db.collection("pedidos").add(CommonHelper.ConvertToObject(order));
 	}
 
-	public GetAllOrderByTime(): AngularFirestoreCollection<Order>
-	{
+	public GetAllOrderByTime(): AngularFirestoreCollection<Order> {
 		return this.db.collection("pedidos", ref => ref.where('completed', '==', false));
 	}
 
-	public GetAllCompletedOrders_InArray(): Promise<Order[]>
-	{
+	public GetAllCompletedOrders_InArray(): Promise<Order[]> {
 		return this.db.collection("pedidos", ref => ref.where('completed', '==', true)).get().toPromise()
-		.then(doc => {
+			.then(doc => {
 
-			let orders: Order[] = [];
-			doc.docs.forEach(el => {
+				let orders: Order[] = [];
+				doc.docs.forEach(el => {
 					orders.push(el.data() as Order);
 				});
 
-			return orders;
+				return orders;
 			})
 	}
 
-	
 
-	public GetAllByWaiterOrderByTime(email: string)
-	{
+
+	public GetAllByWaiterOrderByTime(email: string) {
 		// It's not order by time yet. It requires to create an index.
 		//return this.db.collection("orders", ref => ref.where('waiter.email', '==', email).orderBy('timestamp', 'desc'));
 		return this.db.collection("pedidos", ref => ref.where('waiter.email', '==', email).where('completed', '==', false));
 	}
 
-	public GetAllByCook(cook: Cook): Observable<Order[]>
-	{
-    let documents = this.db.collection("pedidos", ref => ref.where('completed', '==', false).orderBy('timestamp', 'desc'))  as AngularFirestoreCollection<Order>;
+	public GetAllByWaiterOrderByTime2(email: string) {
+		const pendiente = 'Pendiente';
+		const servido = 'Servido';
+		// It's not order by time yet. It requires to create an index.
+		//return this.db.collection("orders", ref => ref.where('waiter.email', '==', email).orderBy('timestamp', 'desc'));
+		return this.db.collection("pedidos", ref => ref.where('client.email', '==', email).where('state', '==', servido || pendiente));
+	}
+
+	public GetAllByCook(cook: Cook): Observable<Order[]> {
+		let documents = this.db.collection("pedidos", ref => ref.where('completed', '==', false).orderBy('timestamp', 'desc')) as AngularFirestoreCollection<Order>;
 		return documents.valueChanges().pipe(
 			map(orders => {
-        return orders.filter(order => {
-          order = Object.assign(new Order(), order);
+				return orders.filter(order => {
+					order = Object.assign(new Order(), order);
 					var hasRole = false;
 					order['items'].forEach(el => {
-						if(el.cook == cook)
+						if (el.cook == cook)
 							hasRole = true;
 					});
-					if(hasRole)
+					if (hasRole)
 						return order;
 				})
 			})
 		);
 	}
 
-	public ChangeStatus(state: OrderState, orderCode: string): void
-	{
+	public ChangeStatus(state: OrderState, orderCode: string): void {
 		this.GetByCodeID(orderCode).then(order => {
 			order.state = state;
 			this.db.collection("pedidos").doc(order.id).update(order);
 		});
 	}
 
-	public Update(order: Order): Promise<boolean>
-	{
+	public Update(order: Order): Promise<boolean> {
 		return this.GetByCodeID(order.codeID).then(or => {
 			let obj = CommonHelper.ConvertToObject(order);
 			this.db.collection("pedidos").doc(or.id).update(obj);
@@ -88,13 +89,11 @@ export class OrderService {
 			})
 	}
 
-	public GetByCodeID(code: string): Promise<Order>
-	{
+	public GetByCodeID(code: string): Promise<Order> {
 		let documents = this.db.collection("pedidos", ref => ref.where('codeID', '==', code));
 		return documents.get().toPromise().then(doc => {
 			return new Promise((resolve, reject) => {
-				if(doc.docs[0])
-				{
+				if (doc.docs[0]) {
 					let theOrder = doc.docs[0].data() as Order;
 					theOrder.id = doc.docs[0].id;
 					resolve(theOrder);
@@ -105,13 +104,11 @@ export class OrderService {
 		});
 	}
 
-	public GetByCodeUser(code: string): Promise<Order>
-	{
+	public GetByCodeUser(code: string): Promise<Order> {
 		let documents = this.db.collection("pedidos", ref => ref.where('client.email', '==', code) && ref.where('completed', '==', false));
 		return documents.get().toPromise().then(doc => {
 			return new Promise((resolve, reject) => {
-				if(doc.docs[0])
-				{
+				if (doc.docs[0]) {
 					let theOrder = doc.docs[0].data() as Order;
 					theOrder.id = doc.docs[0].id;
 					resolve(theOrder);

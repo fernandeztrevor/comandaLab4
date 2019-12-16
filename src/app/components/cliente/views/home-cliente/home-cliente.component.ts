@@ -18,7 +18,7 @@ import { TableState } from 'src/app/models/table';
 
 export class HomeClienteComponent implements OnInit {
 
-	public order: Order;
+	public order: Order = null;
 	public products: Product[];
 	public showingProducts: Product[];
 	public somethingOrdered: boolean;
@@ -26,6 +26,8 @@ export class HomeClienteComponent implements OnInit {
 	public hasOrder = false;
 	private currentUser: User;
 	private currentWorker: User;
+
+	//public waitingOrder: boolean = false;
 
 	constructor(private orderService: OrderService, private userService: UserService, private authService: AuthService, private tableService: TableService, private toastr: ToastrService) { }
 
@@ -36,6 +38,7 @@ export class HomeClienteComponent implements OnInit {
 		this.showingProducts = this.products;
 		this.authService.GetCurrentUser().then(userLogged => this.currentUser = userLogged);
 		this.SelectRandomWaiter().then(waiter => this.currentWorker = waiter);
+		
 	}
 
 	// ##### CORE FUNCTIONS #####
@@ -93,14 +96,38 @@ export class HomeClienteComponent implements OnInit {
 
 	// ###### PRIVATE FUNCTIONS #####
 
-	private InitializeOrder(): void
-	{
-		this.tableService.FindAvailable()
-			.then(table => {
-				this.order = Order.Create(table.tableID);
-				this.somethingOrdered = false;
-			})
-	}
+	 private InitializeOrder(): void
+	 {
+	 	this.tableService.FindAvailable()
+	 		.then(table => {
+	 			this.order = Order.Create(table.tableID);
+	 			this.somethingOrdered = false;
+	 		})
+			
+	 }
+
+	// private InitializeOrder(): void
+	// {
+
+	// 	this.authService.GetCurrentUser().then(userLogged => this.currentUser = userLogged).finally(()=>{
+
+	// 		this.waitingOrder = true;
+	// 		const email = this.currentUser.email;
+	
+	// 		this.orderService.GetByCodeUser(email)
+	// 			.then(ord => this.order = ord)
+	// 			.catch(error => this.toastr.error(error, 'Error'))
+	// 			.finally(() => this.waitingOrder = false);		
+			
+	// 		if(this.waitingOrder){
+	// 			this.tableService.FindAvailable()
+	// 			.then(table => {
+	// 				this.order = Order.Create(table.tableID);
+	// 				this.somethingOrdered = false;
+	// 			});	
+	// 		}
+	// 	})			
+	// }
 	
 	private SelectRandomWaiter(): Promise<User>
 	{
