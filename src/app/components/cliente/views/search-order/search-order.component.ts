@@ -7,6 +7,9 @@ import { TableState } from 'src/app/models/table';
 import { SurveyService } from 'src/app/services/firebase/survey.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Survey } from 'src/app/models/survey';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { User } from 'src/app/models/user';
+
 
 @Component({
 	selector: 'app-search-order',
@@ -24,10 +27,12 @@ export class SearchOrderComponent implements OnInit {
 	public surveyForm: FormGroup;
 	public surveyDone: boolean = false;
 
-	constructor(private surveyService: SurveyService, private toastr: ToastrService, private orderService: OrderService, private tableService: TableService) { }
+	public user: User;
+	public orders: any;
 
-	ngOnInit() 
-	{
+	constructor(private authService: AuthService, private surveyService: SurveyService, private toastr: ToastrService, private orderService: OrderService, private tableService: TableService) { }
+
+	ngOnInit() {
 		this.surveyForm = new FormGroup({
 			'tableScore': new FormControl(null, [Validators.required, Validators.min(1), Validators.max(10)]),
 			'restaurantScore': new FormControl(null, [Validators.required, Validators.min(1), Validators.max(10)]),
@@ -38,16 +43,16 @@ export class SearchOrderComponent implements OnInit {
 		})
 
 		setInterval(() => {
-			if(this.order)
-			{
+			if (this.order) {
 				let now = new Date();
 				this.remainingTime = new Date(this.order.timeLeft).getTime() - now.getTime();
 			}
 		}, 10)
+
+		this.authService.GetCurrentUser().then(x => this.user = x);
 	}
 
-	public Pay(): void
-	{
+	public Pay(): void {
 		this.order.state = OrderState.paidOut;
 		this.orderService.ChangeStatus(OrderState.paidOut, this.order.codeID);
 		this.tableService.UpdateStatus(this.order.tableID, TableState.paying)
@@ -60,16 +65,14 @@ export class SearchOrderComponent implements OnInit {
 			})
 	}
 
-	public IsServed(): boolean
-	{
+	public IsServed(): boolean {
 		let served = false;
-		if(this.order.state == OrderState.served || this.order.state == OrderState.paidOut)
+		if (this.order.state == OrderState.served || this.order.state == OrderState.paidOut)
 			served = true;
 		return served;
 	}
 
-	public FindOrder(): void
-	{
+	public FindOrder(): void {
 		this.waitingOrder = true;
 		this.orderService.GetByCodeID(this.orderID)
 			.then(ord => this.order = ord)
@@ -77,19 +80,27 @@ export class SearchOrderComponent implements OnInit {
 			.finally(() => this.waitingOrder = false);
 	}
 
-	public CanPayNow(): boolean
-	{
+	public FindPending(): void {		
+		// this.authService.GetCurrentUser().then(user => this.user = user).then(() => {
+		// 	this.orders = this.orderService.GetAllOrderByTime().valueChanges();
+		// });
+		this.waitingOrder = true;
+		this.orderService.GetByCodeUser(this.user.email)
+			.then(ord => this.order = ord)
+			.catch(error => this.toastr.error(error, 'Error'))
+			.finally(() => this.waitingOrder = false);
+	}
+
+	public CanPayNow(): boolean {
 		let can = false;
-		if(this.order)
-		{
-			if(this.order.state == OrderState.served)
+		if (this.order) {
+			if (this.order.state == OrderState.served)
 				can = true;
 		}
 		return can;
 	}
 
-	public SendAnswers(): void
-	{
+	public SendAnswers(): void {
 		let survey = Survey.Create(
 			this.order,
 			this.surveyForm.get('tableScore').value,
@@ -106,5 +117,5 @@ export class SearchOrderComponent implements OnInit {
 			.finally(() => this.surveyDone = true);
 	}
 
-	
+
 }

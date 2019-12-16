@@ -38,6 +38,8 @@ export class OrderService {
 			})
 	}
 
+	
+
 	public GetAllByWaiterOrderByTime(email: string)
 	{
 		// It's not order by time yet. It requires to create an index.
@@ -89,6 +91,23 @@ export class OrderService {
 	public GetByCodeID(code: string): Promise<Order>
 	{
 		let documents = this.db.collection("pedidos", ref => ref.where('codeID', '==', code));
+		return documents.get().toPromise().then(doc => {
+			return new Promise((resolve, reject) => {
+				if(doc.docs[0])
+				{
+					let theOrder = doc.docs[0].data() as Order;
+					theOrder.id = doc.docs[0].id;
+					resolve(theOrder);
+				}
+				else
+					reject('No se encontró el pedido.');
+			})
+		});
+	}
+
+	public GetByCodeUser(code: string): Promise<Order>
+	{
+		let documents = this.db.collection("pedidos", ref => ref.where('client.email', '==', code) && ref.where('completed', '==', false));
 		return documents.get().toPromise().then(doc => {
 			return new Promise((resolve, reject) => {
 				if(doc.docs[0])

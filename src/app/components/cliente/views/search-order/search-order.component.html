@@ -21,7 +21,14 @@
             <button [disabled]="!orderID" class="btn btn-outline-primary full-width"
                 (click)="FindOrder()">Buscar</button>
         </div>
-        <div class="col-3"></div>
+        <div class="col-3">
+            <button class="btn btn-outline-primary full-width"
+                (click)="FindPending()">Buscar</button>
+            <select class="form-control" [ngModel]="selectedItem" (ngModelChange)="SelectItem($event)">
+                <option *ngFor="let order of orders">{{order.orderID}}</option>
+            </select>
+        </div>
+        
     </div>
     <div class="row mar-top-1" *ngIf="alreadyPaid">
     <!-- <div class="row mar-top-1"> -->
