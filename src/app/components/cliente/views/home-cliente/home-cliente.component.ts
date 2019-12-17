@@ -70,7 +70,12 @@ export class HomeClienteComponent implements OnInit {
 				this.order.waiter = this.currentWorker;
 				this.order.client = this.currentUser;
 				this.tableService.UpdateStatus(this.order.tableID, TableState.waitingOrder);
-				this.orderService.Add(this.order);
+				//this.orderService.Add(this.order);
+				this.orderService.Update(this.order).then((value) => {
+					if(!value){
+						this.orderService.Add(this.order);
+					} 
+				});;
 				this.toastr.success("El pedido se ha realizado correctamente! Este es tu número de pedido: " + this.order.codeID);
 				this.hasOrder = true;
 			}

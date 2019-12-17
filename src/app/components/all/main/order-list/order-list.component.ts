@@ -4,6 +4,8 @@ import { OrderService } from 'src/app/services/firebase/order.service';
 import { User, Role } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { Cook } from 'src/app/models/product';
+import { FileDetector } from 'selenium-webdriver/remote';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-order-list',
@@ -16,6 +18,7 @@ export class OrderListComponent implements OnInit {
 	@Output() orderSelected = new EventEmitter<Order>();
 
 	public orders: any;
+	public orders2: any;
 	public me: User;
 
 	constructor(private orderService: OrderService, private authService: AuthService) { }
@@ -36,11 +39,29 @@ export class OrderListComponent implements OnInit {
 				break;
 			case Role.socio:
 				this.orders = this.orderService.GetAllOrderByTime().valueChanges();
+				
 				break;
 			case Role.cliente:
+
+			const terminado ='Terminado';
+
 				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
-					this.orders = this.orderService.GetAllByWaiterOrderByTime2(this.me.email).valueChanges();
-					//this.orders = this.orderService.GetAllOrderByTime();
+					this.orders = this.orderService.GetAllByWaiterOrderByTime2(this.me.email).valueChanges().pipe(
+						map(orders => {
+							return orders.filter(order => {
+								order = Object.assign(new Order(), order);
+								var hasRole = false;
+								order['items'].forEach(el => {
+									console.log(el.state);
+									if (el.state != terminado)
+										hasRole = true;
+								});
+								if (hasRole)
+									return order;
+							});
+						})
+					);				
+
 				});
 		}
 	}
@@ -48,6 +69,13 @@ export class OrderListComponent implements OnInit {
 	public SelectOrder(order: Order): void
 	{
 		this.orderSelected.emit(order);
+	}
+
+	public filtro(){
+		
+
+
+
 	}
 
 }

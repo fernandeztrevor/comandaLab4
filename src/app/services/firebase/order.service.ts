@@ -48,7 +48,10 @@ export class OrderService {
 		const servido = 'Servido';
 		// It's not order by time yet. It requires to create an index.
 		//return this.db.collection("orders", ref => ref.where('waiter.email', '==', email).orderBy('timestamp', 'desc'));
-		return this.db.collection("pedidos", ref => ref.where('client.email', '==', email).where('state', '==', servido || pendiente));
+		return this.db.collection("pedidos", ref => ref.where('client.email', '==', email));
+		
+		
+
 	}
 
 	public GetAllByCook(cook: Cook): Observable<Order[]> {
