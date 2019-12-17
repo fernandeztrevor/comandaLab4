@@ -81,6 +81,7 @@ export class HomeClienteComponent implements OnInit {
 			}
 			else
 				this.toastr.error('Hay algo erróneo con este pedido.');
+				
 		}
 	}
 
