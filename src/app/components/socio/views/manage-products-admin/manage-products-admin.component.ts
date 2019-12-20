@@ -17,25 +17,24 @@ export class ManageProductsAdminComponent implements OnInit {
 
   ngOnInit() {
     this.productForm = new FormGroup({
-      'productName': new FormControl(null, [Validators.required]),
-      'productPrice': new FormControl(null, [Validators.required]),
-      'productDescription': new FormControl(null, [Validators.required]),
-      'productImage': new FormControl(null, [Validators.required]),
-      'typeComida': new FormControl(null),
-      'typeBebida': new FormControl(null),
-      'typeAlcohol': new FormControl(null),
-      'typePostre': new FormControl(null),
-      'typeCeliaco': new FormControl(null),
-      'typeVegano': new FormControl(null)
+      productName: new FormControl(null, [Validators.required]),
+      productPrice: new FormControl(null, [Validators.required]),
+      productDescription: new FormControl(null, [Validators.required]),
+      productImage: new FormControl(null, [Validators.required]),
+      typeComida: new FormControl(null),
+      typeBebida: new FormControl(null),
+      typeAlcohol: new FormControl(null),
+      typePostre: new FormControl(null),
+      typeCeliaco: new FormControl(null),
+      typeVegano: new FormControl(null)
     })
-    
+
     this.products = this.CreateTestProducts();
     this.showingProducts = this.products;
     console.log(this.showingProducts);
   }
 
-  private CreateTestProducts(): Product[]
-  {
+  private CreateTestProducts(): Product[] {
     return [
       Product.Create('B-CER-QUIL', 'Cerveza Quilmes', 'assets/img/B-CER-QUIL.jpg', 50, [FoodType.bebida, FoodType.alcohol], Cook.cervecero, "Bebida con alcohol, no recomendada si vas a conducir"),
       Product.Create('C-COM-MCFR', 'Milanesa con fritas', 'assets/img/C-COM-MCFR.jpg', 300, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de papas fritas"),
@@ -50,24 +49,47 @@ export class ManageProductsAdminComponent implements OnInit {
     ];
   }
 
-  public Cancel(): void
-	{
-		
-	}
+  public addProduct(): void {
+    let product: Product;
+    let array: Array<any>;
+
+    array = this.traerFoodTypes();
+
+    // product = Product.Create(
+    //   '',
+    //   this.productForm.value.productName,
+    //   '',
+    //   this.productForm.value.productPrice,
+
+
+    // )
+
+  }
+
+  public traerFoodTypes(): Array<string> {
+    let retorno: Array<string>;
+    console.log(this.productForm.value.typeComida);
+
+    if (this.productForm.value.typeComida) {
+      console.log("hola");
+    }
+
+
+
+    return retorno;
+  }
 
   // ##### FILTER FUNCTIONS #####
 
-	public Filter(type: string): void
-	{
-		this.showingProducts = this.products.filter((element) => {
-			if(element.IsFoodType(type))
-			return element;
-		})
-	}
-	
-	public ClearFilters(): void
-	{
-		this.showingProducts = this.products;
-	}
+  public Filter(type: string): void {
+    this.showingProducts = this.products.filter((element) => {
+      if (element.IsFoodType(type))
+        return element;
+    })
+  }
+
+  public ClearFilters(): void {
+    this.showingProducts = this.products;
+  }
 
 }

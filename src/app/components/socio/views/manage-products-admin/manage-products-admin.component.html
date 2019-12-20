@@ -95,6 +95,8 @@
                                     </div>
                                 </div>
 
+                                
+
                                 <div class="row middle-row">
                                     <div class="col-12">
                                         <input formControlName="productDescription"
@@ -102,6 +104,10 @@
                                             placeholder="Descripción del producto" required>
                                     </div>
                                 </div>
+
+                                
+                                
+                                
 
                                 <div class="row middle-row">
                                     <!-- <fieldset class="scheduler-border">
@@ -112,12 +118,12 @@
 
                                             <div class="custom-control custom-checkbox col-4">
                                                 <input type="checkbox" class="custom-control-input" id="typeComida"
-                                                    formControlName="typeComida">
+                                                    formControlName="typeComida"  (click)="traerFoodTypes()" value="comida">
                                                 <label class="custom-control-label" for="typeComida">Comida</label>
                                             </div>
                                             <div class="custom-control custom-checkbox col-4">
                                                 <input type="checkbox" class="custom-control-input" id="typeBebida"
-                                                    formControlName="typeBebida">
+                                                    formControlName="typeBebida" (click)="traerFoodTypes()">
                                                 <label class="custom-control-label" for="typeBebida">Bebida</label>
                                             </div>
                                             <div class="custom-control custom-checkbox col-4">
@@ -162,10 +168,6 @@
                                             Archivo</label>
                                     </div>
                                 </div>
-
-
-
-
 
                             </div>
                             <div class="col-1"></div>
