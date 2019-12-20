@@ -26,6 +26,7 @@ export class Order
         this.timeLeft = undefined;
         this.timestamp = Date.now();
         this.completed = false;
+
     }
 
     public CompleteOrder(): void

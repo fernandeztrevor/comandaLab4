@@ -6,6 +6,7 @@
                 <th scope="col">Cliente</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Mozo</th>
+                <th scope="col">Imagen</th>
             </tr>
         </thead>
         <tbody *ngIf="orders">
@@ -14,6 +15,7 @@
                 <td>{{or.client.name}}</td>
                 <td>{{or.state}}</td>
                 <td>{{or.waiter.name}}</td>
+                <td><img src="{{or.client.image}}" width="30px" height="30px"></td>
             </tr>
         </tbody>
     </table>
