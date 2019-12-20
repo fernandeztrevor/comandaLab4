@@ -20,4 +20,16 @@ export class FileService {
 	{
 		return this.storage.ref(fileName).getDownloadURL().toPromise().then(URL => resolve(URL));
 	}
+
+	public subirFoto(foto: File, uid: string) {
+	 	const pathFoto = `imagenesProductos/${uid}`;
+	 	const tarea = this.storage.upload(pathFoto, foto);
+	
+	 	tarea.then(() => {
+	 	  this.storage
+	 		.ref(pathFoto)
+	 		.getDownloadURL()
+	 	});
+	
+	   }
 }

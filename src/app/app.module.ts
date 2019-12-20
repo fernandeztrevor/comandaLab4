@@ -50,6 +50,7 @@ import { SurveyCommentDirective } from './directives/survey-comment.directive';
 import { NeatDatePipe } from './pipes/neat-date.pipe';
 import { IsProdDirective } from './directives/is-prod.directive';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { ManageProductsAdminComponent } from './components/socio/views/manage-products-admin/manage-products-admin.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     SurveyAverageDirective,
     SurveyCommentDirective,
     NeatDatePipe,
-    IsProdDirective
+    IsProdDirective,
+    ManageProductsAdminComponent
   ],
   imports: [
     BrowserModule,

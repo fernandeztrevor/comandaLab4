@@ -1,0 +1,194 @@
+<div class="container">
+    <div class="row top-row page-title">
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6">
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#productModal">Agregar
+                Producto</button>
+        </div>
+        <div class="col-3">
+            <div class="btn-group full-width">
+                <button title="Todo" class="btn btn-outline-success" (click)="ClearFilters()"><i
+                        class="fas fa-asterisk"></i></button>
+                <button title="Comida" class="btn btn-outline-success" (click)="Filter('comida')"><i
+                        class="fas fa-utensils"></i></button>
+                <button title="Bebidas" class="btn btn-outline-success" (click)="Filter('bebida')"><i
+                        class="fas fa-wine-glass-alt"></i></button>
+                <button title="Postres" class="btn btn-outline-success" (click)="Filter('postre')"><i
+                        class="fas fa-ice-cream"></i></button>
+                <button title="Alcohol" class="btn btn-outline-success" (click)="Filter('alcohol')"><i
+                        class="fas fa-beer"></i></button>
+                <button title="Sin TACC" class="btn btn-outline-success" (click)="Filter('celiaco')"><i
+                        class="fas fa-seedling"></i></button>
+                <button title="Vegana" class="btn btn-outline-success" (click)="Filter('vegano')"><i
+                        class="fas fa-carrot"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Imagen</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="products">
+                <tr class="product" *ngFor="let prod of showingProducts">
+                    <td>{{prod.name}}</td>
+                    <td>${{prod.price}},00</td>
+                    <td><img src="{{prod.image}}" width="30px" height="30px"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <hr>
+
+
+</div>
+
+<!-- Product modal -->
+<div class="modal fade" id="productModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <h3 class="align-center">Agregar Producto</h3>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <hr class="mar-top-1">
+                    <form [formGroup]="productForm" (ngSubmit)="SendProduct()">
+
+
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <input formControlName="productName"
+                                            class="form-control full-width align-center" type="text"
+                                            placeholder="Nombre del producto" required>
+                                    </div>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <input formControlName="productPrice"
+                                            class="form-control full-width align-center" type="text"
+                                            placeholder="Precio del producto" required>
+                                    </div>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <input formControlName="productDescription"
+                                            class="form-control full-width align-center" type="text"
+                                            placeholder="Descripción del producto" required>
+                                    </div>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <!-- <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">Tipo de producto</legend> -->
+                                        <label class="mr-sm-2">Tipo de producto</label>
+
+                                        <div class="input-group mb-3 col-12">
+
+                                            <div class="custom-control custom-checkbox col-4">
+                                                <input type="checkbox" class="custom-control-input" id="typeComida"
+                                                    formControlName="typeComida">
+                                                <label class="custom-control-label" for="typeComida">Comida</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox col-4">
+                                                <input type="checkbox" class="custom-control-input" id="typeBebida"
+                                                    formControlName="typeBebida">
+                                                <label class="custom-control-label" for="typeBebida">Bebida</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox col-4">
+                                                <input type="checkbox" class="custom-control-input" id="typeAlcohol"
+                                                    formControlName="typeAlcohol">
+                                                <label class="custom-control-label" for="typeAlcohol">Alcohol</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox col-4">
+                                                <input type="checkbox" class="custom-control-input" id="typePostre"
+                                                    formControlName="typePostre">
+                                                <label class="custom-control-label" for="typePostre">Postre</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox col-4">
+                                                <input type="checkbox" class="custom-control-input" id="typeCeliaco"
+                                                    formControlName="typeCeliaco">
+                                                <label class="custom-control-label" for="typeCeliaco">Celiaco</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox col-4">
+                                                <input type="checkbox" class="custom-control-input" id="typeVegano"
+                                                    formControlName="typeVegano">
+                                                <label class="custom-control-label" for="typeVegano">Vegano</label>
+                                            </div>
+
+                                        </div>
+                                    <!-- </fieldset> -->
+                                </div>
+
+                                <div class="row middle-row">
+                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                        <option selected>Encargado</option>
+                                            <option value="1">Cocinero</option>
+                                            <option value="2">Cervecero</option>
+                                            <option value="3">Bartender</option>
+                                      </select>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <input type="file" class="custom-file-input" formControlName="productImage"
+                                            lang="es">
+                                        <label class="custom-file-label" for="productImage">Seleccionar
+                                            Archivo</label>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+
+
+                    </form>
+
+                    <hr class="mar-top-1">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <div class="btn-group full-width">
+                                <button class="btn btn-outline-danger" title="Cancelar" data-dismiss="modal"><i
+                                        class="fas fa-times"></i></button>
+                                <button class="btn btn-outline-success" title="Agregar producto"
+                                    (click)="addProduct()"><i class="fas fa-check"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
