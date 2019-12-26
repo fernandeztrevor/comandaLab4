@@ -155,7 +155,7 @@
                                 <div class="row middle-row">
                                     <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
                                         formControlName="productCook">
-                                        <option selected>Encargado</option>
+                                        <!-- <option selected>Encargado</option> -->
                                         <option value="1">Cocinero</option>
                                         <option value="2">Cervecero</option>
                                         <option value="3">Bartender</option>
@@ -183,8 +183,7 @@
                             </div>
                             <div class="col-1"></div>
                         </div>
-
-                        
+                    
 
 
                     </form>
@@ -194,9 +193,10 @@
                         <div class="col-2"></div>
                         <div class="col-8">
                             <div class="btn-group full-width">
-                                <button class="btn btn-outline-danger" title="Cancelar" data-dismiss="modal"><i
+                                <button class="btn btn-outline-danger" title="Cancelar" (click)="Cancel()" data-dismiss="modal"><i
                                         class="fas fa-times"></i></button>
-                                <button class="btn btn-outline-success" title="Agregar producto"
+
+                                <button type="submit" class="btn btn-outline-success" title="Agregar producto"
                                     (click)="addProduct()"><i class="fas fa-check"></i></button>
                             </div>
                         </div>

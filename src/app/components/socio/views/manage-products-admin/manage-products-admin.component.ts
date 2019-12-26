@@ -35,9 +35,11 @@ export class ManageProductsAdminComponent implements OnInit {
     })
 
     this.products = new Array<Product>();
+    this.products = this.productService.listado;
 
     //this.products = this.CreateTestProducts();
     this.showingProducts = this.products;
+    console.log("showingProducts");
     console.log(this.showingProducts);
   }
 
@@ -70,8 +72,7 @@ export class ManageProductsAdminComponent implements OnInit {
       array,
       this.productForm.value.productCook,
       this.productForm.value.productDescription
-    )
-
+    );
     this.productService.persistirProducto(product, this.file);
   }
 
@@ -117,8 +118,13 @@ export class ManageProductsAdminComponent implements OnInit {
     this.showingProducts = this.products;
   }
 
-  public CancelOrder(): void {
+  public Cancel(): void {
+    this.productForm.reset();
     this.onReset.next();
   }
+
+  
+
+  
 
 }
