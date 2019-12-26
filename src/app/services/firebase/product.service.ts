@@ -100,7 +100,7 @@ export class ProductService {
     persistirProducto(producto: Product, foto: File) {
 
         this.productos.add(CommonHelper.ConvertToObject(producto)).then(doc => {
-            this.productos.doc(doc.id).update({ codeID: doc.id, pathImg: doc.id });
+            this.productos.doc(doc.id).update({ codeID: doc.id });
             //this.productos.doc(doc.id).update({ pathImg: doc.id });
             if (foto) {
                 this.fileService.subirFoto(foto, doc.id);

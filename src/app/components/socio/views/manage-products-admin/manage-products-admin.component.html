@@ -47,7 +47,7 @@
                 <tr class="product" *ngFor="let prod of showingProducts">
                     <td>{{prod.name}}</td>
                     <td>${{prod.price}},00</td>
-                    <td><img src="{{prod.image}}" width="30px" height="30px"></td>
+                    <td><img [src]="prod.image" width="30px" height="30px"></td>
                 </tr>
             </tbody>
         </table>
@@ -163,21 +163,10 @@
                                 </div>
 
                                 <div class="row middle-row">
-                                    <!-- <div class="col-12">
-                                        <input type="file" class="custom-file-input" formControlName="productImage"
-                                            lang="es">
-                                        <label class="custom-file-label" for="productImage">Seleccionar
-                                            Archivo</label>
-                                    </div> -->
 
                                     <div class="btn btn-primary btn-sm float-left">
-                                        <!-- <span>Choose file</span> -->
-                                        <!-- <input type="file" formControlName="productImage" name="productImage"> -->
                                         <input type="file" (change)="onFileChanged($event)" formControlName="productImage" name="productImage">
                                     </div>
-                                    <!-- <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" placeholder="Upload your file">
-                                      </div> -->
                                 </div>
 
                             </div>
