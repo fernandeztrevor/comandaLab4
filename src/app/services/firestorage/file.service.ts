@@ -26,7 +26,7 @@ export class FileService {
 		return this.storage.ref(fileName).getDownloadURL().toPromise().then(URL => resolve(URL));
 	}
 
-	public subirFoto(foto: File, uid: string): string {
+	public subirFoto(foto: File, uid: string) {
 		console.log(foto);
 	 	const pathFoto = `imagenesProductos/${uid}`;
 	 	const tarea = this.storage.upload(pathFoto, foto);

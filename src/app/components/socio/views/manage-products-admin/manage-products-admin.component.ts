@@ -3,6 +3,7 @@ import { Product, FoodType, Cook } from 'src/app/models/product';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ProductService } from 'src/app/services/firebase/product.service';
+import { FileService } from 'src/app/services/firestorage/file.service';
 
 @Component({
   selector: 'app-manage-products-admin',
@@ -17,7 +18,7 @@ export class ManageProductsAdminComponent implements OnInit {
   public onReset: Subject<void> = new Subject<void>();
   public file: File;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private fileService: FileService) { }
 
   ngOnInit() {
     this.productForm = new FormGroup({
@@ -73,6 +74,8 @@ export class ManageProductsAdminComponent implements OnInit {
       this.productForm.value.productCook,
       this.productForm.value.productDescription
     );
+
+    
     this.productService.persistirProducto(product, this.file);
   }
 
