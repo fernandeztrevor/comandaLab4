@@ -4,9 +4,10 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { Product, FoodType, Cook } from 'src/app/models/product';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { getLocaleFirstDayOfWeek } from '@angular/common';
-import { runInThisContext } from 'vm';
+//import { getLocaleFirstDayOfWeek } from '@angular/common';
+//import { runInThisContext } from 'vm';
 import { FileService } from '../firestorage/file.service';
+import { CommonHelper } from 'src/app/classes/helpers/common-helper';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ import { FileService } from '../firestorage/file.service';
 
 export class ProductService {
     public productos: AngularFirestoreCollection;
-    public listado: Product[];
+    //public listado: Product[];
+    public listado: Array<Product>;
 
     constructor(private db: AngularFirestore, private afsFunc: AngularFireFunctions, private fileService: FileService) {
         this.productos = this.db.collection<Product>('productos');
@@ -70,7 +72,7 @@ export class ProductService {
     }
 
     traerProductosArray() {
-        this.CreateTestProducts();
+        //this.CreateTestProducts();
 
         //let listadoObservable: Observable<any[]>;
         let listadoObservable = null;
@@ -83,6 +85,7 @@ export class ProductService {
         // }
         listadoObservable.subscribe(prods => {
             prods.forEach(unProd => {
+                
                 let p = new Product;
                 p.codeID = unProd.codeID;
                 p.cook = unProd.cook;
@@ -93,18 +96,23 @@ export class ProductService {
                 p.price = unProd.price;
                 p.state = unProd.state;
                 p.worker = unProd.worker;
+                
                 this.listado.push(p);
             })
         })
     }
 
-    persistirProducto(producto: Product, foto?: Array<File>) {
+    //persistirProducto(producto: Product, foto?: Array<File>) {
+        persistirProducto(producto: Product, foto: File) {
 
-        this.productos.add(producto).then(doc => {
-            this.productos.doc(doc.id).update({ id: doc.id });
+        console.log(foto);
 
+        
+        this.productos.add(CommonHelper.ConvertToObject(producto)).then(doc => {
+            this.productos.doc(doc.id).update({ codeID: doc.id });
+            this.productos.doc(doc.id).update({ pathImg: doc.id });
             if (foto) {
-                this.fileService.subirFoto(foto[0], doc.id);
+               this.fileService.subirFoto(foto, doc.id);
             }
         });
     }

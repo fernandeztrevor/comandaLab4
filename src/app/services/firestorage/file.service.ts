@@ -22,6 +22,7 @@ export class FileService {
 	}
 
 	public subirFoto(foto: File, uid: string) {
+		console.log(foto);
 	 	const pathFoto = `imagenesProductos/${uid}`;
 	 	const tarea = this.storage.upload(pathFoto, foto);
 	

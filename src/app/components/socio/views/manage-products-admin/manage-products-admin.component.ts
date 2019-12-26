@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product, FoodType, Cook } from 'src/app/models/product';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { ProductService } from 'src/app/services/firebase/product.service';
 
 @Component({
   selector: 'app-manage-products-admin',
@@ -12,24 +14,29 @@ export class ManageProductsAdminComponent implements OnInit {
   public products: Product[];
   public showingProducts: Product[];
   public productForm: FormGroup;
+  public onReset: Subject<void> = new Subject<void>();
+  public file: File;
 
-  constructor() { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.productForm = new FormGroup({
       productName: new FormControl(null, [Validators.required]),
       productPrice: new FormControl(null, [Validators.required]),
       productDescription: new FormControl(null, [Validators.required]),
-      productImage: new FormControl(null, [Validators.required]),
+      productImage: new FormControl('', [Validators.required]),
       typeComida: new FormControl(null),
       typeBebida: new FormControl(null),
       typeAlcohol: new FormControl(null),
       typePostre: new FormControl(null),
       typeCeliaco: new FormControl(null),
-      typeVegano: new FormControl(null)
+      typeVegano: new FormControl(null),
+      productCook: new FormControl(null)
     })
 
-    this.products = this.CreateTestProducts();
+    this.products = new Array<Product>();
+
+    //this.products = this.CreateTestProducts();
     this.showingProducts = this.products;
     console.log(this.showingProducts);
   }
@@ -55,27 +62,45 @@ export class ManageProductsAdminComponent implements OnInit {
 
     array = this.traerFoodTypes();
 
-    // product = Product.Create(
-    //   '',
-    //   this.productForm.value.productName,
-    //   '',
-    //   this.productForm.value.productPrice,
+    product = Product.Create(
+      '',
+      this.productForm.value.productName,
+      '',
+      this.productForm.value.productPrice,
+      array,
+      this.productForm.value.productCook,
+      this.productForm.value.productDescription
+    )
 
+    this.productService.persistirProducto(product, this.file);
+  }
 
-    // )
-
+  onFileChanged(event) {
+    this.file = event.target.files[0];
   }
 
   public traerFoodTypes(): Array<string> {
-    let retorno: Array<string>;
-    console.log(this.productForm.value.typeComida);
+
+    let retorno = new Array<string>();
 
     if (this.productForm.value.typeComida) {
-      console.log("hola");
+      retorno.push(FoodType.comida);
     }
-
-
-
+    if (this.productForm.value.typeBebida) {
+      retorno.push(FoodType.bebida);
+    }
+    if (this.productForm.value.typePostre) {
+      retorno.push(FoodType.postre);
+    }
+    if (this.productForm.value.typeAlcohol) {
+      retorno.push(FoodType.alcohol);
+    }
+    if (this.productForm.value.typeCeliaco) {
+      retorno.push(FoodType.celiaco);
+    }
+    if (this.productForm.value.typeVegano) {
+      retorno.push(FoodType.vegano);
+    }
     return retorno;
   }
 
@@ -90,6 +115,10 @@ export class ManageProductsAdminComponent implements OnInit {
 
   public ClearFilters(): void {
     this.showingProducts = this.products;
+  }
+
+  public CancelOrder(): void {
+    this.onReset.next();
   }
 
 }

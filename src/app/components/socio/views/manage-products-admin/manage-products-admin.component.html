@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
 
-                                
+
 
                                 <div class="row middle-row">
                                     <div class="col-12">
@@ -105,73 +105,86 @@
                                     </div>
                                 </div>
 
-                                
-                                
-                                
+
+
+
 
                                 <div class="row middle-row">
                                     <!-- <fieldset class="scheduler-border">
                                         <legend class="scheduler-border">Tipo de producto</legend> -->
-                                        <label class="mr-sm-2">Tipo de producto</label>
+                                    <label class="mr-sm-2">Tipo de producto</label>
 
-                                        <div class="input-group mb-3 col-12">
+                                    <div class="input-group mb-3 col-12">
 
-                                            <div class="custom-control custom-checkbox col-4">
-                                                <input type="checkbox" class="custom-control-input" id="typeComida"
-                                                    formControlName="typeComida"  (click)="traerFoodTypes()" value="comida">
-                                                <label class="custom-control-label" for="typeComida">Comida</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox col-4">
-                                                <input type="checkbox" class="custom-control-input" id="typeBebida"
-                                                    formControlName="typeBebida" (click)="traerFoodTypes()">
-                                                <label class="custom-control-label" for="typeBebida">Bebida</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox col-4">
-                                                <input type="checkbox" class="custom-control-input" id="typeAlcohol"
-                                                    formControlName="typeAlcohol">
-                                                <label class="custom-control-label" for="typeAlcohol">Alcohol</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox col-4">
-                                                <input type="checkbox" class="custom-control-input" id="typePostre"
-                                                    formControlName="typePostre">
-                                                <label class="custom-control-label" for="typePostre">Postre</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox col-4">
-                                                <input type="checkbox" class="custom-control-input" id="typeCeliaco"
-                                                    formControlName="typeCeliaco">
-                                                <label class="custom-control-label" for="typeCeliaco">Celiaco</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox col-4">
-                                                <input type="checkbox" class="custom-control-input" id="typeVegano"
-                                                    formControlName="typeVegano">
-                                                <label class="custom-control-label" for="typeVegano">Vegano</label>
-                                            </div>
-
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeComida"
+                                                formControlName="typeComida" value="comida">
+                                            <label class="custom-control-label" for="typeComida">Comida</label>
                                         </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeBebida"
+                                                formControlName="typeBebida">
+                                            <label class="custom-control-label" for="typeBebida">Bebida</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeAlcohol"
+                                                formControlName="typeAlcohol">
+                                            <label class="custom-control-label" for="typeAlcohol">Alcohol</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typePostre"
+                                                formControlName="typePostre">
+                                            <label class="custom-control-label" for="typePostre">Postre</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeCeliaco"
+                                                formControlName="typeCeliaco">
+                                            <label class="custom-control-label" for="typeCeliaco">Celiaco</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeVegano"
+                                                formControlName="typeVegano">
+                                            <label class="custom-control-label" for="typeVegano">Vegano</label>
+                                        </div>
+
+                                    </div>
                                     <!-- </fieldset> -->
+                                    <!-- <input type="button" (click)="traerFoodTypes()"> -->
                                 </div>
 
                                 <div class="row middle-row">
-                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
+                                        formControlName="productCook">
                                         <option selected>Encargado</option>
-                                            <option value="1">Cocinero</option>
-                                            <option value="2">Cervecero</option>
-                                            <option value="3">Bartender</option>
-                                      </select>
+                                        <option value="1">Cocinero</option>
+                                        <option value="2">Cervecero</option>
+                                        <option value="3">Bartender</option>
+                                    </select>
                                 </div>
 
                                 <div class="row middle-row">
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <input type="file" class="custom-file-input" formControlName="productImage"
                                             lang="es">
                                         <label class="custom-file-label" for="productImage">Seleccionar
                                             Archivo</label>
+                                    </div> -->
+
+                                    <div class="btn btn-primary btn-sm float-left">
+                                        <!-- <span>Choose file</span> -->
+                                        <!-- <input type="file" formControlName="productImage" name="productImage"> -->
+                                        <input type="file" (change)="onFileChanged($event)" formControlName="productImage" name="productImage">
                                     </div>
+                                    <!-- <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Upload your file">
+                                      </div> -->
                                 </div>
 
                             </div>
                             <div class="col-1"></div>
                         </div>
+
+                        
 
 
                     </form>
