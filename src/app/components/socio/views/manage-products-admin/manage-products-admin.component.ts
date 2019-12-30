@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product, FoodType, Cook } from 'src/app/models/product';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/firebase/product.service';
 import { FileService } from 'src/app/services/firestorage/file.service';
 
@@ -13,6 +13,7 @@ import { FileService } from 'src/app/services/firestorage/file.service';
 export class ManageProductsAdminComponent implements OnInit {
 
   public products: Product[];
+  //public showingProducts: Observable<Product[]>;
   public showingProducts: Product[];
   public productForm: FormGroup;
   public onReset: Subject<void> = new Subject<void>();
@@ -39,6 +40,8 @@ export class ManageProductsAdminComponent implements OnInit {
     this.products = this.productService.listado;
 
     //this.products = this.CreateTestProducts();
+    
+
     this.showingProducts = this.products;
     console.log("showingProducts");
     console.log(this.showingProducts);
@@ -126,6 +129,16 @@ export class ManageProductsAdminComponent implements OnInit {
     this.onReset.next();
   }
 
+  public changeState(uid: string, state: string){
+    
+    if(state =="Pendiente"){
+      this.productService.updateState(uid, "Deshabilitado");
+    }
+    if(state =="Deshabilitado"){
+      this.productService.updateState(uid, "Pendiente");
+    }
+    
+  }
   
 
   

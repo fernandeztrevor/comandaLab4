@@ -41,13 +41,19 @@
                     <th scope="col">Producto</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Imagen</th>
+                    <th scope="col">Habilitar/Desabilitar</th>
                 </tr>
             </thead>
             <tbody *ngIf="products">
                 <tr class="product" *ngFor="let prod of showingProducts">
                     <td>{{prod.name}}</td>
                     <td>${{prod.price}},00</td>
-                    <td><img [src]="prod.image" width="30px" height="30px"></td>
+                    <td><img [src]="prod.pathImg" width="30px" height="30px"></td>
+                    <td><button class="btn btn-outline-danger" *ngIf="prod.state != 'Deshabilitado'"
+                            (click)="changeState(prod.codeID, prod.state)">Deshabilitar</button>
+                        <button class="btn btn-outline-success" *ngIf="prod.state == 'Deshabilitado'"
+                            (click)="changeState(prod.codeID, prod.state)">Habilitar</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -165,14 +171,15 @@
                                 <div class="row middle-row">
 
                                     <div class="btn btn-primary btn-sm float-left">
-                                        <input type="file" (change)="onFileChanged($event)" formControlName="productImage" name="productImage">
+                                        <input type="file" (change)="onFileChanged($event)"
+                                            formControlName="productImage" name="productImage">
                                     </div>
                                 </div>
 
                             </div>
                             <div class="col-1"></div>
                         </div>
-                    
+
 
 
                     </form>
@@ -182,10 +189,10 @@
                         <div class="col-2"></div>
                         <div class="col-8">
                             <div class="btn-group full-width">
-                                <button class="btn btn-outline-danger" title="Cancelar" (click)="Cancel()" data-dismiss="modal"><i
-                                        class="fas fa-times"></i></button>
+                                <button class="btn btn-outline-danger" title="Cancelar" (click)="Cancel()"
+                                    data-dismiss="modal"><i class="fas fa-times"></i></button>
 
-                                <button type="submit" class="btn btn-outline-success" title="Agregar producto"
+                                <button class="btn btn-outline-success" title="Agregar producto"
                                     (click)="addProduct()"><i class="fas fa-check"></i></button>
                             </div>
                         </div>

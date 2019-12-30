@@ -3,6 +3,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { reject, resolve } from 'q';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { Product } from 'src/app/models/product';
+import { ProductService } from '../firebase/product.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -10,34 +11,34 @@ import { Product } from 'src/app/models/product';
 export class FileService {
 	products: AngularFirestoreCollection;
 
-	constructor(private angularFirestore: AngularFirestore,private storage: AngularFireStorage) {
+	constructor(private angularFirestore: AngularFirestore, private storage: AngularFireStorage) {
 		this.products = this.angularFirestore.collection<Product>('productos');
-	 }
+	}
 
-	public Upload(fileName: string, file: File): Promise<void>
-	{
+	public Upload(fileName: string, file: File): Promise<void> {
 		return this.storage.upload(fileName, file).
 			then((success) => resolve(success))
 			.catch((error) => reject(error.message));
 	}
 
-	public GetImageURL(fileName: string)
-	{
+	public GetImageURL(fileName: string) {
 		return this.storage.ref(fileName).getDownloadURL().toPromise().then(URL => resolve(URL));
 	}
 
 	public subirFoto(foto: File, uid: string) {
-		console.log(foto);
-	 	const pathFoto = `imagenesProductos/${uid}`;
-	 	const tarea = this.storage.upload(pathFoto, foto);
-	
-	 	tarea.then(() => {
-	 	  this.storage
-	 		.ref(pathFoto)
-			 .getDownloadURL().subscribe(url=>{
-				return url;
-			 });
-	 	});
-	
-	   }
+		const pathFoto = `imagenesProductos/${uid}`;
+		const tarea = this.storage.upload(pathFoto, foto);
+
+		tarea.then(() => {
+			this.storage
+				.ref(pathFoto)
+				.getDownloadURL().subscribe(url => {
+					this.updatePhotoUrl(url, uid);
+				});
+		});
+	}
+
+	public updatePhotoUrl(url: string, uid: string) {
+		this.products.doc(uid).update({ pathImg: url });
+	}
 }

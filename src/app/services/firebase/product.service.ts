@@ -18,7 +18,7 @@ export class ProductService {
     //public listado: Product[];
     //public listado: Array<Product>;
     public listado = new Array<Product>();
-    public url:string;
+    public url: string;
 
     constructor(private db: AngularFirestore, private afsFunc: AngularFireFunctions, private fileService: FileService) {
         this.productos = this.db.collection<Product>('productos');
@@ -100,16 +100,24 @@ export class ProductService {
 
     persistirProducto(producto: Product, foto: File) {
 
-         this.productos.add(CommonHelper.ConvertToObject(producto)).then(doc => {
-             this.productos.doc(doc.id).update({ codeID: doc.id });
-             //this.productos.doc(doc.id).update({ pathImg: doc.id });
-             if (foto) {
-                 this.fileService.subirFoto(foto, producto.name);
-             }
-         }).finally(()=>{
-             location.reload();
-         }
-         );
-     }
+        this.productos.add(CommonHelper.ConvertToObject(producto)).then(doc => {
+            this.productos.doc(doc.id).update({ codeID: doc.id });
+            //this.productos.doc(doc.id).update({ pathImg: doc.id });
+            console.log(foto);
+            if (foto) {
+                //this.fileService.subirFoto(foto, producto.name);
+                this.fileService.subirFoto(foto, doc.id);
+            }
+        }).finally(() => {
+            //location.reload();
+        }
+        );
+    }
+
+    updateState(uid: string, state: string){
+        this.productos.doc(uid).update({ state: state });
+    }
+
+    
 
 }
