@@ -45,9 +45,9 @@
                 </tr>
             </thead>
             <tbody *ngIf="products">
-                <tr class="product" *ngFor="let prod of showingProducts">
+                <tr class="product"  *ngFor="let prod of showingProducts" (click)="editarProducto(prod)" data-toggle="modal" data-target="#productModal">
                     <td>{{prod.name}}</td>
-                    <td>${{prod.price}},00</td>
+                    <td>${{prod.price}}</td>
                     <td><img [src]="prod.pathImg" width="30px" height="30px"></td>
                     <td><button class="btn btn-outline-danger" *ngIf="prod.state != 'Deshabilitado'"
                             (click)="changeState(prod.codeID, prod.state)">Deshabilitar</button>
@@ -57,7 +57,6 @@
                 </tr>
             </tbody>
         </table>
-
     </div>
     <hr>
 
@@ -72,20 +71,36 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-2"></div>
-                        <div class="col-8">
+                        <div class="col-8" *ngIf="!this.haySeleccionado">
                             <h3 class="align-center">Agregar Producto</h3>
                         </div>
+                        <div class="col-8" *ngIf="this.haySeleccionado">
+                            <h3 class="align-center">Editar Producto</h3>
+                        </div>
                         <div class="col-2"></div>
-                    </div>
+                    </div>                    
+
                     <hr class="mar-top-1">
                     <form [formGroup]="productForm" (ngSubmit)="SendProduct()">
+
+
+                        <div class="row" *ngIf="this.haySeleccionado">
+                            <div class="col-5"></div>
+                            <div class="col-2">
+                                <img  [src]="this.productoSeleccionado.pathImg" width="60px" height="60px">
+                            </div>
+                            <div class="col-5"></div>
+                        </div>
 
 
                         <div class="row">
                             <div class="col-1"></div>
                             <div class="col-10">
-
+                                
                                 <div class="row middle-row">
+                                    <div class="col-12">
+                                        <label>Nombre:</label>
+                                    </div>
                                     <div class="col-12">
                                         <input formControlName="productName"
                                             class="form-control full-width align-center" type="text"
@@ -95,6 +110,9 @@
 
                                 <div class="row middle-row">
                                     <div class="col-12">
+                                        <label>Precio:</label>
+                                    </div>
+                                    <div class="col-12">
                                         <input formControlName="productPrice"
                                             class="form-control full-width align-center" type="text"
                                             placeholder="Precio del producto" required>
@@ -102,17 +120,16 @@
                                 </div>
 
 
-
                                 <div class="row middle-row">
+                                    <div class="col-12">
+                                        <label>Descripción:</label>
+                                    </div>
                                     <div class="col-12">
                                         <input formControlName="productDescription"
                                             class="form-control full-width align-center" type="text"
                                             placeholder="Descripción del producto" required>
                                     </div>
                                 </div>
-
-
-
 
 
                                 <div class="row middle-row">
@@ -192,8 +209,11 @@
                                 <button class="btn btn-outline-danger" title="Cancelar" (click)="Cancel()"
                                     data-dismiss="modal"><i class="fas fa-times"></i></button>
 
-                                <button class="btn btn-outline-success" title="Agregar producto"
-                                    (click)="addProduct()"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-outline-success" *ngIf="!this.haySeleccionado" title="Agregar producto" (click)="addProduct()"
+                                    data-dismiss="modal"><i class="fas fa-check"></i></button>
+
+                                    <button class="btn btn-outline-success" *ngIf="this.haySeleccionado" title="Actualizar producto" (click)="updateProduct()"
+                                    data-dismiss="modal"><i class="fas fa-check"></i></button>
                             </div>
                         </div>
                         <div class="col-2"></div>

@@ -98,9 +98,9 @@ export class ProductService {
         });
     }
 
-    persistirProducto(producto: Product, foto: File) {
+    persistirProducto(producto: Product, foto: File): Promise<boolean> {
 
-        this.productos.add(CommonHelper.ConvertToObject(producto)).then(doc => {
+        return this.productos.add(CommonHelper.ConvertToObject(producto)).then(doc => {
             this.productos.doc(doc.id).update({ codeID: doc.id });
             //this.productos.doc(doc.id).update({ pathImg: doc.id });
             console.log(foto);
@@ -108,16 +108,38 @@ export class ProductService {
                 //this.fileService.subirFoto(foto, producto.name);
                 this.fileService.subirFoto(foto, doc.id);
             }
-        }).finally(() => {
+        }).then(() => {
             //location.reload();
-        }
-        );
+            return true;
+        }).catch(() => {
+            return false;
+        });
     }
 
-    updateState(uid: string, state: string){
+    updateState(uid: string, state: string) {
         this.productos.doc(uid).update({ state: state });
     }
 
-    
+    updateProd(producto: Product, foto: File): Promise<boolean>{
+        return this.productos.doc(producto.codeID).update({
+            name: producto.name,
+            price: producto.price,
+            foodTypes: producto.foodTypes,
+            cook: producto.cook,
+            description: producto.description
+        }).then(()=>{
+            if (foto) {
+                this.fileService.subirFoto(foto, producto.codeID);
+            }
+        }).then(() => {
+            return true;
+        }).catch(() => {
+            return false;
+        });
+        
+
+    }
+
+
 
 }

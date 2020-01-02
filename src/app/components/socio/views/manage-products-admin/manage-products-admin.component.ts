@@ -18,10 +18,13 @@ export class ManageProductsAdminComponent implements OnInit {
   public productForm: FormGroup;
   public onReset: Subject<void> = new Subject<void>();
   public file: File;
+  public productoSeleccionado: Product;
+  public haySeleccionado: boolean;
 
   constructor(private productService: ProductService, private fileService: FileService) { }
 
   ngOnInit() {
+
     this.productForm = new FormGroup({
       productName: new FormControl(null, [Validators.required]),
       productPrice: new FormControl(null, [Validators.required]),
@@ -40,11 +43,13 @@ export class ManageProductsAdminComponent implements OnInit {
     this.products = this.productService.listado;
 
     //this.products = this.CreateTestProducts();
-    
+
 
     this.showingProducts = this.products;
     console.log("showingProducts");
-    console.log(this.showingProducts);
+
+    this.haySeleccionado = false;
+    this.productoSeleccionado = null;
   }
 
   private CreateTestProducts(): Product[] {
@@ -78,8 +83,12 @@ export class ManageProductsAdminComponent implements OnInit {
       this.productForm.value.productDescription
     );
 
-    
-    this.productService.persistirProducto(product, this.file);
+    this.productService.persistirProducto(product, this.file).then((value) => {
+      if (value) {
+        this.Cancel();
+      }
+    });;
+
   }
 
   onFileChanged(event) {
@@ -111,6 +120,74 @@ export class ManageProductsAdminComponent implements OnInit {
     return retorno;
   }
 
+  public changeState(uid: string, state: string) {
+
+    if (state == "Pendiente") {
+      this.productService.updateState(uid, "Deshabilitado");
+    }
+    if (state == "Deshabilitado") {
+      this.productService.updateState(uid, "Pendiente");
+    }
+  }
+
+  public editarProducto(producto: Product) {
+
+    this.productoSeleccionado = producto;
+    this.haySeleccionado = true;
+
+    this.productForm.controls['productName'].setValue(producto.name);
+    this.productForm.controls['productPrice'].setValue(producto.price);
+    this.productForm.controls['productCook'].setValue(producto.cook);
+    this.productForm.controls['productDescription'].setValue(producto.description);
+
+    this.traerTipos(producto.foodTypes);
+  }
+
+  public updateProduct() {
+    let producto: Product;
+    let array: Array<any>;
+
+    array = this.traerFoodTypes();
+
+    this.productoSeleccionado.name = this.productForm.value.productName;
+    this.productoSeleccionado.price = this.productForm.value.productPrice;
+    this.productoSeleccionado.foodTypes = array;
+    this.productoSeleccionado.cook = this.productForm.value.productCook;
+    this.productoSeleccionado.description = this.productForm.value.productDescription;
+
+    this.productService.updateProd(this.productoSeleccionado, this.file).then(()=>{
+      this.productoSeleccionado = null;
+      this.haySeleccionado = false;
+      this.file = null;
+    });
+  }
+
+  public traerTipos(tipos: Array<FoodType>) {
+    tipos.forEach(tipo => {
+      switch (tipo) {
+        case 'comida':
+          this.productForm.controls['typeComida'].setValue(true);
+          break;
+        case 'bebida':
+          this.productForm.controls['typeBebida'].setValue(true);
+          break;
+        case 'alcohol':
+          this.productForm.controls['typeAlcohol'].setValue(true);
+          break;
+        case 'postre':
+          this.productForm.controls['typePostre'].setValue(true);
+          break;
+        case 'celiaco':
+          this.productForm.controls['typeCeliaco'].setValue(true);
+          break;
+        case 'vegano':
+          this.productForm.controls['typeVegano'].setValue(true);
+          break;
+      }
+    });
+  }
+
+
   // ##### FILTER FUNCTIONS #####
 
   public Filter(type: string): void {
@@ -128,19 +205,4 @@ export class ManageProductsAdminComponent implements OnInit {
     this.productForm.reset();
     this.onReset.next();
   }
-
-  public changeState(uid: string, state: string){
-    
-    if(state =="Pendiente"){
-      this.productService.updateState(uid, "Deshabilitado");
-    }
-    if(state =="Deshabilitado"){
-      this.productService.updateState(uid, "Pendiente");
-    }
-    
-  }
-  
-
-  
-
 }
