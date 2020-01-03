@@ -4,6 +4,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/firebase/product.service';
 import { FileService } from 'src/app/services/firestorage/file.service';
+import { DatePipe } from '@angular/common';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { LogService } from 'src/app/services/firebase/log.service';
+import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 
 @Component({
   selector: 'app-manage-products-admin',
@@ -21,7 +25,7 @@ export class ManageProductsAdminComponent implements OnInit {
   public productoSeleccionado: Product;
   public haySeleccionado: boolean;
 
-  constructor(private productService: ProductService, private fileService: FileService) { }
+  constructor(private productService: ProductService, private fileService: FileService, private authService: AuthService, private movimientoService: LogService) { }
 
   ngOnInit() {
 
@@ -39,11 +43,12 @@ export class ManageProductsAdminComponent implements OnInit {
       productCook: new FormControl(null)
     })
 
+    let date = new Date;
+    console.log(date);
+
     this.products = new Array<Product>();
     this.products = this.productService.listado;
-
     //this.products = this.CreateTestProducts();
-
 
     this.showingProducts = this.products;
     console.log("showingProducts");
@@ -87,6 +92,10 @@ export class ManageProductsAdminComponent implements OnInit {
       if (value) {
         this.Cancel();
       }
+      this.authService.GetCurrentUser().then(user =>{
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.altaProducto);
+      })
+
     });;
 
   }
@@ -124,9 +133,15 @@ export class ManageProductsAdminComponent implements OnInit {
 
     if (state == "Pendiente") {
       this.productService.updateState(uid, "Deshabilitado");
+      this.authService.GetCurrentUser().then(user =>{
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.deshabilitacionProducto);
+      })
     }
     if (state == "Deshabilitado") {
       this.productService.updateState(uid, "Pendiente");
+      this.authService.GetCurrentUser().then(user =>{
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.habilitacionProducto);
+      })
     }
   }
 
@@ -159,6 +174,9 @@ export class ManageProductsAdminComponent implements OnInit {
       this.productoSeleccionado = null;
       this.haySeleccionado = false;
       this.file = null;
+      this.authService.GetCurrentUser().then(user =>{
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.modificacionProducto);
+      })
     });
   }
 

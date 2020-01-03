@@ -6,17 +6,18 @@ import { Router } from '@angular/router';
 import { UserService } from '../firebase/user.service';
 import { take, map, tap } from 'rxjs/operators';
 import { reject } from 'q';
+import { LogService } from '../firebase/log.service';
+import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
 
-	constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private userService: UserService) { }
-  
-	public RegisterWithEmail(user: User)
-	{
-    	return new Promise((resolve, reject) => {
+	constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private userService: UserService, private logService: LogService) { }
+
+	public RegisterWithEmail(user: User) {
+		return new Promise((resolve, reject) => {
 			this.afsAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
 				.then(userData => {
 					resolve(userData);
@@ -24,59 +25,62 @@ export class AuthService {
 					console.log('Register successful');
 				})
 				.catch(error => console.log(reject(error)))
-    	});
-	}
-
-	public LoginWithEmail(email: string, pwd: string)
-	{
-		return new Promise((resolve, reject) => {
-			this.afsAuth.auth.signInWithEmailAndPassword(email, pwd)
-			.then(userData => {
-				resolve(userData);
-				console.log('Login success', userData);
-				this.RedirectForRole(email);
-			})
-			.catch(error => reject(error));
 		});
 	}
 
-	public LogoutEmail(): void
-	{
-		this.afsAuth.auth.signOut();
+	public LoginWithEmail(email: string, pwd: string) {
+		return new Promise((resolve, reject) => {
+			this.afsAuth.auth.signInWithEmailAndPassword(email, pwd)
+				.then(userData => {
+					resolve(userData);
+					console.log('Login success', userData);
+					this.RedirectForRole(email);
+					this.userService.GetUserByEmail(email).then(user => {
+						this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.ingreso);
+					});
+				})
+				.catch(error => reject(error));
+		});
 	}
 
-	public GetCurrentUser(): Promise<User>
-	{
+	public LogoutEmail(): void {
+
+		this.GetCurrentUser()
+			.then(user => {
+				this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.egreso)
+					.then(() => {
+						this.afsAuth.auth.signOut();
+					});
+			});
+	}
+
+	public GetCurrentUser(): Promise<User> {
 		return this.GetCurrentEmail().then(email => {
-			if(!email)
+			if (!email)
 				reject('error');
-				
+
 			return this.userService.GetUserByEmail(email).then(user => {
 				return this.RemoveUserPassword(user);
 			})
 		})
 	}
 
-	private GetCurrentEmail(): Promise<string>
-	{
+	private GetCurrentEmail(): Promise<string> {
 		return this.afsAuth.user.pipe(
 			take(1),
 			map(user => user.email)
 		)
-		.toPromise();
+			.toPromise();
 	}
 
-	private RemoveUserPassword(user: User): User
-	{
+	private RemoveUserPassword(user: User): User {
 		user.password = '';
 		return user;
 	}
 
-	private RedirectForRole(email: string): void
-	{
+	private RedirectForRole(email: string): void {
 		this.userService.GetUserByEmail(email).then(user => {
-			switch(user.role)
-			{
+			switch (user.role) {
 				case Role.cliente:
 					this.router.navigate(['/cliente']);
 					break;
@@ -99,6 +103,8 @@ export class AuthService {
 					alert('No tiene rol.');
 					break;
 			}
+
+
 		});
 	}
 }
