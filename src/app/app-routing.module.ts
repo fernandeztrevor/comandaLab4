@@ -24,7 +24,10 @@ import { ManageOrdersAdminComponent } from './components/socio/views/manage-orde
 import { ManageTablesAdminComponent } from './components/socio/views/manage-tables-admin/manage-tables-admin.component';
 import { ProfileComponent } from './components/all/views/profile/profile.component';
 import { SurveyTableComponent } from './components/socio/views/survey-table/survey-table.component';
-import { ManageProductsAdminComponent } from './components/socio/views/manage-products-admin/manage-products-admin.component';
+import { ManageProductsAdminComponent } from './components/socio/views/manage-products-admin/manage-products-admin.component';	
+import { ManageProductsCerveceroComponent } from './components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component';
+import { ManageProductsCocineroComponent } from './components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component';
+import { ManageProductsBartenderComponent } from './components/bartender/views/manage-products-bartender/manage-products-bartender.component';
 
 
 const routes: Routes = [
@@ -64,7 +67,7 @@ const routes: Routes = [
 		[
 			{path: '', component: HomeCerveceroComponent},
 			{path: 'profile', component: ProfileComponent},
-			{path: 'products', component: ManageProductsAdminComponent}
+			{path: 'products', component: ManageProductsCerveceroComponent}
 		],
 	canActivate: [AuthGuard]},
 
@@ -73,7 +76,7 @@ const routes: Routes = [
 		[
 			{path: '', component: HomeCocineroComponent},
 			{path: 'profile', component: ProfileComponent},
-			{path: 'products', component: ManageProductsAdminComponent}
+			{path: 'products', component: ManageProductsCocineroComponent}
 		],
 	canActivate: [AuthGuard]},
 
@@ -82,7 +85,7 @@ const routes: Routes = [
 		[
 			{path: '', component: HomeBartenderComponent},
 			{path: 'profile', component: ProfileComponent},
-			{path: 'products', component: ManageProductsAdminComponent}
+			{path: 'products', component: ManageProductsBartenderComponent}
 		],
 	canActivate: [AuthGuard]},
 
