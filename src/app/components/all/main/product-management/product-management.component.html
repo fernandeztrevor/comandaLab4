@@ -49,7 +49,7 @@
                 <tr class="product" *ngFor="let prod of showingProducts">
                     <td><label>{{prod.name}}</label></td>
                     <td>${{prod.price}}</td>
-                    <td><img [src]="prod.pathImg" width="30px" height="30px">
+                    <td><img [src]="prod.image" width="30px" height="30px">
                     </td>
 
                     <td><button class="btn btn-outline-danger" *ngIf="prod.state != 'Deshabilitado'"
@@ -93,7 +93,7 @@
                         <div class="row" *ngIf="this.haySeleccionado">
                             <div class="col-5"></div>
                             <div class="col-2">
-                                <img [src]="this.productoSeleccionado.pathImg" width="60px" height="60px">
+                                <img [src]="this.productoSeleccionado.image" width="60px" height="60px">
                             </div>
                             <div class="col-5"></div>
                         </div>

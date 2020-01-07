@@ -1,0 +1,10 @@
+los productos que estan deshabilitados no se tienen que mostrar.
+
+los usuarios que estan suspendidos no se pueden loguear(deleted true state desabilitado).
+
+actualizar los datos de cuando se registra el usuario
+
+capturar error cuando verificar el email esta duplicado
+
+DAR DE ALTA EL USUARIO DESDE SOCIO SIN EL createUserWithEmailAndPassword
+authservice registerwithmail

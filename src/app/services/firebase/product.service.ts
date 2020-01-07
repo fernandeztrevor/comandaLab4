@@ -93,7 +93,7 @@ export class ProductService {
                 p.description = unProd.description;
                 p.foodTypes = unProd.foodTypes;
                 p.name = unProd.name;
-                p.pathImg = unProd.pathImg;
+                p.image = unProd.image;
                 p.price = unProd.price;
                 p.state = unProd.state;
                 p.worker = unProd.worker;
@@ -111,7 +111,7 @@ export class ProductService {
             console.log(foto);
             if (foto) {
                 //this.fileService.subirFoto(foto, producto.name);
-                this.fileService.subirFoto(foto, doc.id);
+                this.fileService.subirFotoProducto(foto, doc.id);
             }
         }).then(() => {
             //location.reload();
@@ -134,14 +134,13 @@ export class ProductService {
             description: producto.description
         }).then(()=>{
             if (foto) {
-                this.fileService.subirFoto(foto, producto.codeID);
+                this.fileService.subirFotoProducto(foto, producto.codeID);
             }
         }).then(() => {
             return true;
         }).catch(() => {
             return false;
-        });
-        
+        });        
 
     }
 

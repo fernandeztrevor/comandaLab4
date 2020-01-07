@@ -28,6 +28,7 @@ import { ManageProductsAdminComponent } from './components/socio/views/manage-pr
 import { ManageProductsCerveceroComponent } from './components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component';
 import { ManageProductsCocineroComponent } from './components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component';
 import { ManageProductsBartenderComponent } from './components/bartender/views/manage-products-bartender/manage-products-bartender.component';
+import { ManageUsersComponent } from './components/socio/views/manage-users/manage-users.component';
 
 
 const routes: Routes = [
@@ -49,7 +50,8 @@ const routes: Routes = [
 			{path: 'orders', component: ManageOrdersAdminComponent},
 			{path: 'profile', component: ProfileComponent},
 			{path: 'surveys', component: SurveyTableComponent},
-			{path: 'products', component: ManageProductsAdminComponent}
+			{path: 'products', component: ManageProductsAdminComponent},
+			{path: 'users', component: ManageUsersComponent},
 		],
 	canActivate: [AuthGuard]},
 

@@ -55,6 +55,7 @@ import { ProductManagementComponent } from './components/all/main/product-manage
 import { ManageProductsCocineroComponent } from './components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component';
 import { ManageProductsBartenderComponent } from './components/bartender/views/manage-products-bartender/manage-products-bartender.component';
 import { ManageProductsCerveceroComponent } from './components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component';
+import { ManageUsersComponent } from './components/socio/views/manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { ManageProductsCerveceroComponent } from './components/cervecero/views/m
     ProductManagementComponent,
     ManageProductsCocineroComponent,
     ManageProductsBartenderComponent,
-    ManageProductsCerveceroComponent
+    ManageProductsCerveceroComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,

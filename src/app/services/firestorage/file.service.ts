@@ -4,15 +4,18 @@ import { reject, resolve } from 'q';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { Product } from 'src/app/models/product';
 import { ProductService } from '../firebase/product.service';
+import { User } from 'src/app/models/user';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class FileService {
 	products: AngularFirestoreCollection;
+	users: AngularFirestoreCollection;
 
 	constructor(private angularFirestore: AngularFirestore, private storage: AngularFireStorage) {
 		this.products = this.angularFirestore.collection<Product>('productos');
+		this.users = this.angularFirestore.collection<User>('usuarios');
 	}
 
 	public Upload(fileName: string, file: File): Promise<void> {
@@ -25,7 +28,7 @@ export class FileService {
 		return this.storage.ref(fileName).getDownloadURL().toPromise().then(URL => resolve(URL));
 	}
 
-	public subirFoto(foto: File, uid: string) {
+	public subirFotoProducto(foto: File, uid: string) {
 		const pathFoto = `imagenesProductos/${uid}`;
 		const tarea = this.storage.upload(pathFoto, foto);
 
@@ -33,12 +36,29 @@ export class FileService {
 			this.storage
 				.ref(pathFoto)
 				.getDownloadURL().subscribe(url => {
-					this.updatePhotoUrl(url, uid);
+					this.updatePhotoUrlProduct(url, uid);
 				});
 		});
 	}
 
-	public updatePhotoUrl(url: string, uid: string) {
-		this.products.doc(uid).update({ pathImg: url });
+	public updatePhotoUrlProduct(url: string, uid: string) {
+		this.products.doc(uid).update({ image: url });
+	}
+
+	public subirFotoUsuarios(foto: File, uid: string) {
+		const pathFoto = `imagenesUsuarios/${uid}`;
+		const tarea = this.storage.upload(pathFoto, foto);			
+
+		tarea.then(() => {
+			this.storage
+				.ref(pathFoto)
+				.getDownloadURL().subscribe(url => {
+					this.updatePhotoUrlUsers(url, uid);
+				});
+		});
+	}
+
+	public updatePhotoUrlUsers(url: string, uid: string) {
+		this.users.doc(uid).update({ image: url });
 	}
 }

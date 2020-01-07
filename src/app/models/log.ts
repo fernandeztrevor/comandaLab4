@@ -41,13 +41,16 @@ export enum Role {
 }
 
 export enum TipoMovimiento {
-    altaProducto = 'Alta',
-    habilitacionProducto = 'Habilitacion',
-    deshabilitacionProducto = 'Deshabilitacion',
-    modificacionProducto = 'Modificacion',
+    alta = 'Alta',
+    habilitacion = 'Habilitacion',
+    deshabilitacion = 'Deshabilitacion',
+    modificacion = 'Modificacion',
     ingreso = 'Ingreso',
     egreso = 'Egreso',
     entrega = 'Entrega',
+    suspension = 'Suspension',
+    reincorporacion = 'Reincorporacion',
+    borrado = 'Borrado',
     //noEspecifica = 'No Especifica'
 }
 

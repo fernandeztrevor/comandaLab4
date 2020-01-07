@@ -4,7 +4,7 @@ export class Product
 {
     public codeID: string;
     public name: string;
-    public pathImg: string;
+    public image: string;
     public price: number;
     public foodTypes: FoodType[];
     public state: FoodState;
@@ -16,7 +16,7 @@ export class Product
     {
         this.codeID = "";
         this.name = "";
-        this.pathImg = "";
+        this.image = "";
         this.price = -1;
         this.foodTypes = [];
         this.state = FoodState.pending;
@@ -27,12 +27,12 @@ export class Product
         return this.foodTypes.includes(type as FoodType);
     }
 
-    public static Create(code: string, name: string, pathImg: string, price: number, foodTypes: FoodType[], cook: Cook, description:string)
+    public static Create(code: string, name: string, image: string, price: number, foodTypes: FoodType[], cook: Cook, description:string)
     {
         let newProd = new Product();
         newProd.codeID = code;
         newProd.name = name;
-        newProd.pathImg = pathImg;
+        newProd.image = image;
         newProd.price = price;
         newProd.foodTypes = foodTypes;
         newProd.cook = cook;

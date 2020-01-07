@@ -7,6 +7,8 @@ export class User
     public email: string;
     public role: Role;
     public image: string;
+    public deleted: boolean;
+    public state: string;
 
     constructor() 
     {
@@ -14,20 +16,39 @@ export class User
         this.lastname = "";
         this.password = "";
         this.email = "";
-        this.role = Role.socio;
-        this.image = 'assets/img/default-profile.png';
+        this.role = null;
+        this.image = null;
+        this.deleted = true;
+        this.state = 'deshabilitado';
     }
 
     public static CreateUserWithParams(name: string, lastname: string,  email: string, password: string, role: Role): User
     {
         let user = new User();
-        user.name = name
+        user.name = name;
         user.lastname = lastname;
         user.password = password;
         user.email = email;
         user.role = role;
+        user.deleted = false;
+        user.state = 'habilitado';
         return user;
     }
+
+    public static CreateUserFromAdmin(name: string, lastname: string,  email: string, role: Role): User
+    {
+        let user = new User();
+        user.name = name;
+        user.lastname = lastname;
+        user.password = email;
+        user.email = email;
+        user.role = role;
+        user.deleted = false;
+        user.state = 'habilitado';
+        return user;
+    }
+
+    
 }
 
 export enum Role

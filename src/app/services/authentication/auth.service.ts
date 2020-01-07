@@ -21,12 +21,27 @@ export class AuthService {
 			this.afsAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
 				.then(userData => {
 					resolve(userData);
-					this.userService.Add(user);
+					//this.userService.Add(user);					
 					console.log('Register successful');
 				})
 				.catch(error => console.log(reject(error)))
 		});
 	}
+
+	public RegisterWithEmailAdmin(user: User) {
+
+				
+		this.afsAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+			.then(userData => {
+				
+				//this.userService.Add(user);					
+				console.log('Register successful');
+			})
+			.catch(error => console.log(reject(error)))
+		
+	}
+
+	
 
 	public LoginWithEmail(email: string, pwd: string) {
 		return new Promise((resolve, reject) => {

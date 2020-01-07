@@ -105,7 +105,7 @@ export class ProductManagementComponent implements OnInit {
         this.Cancel();
       }
       this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.altaProducto);
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.alta);
       })
 
     });;
@@ -164,13 +164,13 @@ export class ProductManagementComponent implements OnInit {
     if (state == "Pendiente") {
       this.productService.updateState(uid, "Deshabilitado");
       this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.deshabilitacionProducto);
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.deshabilitacion);
       })
     }
     if (state == "Deshabilitado") {
       this.productService.updateState(uid, "Pendiente");
       this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.habilitacionProducto);
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.habilitacion);
       })
     }
   }
@@ -205,7 +205,7 @@ export class ProductManagementComponent implements OnInit {
       this.haySeleccionado = false;
       this.file = null;
       this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.modificacionProducto);
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.modificacion);
       })
     });
   }
@@ -266,8 +266,6 @@ export class ProductManagementComponent implements OnInit {
       });
       //console.log(this.role);
     })
-
-
   }
 
   public Cancel(): void {
