@@ -51,6 +51,8 @@ import { NeatDatePipe } from './pipes/neat-date.pipe';
 import { IsProdDirective } from './directives/is-prod.directive';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { ManageProductsAdminComponent } from './components/socio/views/manage-products-admin/manage-products-admin.component';
+import { ProductManagementComponent } from './components/all/main/product-management/product-management.component';
+import { ManageProductsCocineroComponent } from './components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,9 @@ import { ManageProductsAdminComponent } from './components/socio/views/manage-pr
     SurveyCommentDirective,
     NeatDatePipe,
     IsProdDirective,
-    ManageProductsAdminComponent
+    ManageProductsAdminComponent,
+    ProductManagementComponent,
+    ManageProductsCocineroComponent
   ],
   imports: [
     BrowserModule,

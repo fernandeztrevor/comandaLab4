@@ -64,6 +64,7 @@ const routes: Routes = [
 		[
 			{path: '', component: HomeCerveceroComponent},
 			{path: 'profile', component: ProfileComponent},
+			{path: 'products', component: ManageProductsAdminComponent}
 		],
 	canActivate: [AuthGuard]},
 
@@ -72,6 +73,7 @@ const routes: Routes = [
 		[
 			{path: '', component: HomeCocineroComponent},
 			{path: 'profile', component: ProfileComponent},
+			{path: 'products', component: ManageProductsAdminComponent}
 		],
 	canActivate: [AuthGuard]},
 
@@ -80,6 +82,7 @@ const routes: Routes = [
 		[
 			{path: '', component: HomeBartenderComponent},
 			{path: 'profile', component: ProfileComponent},
+			{path: 'products', component: ManageProductsAdminComponent}
 		],
 	canActivate: [AuthGuard]},
 

@@ -1,0 +1,237 @@
+<div class="container">
+    <div class="row top-row page-title">
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6">
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#productModal">Agregar
+                Producto</button>
+        </div>
+        <div class="col-3">
+            <div class="btn-group full-width">
+                <button title="Todo" class="btn btn-outline-success" (click)="ClearFilters()"><i
+                        class="fas fa-asterisk"></i></button>
+                <button title="Comida" class="btn btn-outline-success" (click)="Filter('comida')"><i
+                        class="fas fa-utensils"></i></button>
+                <button title="Bebidas" class="btn btn-outline-success" (click)="Filter('bebida')"><i
+                        class="fas fa-wine-glass-alt"></i></button>
+                <button title="Postres" class="btn btn-outline-success" (click)="Filter('postre')"><i
+                        class="fas fa-ice-cream"></i></button>
+                <button title="Alcohol" class="btn btn-outline-success" (click)="Filter('alcohol')"><i
+                        class="fas fa-beer"></i></button>
+                <button title="Sin TACC" class="btn btn-outline-success" (click)="Filter('celiaco')"><i
+                        class="fas fa-seedling"></i></button>
+                <button title="Vegana" class="btn btn-outline-success" (click)="Filter('vegano')"><i
+                        class="fas fa-carrot"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Habilitar/Desabilitar</th>
+                    <th scope="col">Editar</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="products">
+                <tr class="product" *ngFor="let prod of showingProducts">
+                    <td><label>{{prod.name}}</label></td>
+                    <td>${{prod.price}}</td>
+                    <td><img [src]="prod.pathImg" width="30px" height="30px">
+                    </td>
+
+                    <td><button class="btn btn-outline-danger" *ngIf="prod.state != 'Deshabilitado'"
+                            (click)="changeState(prod.codeID, prod.state)">Deshabilitar</button>
+                        <button class="btn btn-outline-success" *ngIf="prod.state == 'Deshabilitado'"
+                            (click)="changeState(prod.codeID, prod.state)">Habilitar</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#productModal"
+                            (click)="editarProducto(prod)">Editar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+
+</div>
+
+<!-- Product modal -->
+<div class="modal fade" id="productModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8" *ngIf="!this.haySeleccionado">
+                            <h3 class="align-center">Agregar Producto</h3>
+                        </div>
+                        <div class="col-8" *ngIf="this.haySeleccionado">
+                            <h3 class="align-center">Editar Producto</h3>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+
+                    <hr class="mar-top-1">
+                    <form [formGroup]="productForm" (ngSubmit)="SendProduct()">
+
+
+                        <div class="row" *ngIf="this.haySeleccionado">
+                            <div class="col-5"></div>
+                            <div class="col-2">
+                                <img [src]="this.productoSeleccionado.pathImg" width="60px" height="60px">
+                            </div>
+                            <div class="col-5"></div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <label>Nombre:</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <input formControlName="productName"
+                                            class="form-control full-width align-center" type="text"
+                                            placeholder="Nombre del producto" required>
+                                    </div>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <label>Precio:</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <input formControlName="productPrice"
+                                            class="form-control full-width align-center" type="text"
+                                            placeholder="Precio del producto" required>
+                                    </div>
+                                </div>
+
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <label>Descripción:</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <input formControlName="productDescription"
+                                            class="form-control full-width align-center" type="text"
+                                            placeholder="Descripción del producto" required>
+                                    </div>
+                                </div>
+
+
+                                <div class="row middle-row">
+                                    <!-- <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border">Tipo de producto</legend> -->
+                                    <label class="mr-sm-2">Tipo de producto</label>
+
+                                    <div class="input-group mb-3 col-12">
+
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeComida"
+                                                formControlName="typeComida" value="comida">
+                                            <label class="custom-control-label" for="typeComida">Comida</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeBebida"
+                                                formControlName="typeBebida">
+                                            <label class="custom-control-label" for="typeBebida">Bebida</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeAlcohol"
+                                                formControlName="typeAlcohol">
+                                            <label class="custom-control-label" for="typeAlcohol">Alcohol</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typePostre"
+                                                formControlName="typePostre">
+                                            <label class="custom-control-label" for="typePostre">Postre</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeCeliaco"
+                                                formControlName="typeCeliaco">
+                                            <label class="custom-control-label" for="typeCeliaco">Celiaco</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeVegano"
+                                                formControlName="typeVegano">
+                                            <label class="custom-control-label" for="typeVegano">Vegano</label>
+                                        </div>
+
+                                    </div>
+                                    <!-- </fieldset> -->
+                                    <!-- <input type="button" (click)="traerFoodTypes()"> -->
+                                </div>
+
+                                <div class="row middle-row">
+                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
+                                        formControlName="productCook" *ngIf="this.role == 'socio'">
+                                        <!-- <option selected>Encargado</option> -->
+                                        <option value="cocinero">Cocinero</option>
+                                        <option value="cevecero">Cervecero</option>
+                                        <option value="bartender">Bartender</option>
+                                    </select>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <h4 *ngIf="this.role != 'socio'" >El producto será para un {{ this.role }}</h4>
+                                </div>
+
+                                <div class="row middle-row">
+
+                                    <div class="btn btn-primary btn-sm float-left">
+                                        <input type="file" (change)="onFileChanged($event)"
+                                            formControlName="productImage" name="productImage">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+
+
+
+                    </form>
+
+                    <hr class="mar-top-1">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <div class="btn-group full-width">
+                                <button class="btn btn-outline-danger" title="Cancelar" (click)="Cancel()"
+                                    data-dismiss="modal"><i class="fas fa-times"></i></button>
+
+                                <button class="btn btn-outline-success" *ngIf="!this.haySeleccionado"
+                                    title="Agregar producto" (click)="addProduct()" data-dismiss="modal"><i
+                                        class="fas fa-check"></i></button>
+
+                                <button class="btn btn-outline-success" *ngIf="this.haySeleccionado"
+                                    title="Actualizar producto" (click)="updateProduct()" data-dismiss="modal"><i
+                                        class="fas fa-check"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

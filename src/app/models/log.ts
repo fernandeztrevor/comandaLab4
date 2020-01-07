@@ -47,6 +47,7 @@ export enum TipoMovimiento {
     modificacionProducto = 'Modificacion',
     ingreso = 'Ingreso',
     egreso = 'Egreso',
+    entrega = 'Entrega',
     //noEspecifica = 'No Especifica'
 }
 
