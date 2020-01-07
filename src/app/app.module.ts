@@ -53,6 +53,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { ManageProductsAdminComponent } from './components/socio/views/manage-products-admin/manage-products-admin.component';
 import { ProductManagementComponent } from './components/all/main/product-management/product-management.component';
 import { ManageProductsCocineroComponent } from './components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component';
+import { ManageProductsBartenderComponent } from './components/bartender/views/manage-products-bartender/manage-products-bartender.component';
+import { ManageProductsCerveceroComponent } from './components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +98,9 @@ import { ManageProductsCocineroComponent } from './components/cocinero/views/man
     IsProdDirective,
     ManageProductsAdminComponent,
     ProductManagementComponent,
-    ManageProductsCocineroComponent
+    ManageProductsCocineroComponent,
+    ManageProductsBartenderComponent,
+    ManageProductsCerveceroComponent
   ],
   imports: [
     BrowserModule,
