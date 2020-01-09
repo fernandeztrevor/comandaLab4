@@ -21,7 +21,7 @@ export class MainSocioComponent implements OnInit, Sidebar {
 	constructor(private authService: AuthService) { }
 
 	ngOnInit() {
-		this.authService.GetCurrentUser().then(x => this.user = x);
+		this.authService.GetCurrentUser().then(x => this.user = x);		
 	}
 
 }

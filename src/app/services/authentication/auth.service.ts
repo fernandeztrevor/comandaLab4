@@ -8,11 +8,13 @@ import { take, map, tap } from 'rxjs/operators';
 import { reject } from 'q';
 import { LogService } from '../firebase/log.service';
 import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
+	
 
 	constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private userService: UserService, private logService: LogService) { }
 
@@ -27,18 +29,38 @@ export class AuthService {
 				.catch(error => console.log(reject(error)))
 		});
 	}
+	
 
-	public RegisterWithEmailAdmin(user: User) {
+	// public RegisterWithEmailAdmin(user: User, file: File) {
 
-				
-		this.afsAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
-			.then(userData => {
-				
-				//this.userService.Add(user);					
-				console.log('Register successful');
-			})
-			.catch(error => console.log(reject(error)))
+	// 	var logueado:User;
+
+	// 	this.GetCurrentUser().then(usr =>{
+	// 		logueado=user;
+
+	// 		this.afsAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+	// 		 .then(userData => {				
+	// 			 //this.userService.Add(user);
+	// 			this.LoginWithEmail(logueado.email, logueado.password);
+	// 		 	this.userService.persistirUsuario(user, file).then(value =>{
+	// 		 		if(value){
+	// 		 			//location.reload();
+	// 		 		}
+	// 		 	}).catch(error => console.log(reject(error)));					
+	// 		 	console.log('Register successful');
+	// 		 })
+	// 		 .catch(error => console.log(reject(error)))
+	// 	})
 		
+	// }
+
+	public RegisterWithEmailAdmin(mail: string) {
+		this.userService.GetUserByEmail(mail).then(user=>{
+			const pass = user.password;
+			this.RegisterWithEmail(user).then(()=>{
+				this.LoginWithEmail(mail,pass);
+			});
+		})
 	}
 
 	
@@ -122,4 +144,5 @@ export class AuthService {
 
 		});
 	}
+
 }

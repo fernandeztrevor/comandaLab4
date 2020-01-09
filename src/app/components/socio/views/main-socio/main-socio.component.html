@@ -4,6 +4,7 @@
         </div>
         <div class="col-6 profile">
             <img *ngIf="user" src="{{user.image}}" class="profile-pic" [ngClass]="open ? 'active': ''" (click)="toggleSidebar()">
+            
         </div>
     </div>
 </nav>

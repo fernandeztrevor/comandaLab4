@@ -147,17 +147,18 @@ export class UserService {
 	}
 
 	persistirUsuario(usuario: User, foto: File): Promise<boolean> {
+ 		let idGenerado: string;
 
         return this.usuarios.add(CommonHelper.ConvertToObject(usuario)).then(doc => {
 			this.usuarios.doc(doc.id).update({ id: doc.id });  
-			if (foto) {				
-                this.fileService.subirFotoUsuarios(foto, doc.id);
-            }     
-            
+			idGenerado = doc.id;			           
 		})		
 		.then(() => {
-            //location.reload();
-            return true;
+            if (foto) {				
+            return  this.fileService.subirFotoUsuarios(foto, idGenerado).then(()=>{
+					return true;
+				});
+            }             
         }).catch(() => {
             return false;
         });

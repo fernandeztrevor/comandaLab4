@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/firebase/user.service';
 
 @Component({
 	selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
 	public userOption: string = 'none';
 	public loading: boolean = false;
 
-	constructor(private authService: AuthService, private toastr: ToastrService) { }
+	constructor(private authService: AuthService, private toastr: ToastrService, private userService: UserService) { }
 
 	ngOnInit() {
 		this.loginForm = new FormGroup({
@@ -26,13 +27,28 @@ export class LoginComponent implements OnInit {
 
 	public onSubmit() {
 		this.loading = true;
-		this.authService.LoginWithEmail(this.loginForm.get('email').value, this.loginForm.get('password').value)
-			.then(() => {
-				this.toastr.success('¡Bienvenido!');
-			})
-			.catch(() => {
-				this.toastr.error('Usuario y/o contraseña incorrecto.');
-			});
+		const usr = this.loginForm.get('email').value;
+		const pass = this.loginForm.get('password').value;
+
+		this.userService.GetUserByEmail(usr)
+		.then(()=>{
+
+			console.log("esta en la base");
+
+			this.authService.LoginWithEmail(usr, pass)
+		 	.then(() => {
+		 		this.toastr.success('¡Bienvenido!');
+		 	})
+		 	.catch(() => {
+				 console.log("no estaba auth asi que lo creo");
+		 		this.authService.RegisterWithEmailAdmin(usr);
+			 })
+
+		})
+			 
+		.catch(()=>
+			this.toastr.error('Usuario y/o contraseña incorrecto.')
+		);
 	}
 
 	private BindUser(usuario: string) {

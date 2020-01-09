@@ -5,6 +5,7 @@ import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/fires
 import { Product } from 'src/app/models/product';
 import { ProductService } from '../firebase/product.service';
 import { User } from 'src/app/models/user';
+import { promise } from 'protractor';
 
 @Injectable({
 	providedIn: 'root'
@@ -45,20 +46,29 @@ export class FileService {
 		this.products.doc(uid).update({ image: url });
 	}
 
-	public subirFotoUsuarios(foto: File, uid: string) {
+	public subirFotoUsuarios(foto: File, uid: string): Promise<boolean> {
 		const pathFoto = `imagenesUsuarios/${uid}`;
-		const tarea = this.storage.upload(pathFoto, foto);			
+		const tarea = this.storage.upload(pathFoto, foto);
 
-		tarea.then(() => {
+		return tarea.then(() => {
 			this.storage
 				.ref(pathFoto)
 				.getDownloadURL().subscribe(url => {
-					this.updatePhotoUrlUsers(url, uid);
+					this.updatePhotoUrlUsers(url, uid).then(()=>{
+						location.reload();
+					});
 				});
-		});
+		}).then(() => {
+			//location.reload();
+			return true;
+		}).catch(() => {
+			return false;
+		});;
 	}
 
-	public updatePhotoUrlUsers(url: string, uid: string) {
-		this.users.doc(uid).update({ image: url });
+	public updatePhotoUrlUsers(url: string, uid: string): Promise<boolean>{
+		return this.users.doc(uid).update({ image: url }).then(()=>{
+			return true;
+		});
 	}
 }

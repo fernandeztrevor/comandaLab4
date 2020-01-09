@@ -69,16 +69,15 @@ export class ManageUsersComponent implements OnInit {
     // });
 
     
-      this.userService.persistirUsuario(user, this.file).then((value) => {
-        //this.authService.RegisterWithEmailAdmin(user);
-        if (value) {
-          this.Cancel();
-        }
-        this.authService.GetCurrentUser().then(user => {
-          this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta);
-        })
-      });;
-      
+       this.userService.persistirUsuario(user, this.file).then((value) => {
+         if (value) {
+           this.Cancel();
+         }
+         this.authService.GetCurrentUser().then(user => {
+           this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta);
+         })
+       });;
+
   }
 
   onFileChanged(event) {
@@ -89,7 +88,6 @@ export class ManageUsersComponent implements OnInit {
     this.userForm.reset();
     this.onReset.next();
   }
-
 
   public ClearFilters(): void {
 
