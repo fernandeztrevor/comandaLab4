@@ -129,7 +129,10 @@ export class UserService {
 				u.deleted = unUser.deleted;
 				u.password = unUser.password;
 
-                this.listado.push(u);
+				if(!u.deleted){
+					if(u.role != Role.cliente)
+					this.listado.push(u);
+				}                
             });
         });
 	}
@@ -164,6 +167,13 @@ export class UserService {
         });
     }
 	
+	updateState(uid: string, state: string) {
+        this.usuarios.doc(uid).update({ state: state });
+	}
+	
+	delete(uid:string){
+		this.usuarios.doc(uid).update({ deleted: true });
+	}
 
 
 	

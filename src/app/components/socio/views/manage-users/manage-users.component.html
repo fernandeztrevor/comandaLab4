@@ -15,22 +15,42 @@
         </div>
         <div class="col-3">
             <div class="btn-group full-width">
-                <button title="Todo" class="btn btn-outline-success" (click)="ClearFilters()"><i
+
+                <button title="Todos" class="btn btn-outline-success" (click)="ClearFilters()"><i
                         class="fas fa-asterisk"></i></button>
-                <button title="Comida" class="btn btn-outline-success" (click)="Filter('comida')"><i
-                        class="fas fa-utensils"></i></button>
-                <button title="Bebidas" class="btn btn-outline-success" (click)="Filter('bebida')"><i
+                <button title="Socios" class="btn btn-outline-success" (click)="Filter('socio')"><i
+                        class="fas fa-user-secret"></i></button>
+                <button title="Bartenders" class="btn btn-outline-success" (click)="Filter('bartender')"><i
                         class="fas fa-wine-glass-alt"></i></button>
-                <button title="Postres" class="btn btn-outline-success" (click)="Filter('postre')"><i
-                        class="fas fa-ice-cream"></i></button>
-                <button title="Alcohol" class="btn btn-outline-success" (click)="Filter('alcohol')"><i
+                <button title="Cerveceros" class="btn btn-outline-success" (click)="Filter('cervecero')"><i
                         class="fas fa-beer"></i></button>
-                <button title="Sin TACC" class="btn btn-outline-success" (click)="Filter('celiaco')"><i
-                        class="fas fa-seedling"></i></button>
-                <button title="Vegana" class="btn btn-outline-success" (click)="Filter('vegano')"><i
-                        class="fas fa-carrot"></i></button>
+                <button title="Cocineros" class="btn btn-outline-success" (click)="Filter('cocinero')"><i
+                        class="fas fa-fire"></i></button>
+                        <button title="Mozos" class="btn btn-outline-success" (click)="Filter('mozo')"><i
+                            class="fas fa-book"></i></button>
+                <button title="Suspendidos" class="btn btn-outline-success" (click)="Filter('true')"><i
+                        class="fas fa-ban"></i></button>
+                <button title="Habilitados" class="btn btn-outline-success" (click)="Filter('false')"><i
+                        class="fas fa-check"></i></button>
+
             </div>
         </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="form-group col-6 align-center full-width">
+            <input class="form-control" type="text" [(ngModel)]="busqueda" (input)="search()" placeholder="Ingrese aqui su busqueda...">
+        </div>
+        <div class="col-3 align-center">
+
+        </div>
+        
+        
     </div>
 
     <hr>
@@ -56,16 +76,15 @@
                     <td>{{user.lastname}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.role}}</td>
-                    <td><button class="btn btn-outline-danger" *ngIf="user.state != 'Deshabilitado'"
+                    <td><button class="btn btn-outline-danger" *ngIf="user.state != 'deshabilitado'"
                             (click)="changeState(user.id, user.state)">Suspender</button>
-                        <button class="btn btn-outline-success" *ngIf="user.state == 'Deshabilitado'"
+                        <button class="btn btn-outline-success" *ngIf="user.state == 'deshabilitado'"
                             (click)="changeState(user.id, user.state)">Reincorporar</button>
                     </td>
-                    <td><button class="btn btn-outline-danger"
-                            (click)="deleteUser(user.id)">Borrar</button>                        
+                    <td><button class="btn btn-outline-danger" (click)="deleteUser(user.id)">Borrar</button>
                     </td>
                     <td>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#productModal"
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#userModal"
                             (click)="editarUsuario(user)">Editar</button>
                     </td>
                 </tr>
@@ -73,7 +92,6 @@
         </table>
     </div>
     <hr>
-
 </div>
 
 <!-- Product modal -->
@@ -96,7 +114,6 @@
                     <hr class="mar-top-1">
                     <form [formGroup]="userForm" (ngSubmit)="SendUser()">
 
-
                         <div class="row" *ngIf="this.haySeleccionado">
                             <div class="col-5"></div>
                             <div class="col-2">
@@ -104,7 +121,6 @@
                             </div>
                             <div class="col-5"></div>
                         </div>
-
 
                         <div class="row">
                             <div class="col-1"></div>
@@ -115,9 +131,8 @@
                                         <label>Nombre:</label>
                                     </div>
                                     <div class="col-12">
-                                        <input formControlName="userName"
-                                            class="form-control full-width align-center" type="text"
-                                            placeholder="Nombre del usuario" required>
+                                        <input formControlName="userName" class="form-control full-width align-center"
+                                            type="text" placeholder="Nombre del usuario" required>
                                     </div>
                                 </div>
 
@@ -137,35 +152,44 @@
                                         <label>Email:</label>
                                     </div>
                                     <div class="col-12">
-                                        <input formControlName="userMail"
-                                            class="form-control full-width align-center" type="email"
-                                            placeholder="Email del usuario" required>
+                                        <input formControlName="userMail" class="form-control full-width align-center"
+                                            type="email" placeholder="Email del usuario" required>
                                     </div>
-                                </div>  
-
-                                
-
-                                <div class="row middle-row">
-                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
-                                        formControlName="userRole">
-                                        <option value="bartender">Bartender</option>
-                                        <option value="cocinero">Cocinero</option>
-                                        <option value="cevecero">Cervecero</option>
-                                        <option value="mozo">Mozo</option>
-                                        <option value="socio">Socio</option>
-                                        <option value="mozo">Mozo</option>
-                                        <option value="cliente">Cliente</option>                                        
-                                    </select>
                                 </div>
 
                                 <div class="row middle-row">
 
-                                    <div class="btn btn-primary btn-sm float-left">
-                                        <input type="file" (change)="onFileChanged($event)"
-                                            formControlName="userImage" name="userImage">
+                                    <div class="col-12">
+                                        <label>Rol:</label>
                                     </div>
+
+                                    <div class="col-12">
+                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
+                                            formControlName="userRole">
+                                            <option value="bartender">Bartender</option>
+                                            <option value="cocinero">Cocinero</option>
+                                            <option value="cervecero">Cervecero</option>
+                                            <option value="mozo">Mozo</option>
+                                            <option value="socio">Socio</option>
+                                            <option value="mozo">Mozo</option>
+                                            <option value="cliente">Cliente</option>
+                                        </select>
+                                    </div>
+
                                 </div>
 
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <label>Foto de perfil:</label>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="btn btn-primary btn-sm float-left">
+                                            <input type="file" (change)="onFileChanged($event)"
+                                                formControlName="userImage" name="userImage">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-1"></div>
                         </div>

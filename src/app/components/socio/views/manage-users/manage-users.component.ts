@@ -24,6 +24,7 @@ export class ManageUsersComponent implements OnInit {
   public usuarioSeleccionado: User;
   public haySeleccionado: boolean;
   public role: string;
+  public busqueda: string
 
   constructor(private userService: UserService, private fileService: FileService, private authService: AuthService, private movimientoService: LogService) { }
 
@@ -34,7 +35,6 @@ export class ManageUsersComponent implements OnInit {
       userMail: new FormControl(null, [Validators.required]),
       userRole: new FormControl(null),
       userImage: new FormControl('', [Validators.required])
-
     })
 
     this.users = new Array<User>();
@@ -68,21 +68,92 @@ export class ManageUsersComponent implements OnInit {
     //   });;
     // });
 
-    
-       this.userService.persistirUsuario(user, this.file).then((value) => {
-         if (value) {
-           this.Cancel();
-         }
-         this.authService.GetCurrentUser().then(user => {
-           this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta);
-         })
-       });;
+
+    this.userService.persistirUsuario(user, this.file).then((value) => {
+      if (value) {
+        this.Cancel();
+      }
+      this.authService.GetCurrentUser().then(user => {
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta);
+      })
+    });;
 
   }
 
   onFileChanged(event) {
     this.file = event.target.files[0];
   }
+
+
+
+  public changeState(uid: string, state: string) {
+
+    if (state == "habilitado") {
+      this.userService.updateState(uid, "deshabilitado");
+      this.authService.GetCurrentUser().then(user => {
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.deshabilitacion);
+      })
+    }
+    if (state == "deshabilitado") {
+      this.userService.updateState(uid, "habilitado");
+      this.authService.GetCurrentUser().then(user => {
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.habilitacion);
+      })
+    }
+  }
+
+  public deleteUser(uid: string) {
+    this.userService.delete(uid);
+    this.authService.GetCurrentUser().then(user => {
+      this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.borrado);
+    })
+  }
+
+  public editarUsuario(usuario: User) {
+
+    this.usuarioSeleccionado = usuario;
+    this.haySeleccionado = true;
+
+    this.userForm.controls['userName'].setValue(usuario.name);
+    this.userForm.controls['userLastname'].setValue(usuario.lastname);
+    this.userForm.controls['userMail'].setValue(usuario.email);
+    this.userForm.controls['userRole'].setValue(usuario.role);
+
+  }
+
+  // ##### FILTER FUNCTIONS #####
+
+  public Filter(type: string): void {
+    this.showingUsers = this.users.filter((element) => {
+
+      if (type == 'true' || type == 'false') {
+        if (type == 'true') {
+          if(element.state == 'deshabilitado')
+          return element;
+        } else {
+          if(element.state == 'habilitado')
+          return element;
+        }
+      } else {
+        if (element.role == type)
+          return element;
+      }
+    })
+  }
+
+  public search(){
+    this.showingUsers = this.users.filter(res=>{      
+      if(res.name.includes(this.busqueda) || res.lastname.includes(this.busqueda) || res.email.includes(this.busqueda)){
+        return res;
+      } ;
+    });
+  }
+
+  public filtro(valor: string){
+    console.log(valor);
+  }
+
+
 
   public Cancel(): void {
     this.userForm.reset();
