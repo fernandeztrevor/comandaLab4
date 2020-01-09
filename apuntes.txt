@@ -6,5 +6,11 @@ actualizar los datos de cuando se registra el usuario
 
 capturar error cuando verificar el email esta duplicado
 
-DAR DE ALTA EL USUARIO DESDE SOCIO SIN EL createUserWithEmailAndPassword
-authservice registerwithmail
+registerwithmail cambiar el addUser por el persistirUsuario
+
+
+
+
+
+SUGERENCIAS:
+- si el usuario esta en la base pero no en auth te podría redireccionar directamente a una pagina para cambiar la contraseña

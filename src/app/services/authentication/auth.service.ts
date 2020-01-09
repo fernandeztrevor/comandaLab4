@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 	providedIn: 'root'
 })
 export class AuthService {
-	
+
 
 	constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private userService: UserService, private logService: LogService) { }
 
@@ -23,13 +23,13 @@ export class AuthService {
 			this.afsAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
 				.then(userData => {
 					resolve(userData);
-					//this.userService.Add(user);					
+					this.userService.Add(user);
 					console.log('Register successful');
 				})
 				.catch(error => console.log(reject(error)))
 		});
 	}
-	
+
 
 	// public RegisterWithEmailAdmin(user: User, file: File) {
 
@@ -51,19 +51,19 @@ export class AuthService {
 	// 		 })
 	// 		 .catch(error => console.log(reject(error)))
 	// 	})
-		
+
 	// }
 
 	public RegisterWithEmailAdmin(mail: string) {
-		this.userService.GetUserByEmail(mail).then(user=>{
+		this.userService.GetUserByEmail(mail).then(user => {
 			const pass = user.password;
-			this.RegisterWithEmail(user).then(()=>{
-				this.LoginWithEmail(mail,pass);
+			this.RegisterWithEmail(user).then(() => {
+				this.LoginWithEmail(mail, pass);
 			});
 		})
 	}
 
-	
+
 
 	public LoginWithEmail(email: string, pwd: string) {
 		return new Promise((resolve, reject) => {
