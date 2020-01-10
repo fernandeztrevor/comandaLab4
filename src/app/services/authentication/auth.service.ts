@@ -73,7 +73,8 @@ export class AuthService {
 					console.log('Login success', userData);
 					this.RedirectForRole(email);
 					this.userService.GetUserByEmail(email).then(user => {
-						this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.ingreso);
+						let mensaje: string = `El usuario ${user.email} inició sesión`;
+						this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.ingreso, mensaje);
 					});
 				})
 				.catch(error => reject(error));
@@ -84,7 +85,8 @@ export class AuthService {
 
 		this.GetCurrentUser()
 			.then(user => {
-				this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.egreso)
+				let mensaje: string = `El usuario ${user.email} cerró sesión`;
+				this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.egreso, mensaje)
 					.then(() => {
 						this.afsAuth.auth.signOut();
 					});

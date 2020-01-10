@@ -29,6 +29,7 @@ import { ManageProductsCerveceroComponent } from './components/cervecero/views/m
 import { ManageProductsCocineroComponent } from './components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component';
 import { ManageProductsBartenderComponent } from './components/bartender/views/manage-products-bartender/manage-products-bartender.component';
 import { ManageUsersComponent } from './components/socio/views/manage-users/manage-users.component';
+import { ViewLogsComponent } from './components/socio/views/view-logs/view-logs.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
 			{path: 'surveys', component: SurveyTableComponent},
 			{path: 'products', component: ManageProductsAdminComponent},
 			{path: 'users', component: ManageUsersComponent},
+			{path: 'logs', component: ViewLogsComponent},
 		],
 	canActivate: [AuthGuard]},
 

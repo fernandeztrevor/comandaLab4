@@ -59,5 +59,6 @@ export enum Role
     cocinero = 'cocinero',
     cervecero = 'cervecero',
     bartender = 'bartender',
-    cliente = 'cliente'
+    cliente = 'cliente',
+    delivery = 'delivery'
 }

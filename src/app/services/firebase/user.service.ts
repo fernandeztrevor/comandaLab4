@@ -91,6 +91,16 @@ export class UserService {
 		})
 	}
 
+	public GetUserByID(id: string): Promise<User>
+	{		
+		let docRef = this.db.collection('usuarios', ref => ref.where('id', '==', id));
+		return docRef.get().toPromise().then(doc => {
+			let user = doc.docs[0].data() as User;
+			user.id = doc.docs[0].id;
+			return user;
+		})
+	}
+
 	// public ModifyProfileImage(email: string, image: string): Promise<void>
 	// {
 	// 	return this.GetUserByEmail(email).then(doc => {

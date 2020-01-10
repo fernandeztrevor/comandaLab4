@@ -7,6 +7,7 @@ export class Log {
     public target: TargetMovimiento;
     public tipo: TipoMovimiento;
     public fecha: number;
+    public observacion: string;
 
     constructor() {
         this.id = "";
@@ -15,15 +16,17 @@ export class Log {
         this.target = null;
         this.tipo = null;
         this.fecha = null;
+        this.observacion = "";
     }
 
-    public static CreateLogWithParams(usuario: string, role: Role, target: TargetMovimiento, tipo: TipoMovimiento): Log {
+    public static CreateLogWithParams(usuario: string, role: Role, target: TargetMovimiento, tipo: TipoMovimiento, observacion: string): Log {
         let movimiento = new Log();
         
         movimiento.usuario = usuario;
         movimiento.role = role;
         movimiento.target = target;
         movimiento.tipo = tipo;
+        movimiento.observacion = observacion;
         movimiento.fecha =  Date.now();
 
         return movimiento;
@@ -37,6 +40,7 @@ export enum Role {
     cervecero = 'cervecero',
     bartender = 'bartender',
     cliente = 'cliente',
+    delivery = 'delivery'
     //noEspecifica = 'No Especifica'
 }
 

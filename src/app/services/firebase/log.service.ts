@@ -37,6 +37,7 @@ export class LogService {
         m.usuario = unMov.usuario;
         m.tipo = unMov.tipo;
         m.fecha = unMov.fecha;
+        m.observacion = unMov.observacion;
 
         this.listado.push(m);
       });
@@ -66,9 +67,9 @@ export class LogService {
   //     });
   // }
 
-  persistirMovimiento(usuario: User, target: TargetMovimiento, tipo: TipoMovimiento): Promise<boolean> {
+  persistirMovimiento(usuario: User, target: TargetMovimiento, tipo: TipoMovimiento, observacion: string): Promise<boolean> {
 
-    let movimiento: Log = Log.CreateLogWithParams(usuario.email, usuario.role, target, tipo);
+    let movimiento: Log = Log.CreateLogWithParams(usuario.email, usuario.role, target, tipo, observacion);
 
     return this.movimientos.add(CommonHelper.ConvertToObject(movimiento)).then(doc => {
       this.movimientos.doc(doc.id).update({ id: doc.id });

@@ -50,7 +50,8 @@ export class SelectOrderComponent implements OnInit {
 		this.order.CompleteOrder();
 		this.orderService.Update(this.order).then(() => {
 			this.authService.GetCurrentUser().then(user =>{
-				this.movimientoService.persistirMovimiento(user, TargetMovimiento.pedido, TipoMovimiento.entrega);
+				let mensaje: string = `El usuario ${user.email} entregó un pedido ${this.order.codeID}`;
+				this.movimientoService.persistirMovimiento(user, TargetMovimiento.pedido, TipoMovimiento.entrega, mensaje);
 			  })
 			})
 			.then(() => {

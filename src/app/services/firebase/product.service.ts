@@ -144,6 +144,15 @@ export class ProductService {
 
     }
 
+    public GetProductByID(id: string): Promise<Product>
+	{		
+		let docRef = this.db.collection('productos', ref => ref.where('codeID', '==', id));
+		return docRef.get().toPromise().then(doc => {
+			let product = doc.docs[0].data() as Product;
+			product.codeID = doc.docs[0].id;
+			return product;
+		})
+	}
 
 
 }

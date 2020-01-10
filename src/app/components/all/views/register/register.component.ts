@@ -43,8 +43,9 @@ export class RegisterComponent implements OnInit {
 		);
     
 	this.authService.RegisterWithEmail(user)
-		.then(() => {		
-			this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta);			
+		.then(() => {	
+			let mensaje: string = `El usuario ${user.email} se dió de alta`;
+			this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta, mensaje);			
 			this.toastr.success('Te has registrado con éxito.');
 			this.router.navigate(['app/login']);
 		})

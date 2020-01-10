@@ -1,0 +1,223 @@
+<div class="container">
+    <div class="row top-row page-title">
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6">
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#logModal">Personalizar <i
+                    class="fas fa-cogs"></i></button>
+        </div>
+        <div class="col-3">
+            <!-- <div class="btn-group full-width">
+                <button title="Todos" class="btn btn-outline-success" (click)="ClearFilters()"><i
+                        class="fas fa-asterisk"></i></button>
+                <button title="Socios" class="btn btn-outline-success" (click)="Filter('socio')"><i
+                        class="fas fa-user-secret"></i></button>
+                <button title="Bartenders" class="btn btn-outline-success" (click)="Filter('bartender')"><i
+                        class="fas fa-wine-glass-alt"></i></button>
+                <button title="Cerveceros" class="btn btn-outline-success" (click)="Filter('cervecero')"><i
+                        class="fas fa-beer"></i></button>
+                <button title="Cocineros" class="btn btn-outline-success" (click)="Filter('cocinero')"><i
+                        class="fas fa-fire"></i></button>
+                        <button title="Mozos" class="btn btn-outline-success" (click)="Filter('mozo')"><i
+                            class="fas fa-book"></i></button>
+                <button title="Suspendidos" class="btn btn-outline-success" (click)="Filter('true')"><i
+                        class="fas fa-ban"></i></button>
+                <button title="Habilitados" class="btn btn-outline-success" (click)="Filter('false')"><i
+                        class="fas fa-check"></i></button>
+            </div> -->
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="form-group col-6 align-center full-width">
+            <input class="form-control" type="text" [(ngModel)]="busqueda" (input)="search()"
+                placeholder="Ingrese aqui su busqueda...">
+            <label *ngIf="busqueda || !this.todos">
+                <h4>Cantidad de coincidencias: {{this.coincidencias}}</h4>
+            </label>
+        </div>
+        <div class="col-3 align-center">
+
+
+
+        </div>
+
+
+    </div>
+
+    <hr>
+    <div class="table-responsive">
+        <!-- <table class="table table-hover"> -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Detalle</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="logs">
+                <tr class="log" *ngFor="let log of showingLogs | sortPipe:'usuario'">
+                    <td>{{log.usuario}}</td>
+                    <td>{{log.fecha | date: 'hh:mm dd-MM-yyyy'}}</td>
+                    <td>{{log.observacion}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+</div>
+
+<!-- Logs modal -->
+<div class="modal fade" id="logModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <h3 class="align-center">Personalizar Busqueda</h3>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+
+                    <hr class="mar-top-1">
+                    <form [formGroup]="logForm" (ngSubmit)="SendSettings()">
+
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+
+                                <div class="row middle-row">
+                                    <div class="col-12">
+                                        <label>Seleccione los sectores de los cuales desea ver el log:</label>
+                                    </div>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <div class="input-group mb-3 col-12">
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeTodos"
+                                                formControlName="typeTodos" [(ngModel)]="todos"
+                                                (change)="enableDisable()">
+                                            <label class="custom-control-label" for="typeTodos">Todos</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeCocinero"
+                                                formControlName="typeCocinero">
+                                            <label class="custom-control-label" for="typeCocinero">Cocinero</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeMozo"
+                                                formControlName="typeMozo">
+                                            <label class="custom-control-label" for="typeMozo">Mozo</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeSocio"
+                                                formControlName="typeSocio">
+                                            <label class="custom-control-label" for="typeSocio">Socio</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeCervecero"
+                                                formControlName="typeCervecero">
+                                            <label class="custom-control-label" for="typeCervecero">Cervecero</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeBartender"
+                                                formControlName="typeBartender">
+                                            <label class="custom-control-label" for="typeBartender">Bartender</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeDelivery"
+                                                formControlName="typeDelivery">
+                                            <label class="custom-control-label" for="typeDelivery">Delivery</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-4">
+                                            <input type="checkbox" class="custom-control-input" id="typeCliente"
+                                                formControlName="typeCliente">
+                                            <label class="custom-control-label" for="typeCliente">Cliente</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row middle-row">
+                                    <div class="col-6">
+                                        <div class="col-12">
+                                            <label>Desde fecha:</label>
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="date" name="fechaInicio" formControlName="fechaInicio">
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="col-12">
+                                            <label>Desde fecha:</label>
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="date" name="fechaFin" formControlName="fechaFin">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- <div class="row middle-row">
+
+                                    <div class="col-12">
+                                        <label>Rol:</label>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
+                                            formControlName="userRole">
+                                            <option value="bartender">Bartender</option>
+                                            <option value="cocinero">Cocinero</option>
+                                            <option value="cervecero">Cervecero</option>
+                                            <option value="mozo">Mozo</option>
+                                            <option value="socio">Socio</option>
+                                            <option value="mozo">Mozo</option>
+                                            <option value="cliente">Cliente</option>
+                                        </select>
+                                    </div>
+                                </div>                                 -->
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </form>
+
+                    <hr class="mar-top-1">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <div class="btn-group full-width">
+                                <button class="btn btn-outline-danger" title="Cancelar" (click)="Cancel()"
+                                    data-dismiss="modal"><i class="fas fa-times"></i></button>
+
+                                <button class="btn btn-outline-success" title="Filtrar tabla" (click)="search()"
+                                    data-dismiss="modal"><i class="fas fa-check"></i></button>
+
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

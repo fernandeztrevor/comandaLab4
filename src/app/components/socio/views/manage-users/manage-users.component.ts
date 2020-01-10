@@ -24,7 +24,7 @@ export class ManageUsersComponent implements OnInit {
   public usuarioSeleccionado: User;
   public haySeleccionado: boolean;
   public role: string;
-  public busqueda: string
+  public busqueda: string;
 
   constructor(private userService: UserService, private fileService: FileService, private authService: AuthService, private movimientoService: LogService) { }
 
@@ -73,8 +73,10 @@ export class ManageUsersComponent implements OnInit {
       if (value) {
         this.Cancel();
       }
-      this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta);
+      this.authService.GetCurrentUser().then(usr => {
+        let mensaje: string = `El usuario ${usr.email} dió de alta el usuario ${user.email}`;
+
+        this.movimientoService.persistirMovimiento(usr, TargetMovimiento.usuario, TipoMovimiento.alta, mensaje);
       })
     });;
 
@@ -88,25 +90,38 @@ export class ManageUsersComponent implements OnInit {
 
   public changeState(uid: string, state: string) {
 
-    if (state == "habilitado") {
-      this.userService.updateState(uid, "deshabilitado");
-      this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.deshabilitacion);
-      })
-    }
-    if (state == "deshabilitado") {
-      this.userService.updateState(uid, "habilitado");
-      this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.habilitacion);
-      })
-    }
+
+    this.userService.GetUserByID(uid).then(usuarioMod => {
+      if (state == "habilitado") {
+        this.userService.updateState(uid, "deshabilitado");
+        this.authService.GetCurrentUser().then(user => {
+
+          let mensaje = `El usuario ${user.email} cambio el estado a deshabilitado  del usuario ${usuarioMod.email}`;
+          this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.deshabilitacion, mensaje);
+        })
+      }
+      if (state == "deshabilitado") {
+        this.userService.updateState(uid, "habilitado");
+        this.authService.GetCurrentUser().then(user => {
+          let mensaje = `El usuario ${user.email} cambio el estado a habilitado  del usuario ${usuarioMod.email}`;
+          this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.habilitacion, mensaje);
+        })
+      }
+    });
+
+
   }
 
   public deleteUser(uid: string) {
-    this.userService.delete(uid);
-    this.authService.GetCurrentUser().then(user => {
-      this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.borrado);
-    })
+
+    this.userService.GetUserByID(uid).then(usuarioMod => {
+      this.userService.delete(uid);
+      this.authService.GetCurrentUser().then(user => {
+        let mensaje = `El usuario ${user.email} dio de baja al usuario ${usuarioMod.email}`;
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.borrado, mensaje);
+      });
+    });
+
   }
 
   public editarUsuario(usuario: User) {
@@ -128,11 +143,11 @@ export class ManageUsersComponent implements OnInit {
 
       if (type == 'true' || type == 'false') {
         if (type == 'true') {
-          if(element.state == 'deshabilitado')
-          return element;
+          if (element.state == 'deshabilitado')
+            return element;
         } else {
-          if(element.state == 'habilitado')
-          return element;
+          if (element.state == 'habilitado')
+            return element;
         }
       } else {
         if (element.role == type)
@@ -141,15 +156,15 @@ export class ManageUsersComponent implements OnInit {
     })
   }
 
-  public search(){
-    this.showingUsers = this.users.filter(res=>{      
-      if(res.name.includes(this.busqueda) || res.lastname.includes(this.busqueda) || res.email.includes(this.busqueda)){
+  public search() {
+    this.showingUsers = this.users.filter(res => {
+      if (res.name.includes(this.busqueda) || res.lastname.includes(this.busqueda) || res.email.includes(this.busqueda)) {
         return res;
-      } ;
+      };
     });
   }
 
-  public filtro(valor: string){
+  public filtro(valor: string) {
     console.log(valor);
   }
 

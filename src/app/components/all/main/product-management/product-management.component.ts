@@ -105,7 +105,8 @@ export class ProductManagementComponent implements OnInit {
         this.Cancel();
       }
       this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.alta);
+        let mensaje:string = `El usuario ${user.email} dió de alta el producto ${product.name}`;
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.alta, mensaje);
       })
 
     });;
@@ -160,19 +161,26 @@ export class ProductManagementComponent implements OnInit {
   }
 
   public changeState(uid: string, state: string) {
+    
+        this.productService.GetProductByID(uid).then(prod=>{
 
-    if (state == "Pendiente") {
-      this.productService.updateState(uid, "Deshabilitado");
-      this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.deshabilitacion);
-      })
-    }
-    if (state == "Deshabilitado") {
-      this.productService.updateState(uid, "Pendiente");
-      this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.habilitacion);
-      })
-    }
+          if (state == "Pendiente") {
+            this.productService.updateState(uid, "Deshabilitado");
+            this.authService.GetCurrentUser().then(user => {
+              let mensaje:string = `El usuario ${user.email} deshabilitó el producto ${prod.name}`;
+              this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.deshabilitacion, mensaje);
+            })
+          }
+          if (state == "Deshabilitado") {
+            this.productService.updateState(uid, "Pendiente");
+            this.authService.GetCurrentUser().then(user => {
+              let mensaje:string = `El usuario ${user.email} habilitó el producto ${prod.name}`;
+              this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.habilitacion, mensaje);
+            })
+          }
+        });
+
+    
   }
 
   public editarProducto(producto: Product) {
@@ -205,7 +213,8 @@ export class ProductManagementComponent implements OnInit {
       this.haySeleccionado = false;
       this.file = null;
       this.authService.GetCurrentUser().then(user => {
-        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.modificacion);
+        let mensaje:string = `El usuario ${user.email} modificó el producto ${this.productoSeleccionado.name}`;
+        this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.modificacion, mensaje);
       })
     });
   }

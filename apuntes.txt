@@ -1,4 +1,4 @@
-los productos que estan deshabilitados no se tienen que mostrar.
+los productos que estan deshabilitados no se tienen que mostrar en el menu de cliente.
 
 los usuarios que estan suspendidos no se pueden loguear(deleted true state desabilitado).
 
@@ -6,10 +6,7 @@ actualizar los datos de cuando se registra el usuario
 
 capturar error cuando verificar el email esta duplicado
 
-registerwithmail cambiar el addUser por el persistirUsuario
-
-
-
+ordenar las tablas con un pipe y ponerle un scroll
 
 
 SUGERENCIAS:
