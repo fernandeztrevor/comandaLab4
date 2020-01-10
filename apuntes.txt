@@ -9,5 +9,6 @@ capturar error cuando verificar el email esta duplicado
 ordenar las tablas con un pipe y ponerle un scroll
 
 
+
 SUGERENCIAS:
 - si el usuario esta en la base pero no en auth te podría redireccionar directamente a una pagina para cambiar la contraseña
