@@ -30,6 +30,8 @@ import { ManageProductsCocineroComponent } from './components/cocinero/views/man
 import { ManageProductsBartenderComponent } from './components/bartender/views/manage-products-bartender/manage-products-bartender.component';
 import { ManageUsersComponent } from './components/socio/views/manage-users/manage-users.component';
 import { ViewLogsComponent } from './components/socio/views/view-logs/view-logs.component';
+import { ViewOrdersStatsComponent } from './components/socio/views/view-orders-stats/view-orders-stats.component';
+import { ViewTablesStatsComponent } from './components/socio/views/view-tables-stats/view-tables-stats.component';
 
 
 const routes: Routes = [
@@ -54,6 +56,8 @@ const routes: Routes = [
 			{path: 'products', component: ManageProductsAdminComponent},
 			{path: 'users', component: ManageUsersComponent},
 			{path: 'logs', component: ViewLogsComponent},
+			{path: 'orderStats', component: ViewOrdersStatsComponent},
+			{path: 'tableStats', component: ViewTablesStatsComponent},
 		],
 	canActivate: [AuthGuard]},
 

@@ -58,6 +58,8 @@ import { ManageProductsCerveceroComponent } from './components/cervecero/views/m
 import { ManageUsersComponent } from './components/socio/views/manage-users/manage-users.component';
 import { ViewLogsComponent } from './components/socio/views/view-logs/view-logs.component';
 import { SortPipePipe } from './pipes/sort-pipe.pipe';
+import { ViewOrdersStatsComponent } from './components/socio/views/view-orders-stats/view-orders-stats.component';
+import { ViewTablesStatsComponent } from './components/socio/views/view-tables-stats/view-tables-stats.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,9 @@ import { SortPipePipe } from './pipes/sort-pipe.pipe';
     ManageProductsCerveceroComponent,
     ManageUsersComponent,
     ViewLogsComponent,
-    SortPipePipe
+    SortPipePipe,
+    ViewOrdersStatsComponent,
+    ViewTablesStatsComponent
   ],
   imports: [
     BrowserModule,
