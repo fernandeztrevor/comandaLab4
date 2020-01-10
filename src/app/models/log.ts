@@ -55,6 +55,8 @@ export enum TipoMovimiento {
     suspension = 'Suspension',
     reincorporacion = 'Reincorporacion',
     borrado = 'Borrado',
+    preparacion = 'En preparación',
+    finalizacion = "Finalizó"
     //noEspecifica = 'No Especifica'
 }
 

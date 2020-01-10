@@ -107,6 +107,12 @@
                     <hr>
                     <div class="row">
                         <div class="col-12">
+                            <button [disabled]="CanPayNow()" (click)="Cancel()" *ngIf="!notCancelled()"
+                                class="btn btn-danger full-width">Cancelar Pedido</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
                             <button [disabled]="!CanPayNow()" (click)="Pay()"
                                 class="btn btn-success full-width">Pagar</button>
                         </div>

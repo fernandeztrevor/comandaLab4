@@ -5,6 +5,8 @@ import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { OrderService } from 'src/app/services/firebase/order.service';
 import { ToastrService } from 'ngx-toastr';
+import { LogService } from 'src/app/services/firebase/log.service';
+import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 
 @Component({
 	selector: 'app-work-order',
@@ -20,7 +22,7 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 	public addedTime: number;
 	public remainingTime: number;
 
-	constructor(private authService: AuthService, private orderService: OrderService, private toastr: ToastrService) { }
+	constructor(private authService: AuthService, private orderService: OrderService, private toastr: ToastrService, private logService: LogService) { }
 
 	ngOnInit() {
 		this.authService.GetCurrentUser().then(user => this.me = user);
@@ -83,6 +85,8 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 		this.AssignToMe();
 		this.selectedItem.state = FoodState.preparing;
 		this.order.UpdateOrderState();
+		let mensaje: string = `El usuario ${this.me.email} (${this.me.role}) comenzó a preparar ${this.selectedItem.name} del pedido ${this.order.codeID}`;
+		this.logService.persistirMovimiento(this.me, TargetMovimiento.pedido, TipoMovimiento.preparacion, mensaje);
 		this.orderService.Update(this.order)
 			.then(() => {
 				this.toastr.success('El pedido se actualizó con éxito', 'Hecho!');
@@ -97,6 +101,8 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 		this.selectedItem.state = FoodState.finished;
 		this.order = Object.assign(new Order(), this.order);
 		this.order.UpdateOrderState();
+		let mensaje: string = `El usuario ${this.me.email} (${this.me.role})  terminó ${this.selectedItem.name} del pedido ${this.order.codeID}`;
+		this.logService.persistirMovimiento(this.me, TargetMovimiento.pedido, TipoMovimiento.finalizacion, mensaje);
 		this.orderService.Update(this.order)
 			.then(() => {
 				this.toastr.success('El pedido se actualizó con éxito', 'Hecho!');

@@ -67,6 +67,12 @@ export class SearchOrderComponent implements OnInit {
 			})
 	}
 
+	public Cancel(): void{
+		this.order.state = OrderState.cancelled;
+		this.orderService.ChangeStatus(OrderState.cancelled, this.order.codeID);
+
+	}
+
 	public IsServed(): boolean {
 		let served = false;
 		if (this.order.state == OrderState.served || this.order.state == OrderState.paidOut)
@@ -94,6 +100,15 @@ export class SearchOrderComponent implements OnInit {
 		let can = false;
 		if (this.order) {
 			if (this.order.state == OrderState.served)
+				can = true;
+		}
+		return can;
+	}
+
+	public notCancelled(): boolean{
+		let can = false;
+		if (this.order) {
+			if (this.order.state == OrderState.cancelled || this.order.state == OrderState.paidOut)
 				can = true;
 		}
 		return can;

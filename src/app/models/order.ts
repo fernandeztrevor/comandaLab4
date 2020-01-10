@@ -152,5 +152,6 @@ export enum OrderState
     cooking = 'Cocinándose',
     readyToServe = 'Listo para servir',
     served = 'Servido',
-    paidOut = 'Pagado'
+    paidOut = 'Pagado',
+    cancelled = 'Cancelado'
 }
