@@ -11,6 +11,7 @@ export class Product
     public cook: Cook;
     public worker: User;
     public description: string;
+    public demand: number;
 
     constructor()
     {
@@ -20,6 +21,7 @@ export class Product
         this.price = -1;
         this.foodTypes = [];
         this.state = FoodState.pending;
+        this.demand = 0;
     }
     
     public IsFoodType(type: string): boolean

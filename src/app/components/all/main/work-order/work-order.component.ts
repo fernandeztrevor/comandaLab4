@@ -28,10 +28,13 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 		this.authService.GetCurrentUser().then(user => this.me = user);
 
 		setInterval(() => {
-			if(this.order)
-			{
+			if (this.order) {
 				let now = new Date();
 				this.remainingTime = new Date(this.order.timeLeft).getTime() - now.getTime();
+				if (this.remainingTime < 0) {
+					this.order.delayed = this.remainingTime;
+					this.orderService.Update(this.order);
+				}
 			}
 		}, 10)
 	}
@@ -40,44 +43,37 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 		this.selectedItem = null;
 	}
 
-	public IsPending(): boolean
-	{
+	public IsPending(): boolean {
 		let is = false;
-		if(this.selectedItem.state == FoodState.pending)
+		if (this.selectedItem.state == FoodState.pending)
 			is = true;
 		return is;
 	}
 
-	public IsCooking(): boolean
-	{
+	public IsCooking(): boolean {
 		let is = false;
-		if(this.selectedItem.state == FoodState.preparing)
+		if (this.selectedItem.state == FoodState.preparing)
 			is = true;
 		return is;
 	}
 
-	public IsAvailableForMe(): boolean
-	{
+	public IsAvailableForMe(): boolean {
 		let available = false;
-		if(this.selectedItem)
-		{
+		if (this.selectedItem) {
 			let myRole: string = this.me.role;
-			if(this.selectedItem.cook == myRole as Cook && this.selectedItem.state != FoodState.finished)
-			{
+			if (this.selectedItem.cook == myRole as Cook && this.selectedItem.state != FoodState.finished) {
 				available = true;
 			}
 		}
 		return available;
 	}
 
-	public SelectItem(item: Product): void
-	{
+	public SelectItem(item: Product): void {
 		this.selectedItem = item;
 	}
 
-	public BeginCook(withTime: boolean): void
-	{
-		if(withTime)
+	public BeginCook(withTime: boolean): void {
+		if (withTime)
 			this.AddMoreTime(); // Add more time
 		else
 			this.order = Object.assign(new Order(), this.order);
@@ -96,8 +92,7 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 			});
 	}
 
-	public ReadyToServe(): void
-	{
+	public ReadyToServe(): void {
 		this.selectedItem.state = FoodState.finished;
 		this.order = Object.assign(new Order(), this.order);
 		this.order.UpdateOrderState();
@@ -112,13 +107,11 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 			});
 	}
 
-	private AssignToMe(): void
-	{
+	private AssignToMe(): void {
 		this.selectedItem.worker = this.me;
 	}
 
-	private AddMoreTime(): void 
-	{
+	private AddMoreTime(): void {
 		this.order = Object.assign(new Order(), this.order);
 		this.order.AddMinutes(this.addedTime);
 		this.addedTime = null;

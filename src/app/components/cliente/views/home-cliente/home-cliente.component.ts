@@ -37,8 +37,10 @@ export class HomeClienteComponent implements OnInit {
 	ngOnInit() 
 	{
 		this.InitializeOrder();
-		this.products = this.CreateTestProducts();
+		//this.products = this.CreateTestProducts();
 		//this.products = this.productService.listado;
+		this.products = new Array<Product>();
+    	this.products = this.productService.listado;
 		this.showingProducts = this.products;
 		this.authService.GetCurrentUser().then(userLogged => this.currentUser = userLogged);
 		this.SelectRandomWaiter().then(waiter => this.currentWorker = waiter);
@@ -63,31 +65,36 @@ export class HomeClienteComponent implements OnInit {
 		this.onReset.next();
 	}
 	
-	public MakeOrder(): void 
+	public MakeOrder(): void	
 	{
-		if(this.order.tableID == 'No hay')
-			this.toastr.error('No hay mesas disponibles. Vuelva más tarde.');
-		else
-		{
-			if(this.order.CheckOrder())
-			{
-				this.order.waiter = this.currentWorker;
-				this.order.client = this.currentUser;
-				this.tableService.UpdateStatus(this.order.tableID, TableState.waitingOrder);
-				//this.orderService.Add(this.order);
-				this.orderService.Update(this.order).then((value) => {
-					if(!value){
-						this.orderService.Add(this.order);
-					} 
-				});;
-				this.toastr.success("El pedido se ha realizado correctamente! Este es tu número de pedido: " + this.order.codeID);
-				this.hasOrder = true;
-			}
-			else
-				this.toastr.error('Hay algo erróneo con este pedido.');
+
+		this.orderService.GetTopBest();
+		// if(this.order.tableID == 'No hay')
+		// 	this.toastr.error('No hay mesas disponibles. Vuelva más tarde.');
+		// else
+		// {
+		// 	if(this.order.CheckOrder())
+		// 	{
+		// 		this.order.waiter = this.currentWorker;
+		// 		this.order.client = this.currentUser;
+		// 		this.tableService.UpdateStatus(this.order.tableID, TableState.waitingOrder);
+		// 		//this.orderService.Add(this.order);
+		// 		this.productService.sumarCantidades(this.order.items);
+		// 		this.orderService.Update(this.order).then((value) => {
+		// 			if(!value){
+		// 				this.orderService.Add(this.order);
+		// 			} 
+		// 		});;
+		// 		this.toastr.success("El pedido se ha realizado correctamente! Este es tu número de pedido: " + this.order.codeID);
+		// 		this.hasOrder = true;
+		// 	}
+		// 	else
+		// 		this.toastr.error('Hay algo erróneo con este pedido.');
 				
-		}
+		// }
 	}
+
+	
 
 	// ##### FILTER FUNCTIONS #####
 

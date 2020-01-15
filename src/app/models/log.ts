@@ -64,5 +64,6 @@ export enum TargetMovimiento {
     usuario = 'Usuario',
     producto = 'Producto',
     pedido = 'Pedido',
+    mesa = 'Mesa'
     //noEspecifica = 'No Especifica'
 }

@@ -62,10 +62,9 @@ export class ProductService {
     //     })
     // }
 
-    public GetAll(): any
-	{
-		return this.db.collection("productos");
-	}
+    public GetAll(): any {
+        return this.db.collection("productos");
+    }
 
     traerProductos(): Observable<any[]> {
         return this.productos.snapshotChanges().pipe(
@@ -94,7 +93,7 @@ export class ProductService {
                 p.foodTypes = unProd.foodTypes;
                 p.name = unProd.name;
                 p.image = unProd.image;
-                p.price = unProd.price;
+                p.price = parseInt(unProd.price);
                 p.state = unProd.state;
                 p.worker = unProd.worker;
 
@@ -125,14 +124,14 @@ export class ProductService {
         this.productos.doc(uid).update({ state: state });
     }
 
-    updateProd(producto: Product, foto: File): Promise<boolean>{
+    updateProd(producto: Product, foto: File): Promise<boolean> {
         return this.productos.doc(producto.codeID).update({
             name: producto.name,
             price: producto.price,
             foodTypes: producto.foodTypes,
             cook: producto.cook,
             description: producto.description
-        }).then(()=>{
+        }).then(() => {
             if (foto) {
                 this.fileService.subirFotoProducto(foto, producto.codeID);
             }
@@ -140,19 +139,42 @@ export class ProductService {
             return true;
         }).catch(() => {
             return false;
-        });        
+        });
 
     }
 
-    public GetProductByID(id: string): Promise<Product>
-	{		
-		let docRef = this.db.collection('productos', ref => ref.where('codeID', '==', id));
-		return docRef.get().toPromise().then(doc => {
-			let product = doc.docs[0].data() as Product;
-			product.codeID = doc.docs[0].id;
-			return product;
-		})
-	}
+    public GetProductByID(id: string): Promise<Product> {
+        let docRef = this.db.collection('productos', ref => ref.where('codeID', '==', id));
+        return docRef.get().toPromise().then(doc => {
+            let product = doc.docs[0].data() as Product;
+            product.codeID = doc.docs[0].id;
+            return product;
+        })
+    }
+
+    public sumarCantidades(array: Array<Product>) {
+        let nombres = new Array<string>();
+
+        array.forEach(elemento => {
+            
+        });
+
+        
+
+        const cantidadNombres = nombres.reduce((contadorNombre, nombre) => {
+            contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
+            return contadorNombre;
+        }, {});       
+
+
+        console.log(cantidadNombres);
+    }
+
+
+    
+    
+
+    
 
 
 }

@@ -1,0 +1,214 @@
+<div class="container">
+    <div class="row top-row page-title">
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6">
+
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6 align-center">
+
+        </div>
+        <div class="col-3 align-center">
+
+        </div>
+    </div>
+
+    <hr>
+
+
+
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6 align-center">
+            <h2>Top 3 mas vendidos</h2>
+        </div>
+        <div class="col-3 align-center">
+
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="card col-3 align-center">
+            <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                    of the
+                    card's
+                    content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+        <div class="card col-3 align-center">
+            <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                    of the
+                    card's
+                    content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+        <div class="card col-3 align-center">
+            <img src="../../../../../assets/img/tercero-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                    of the
+                    card's
+                    content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6 align-center">
+            <h2>Top 3 menos vendidos</h2>
+        </div>
+        <div class="col-3 align-center">
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="card col-3 align-center">
+            <img src="../../../../../assets/img/mal amarillo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                    of the
+                    card's
+                    content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <!-- <div class=" col-1 align-center"></div> -->
+
+        <div class="card col-3 align-center">
+            <img src="../../../../../assets/img/mal naranja.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                    of the
+                    card's
+                    content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <!-- <div class=" col-1 align-center"></div> -->
+
+        <div class="card col-3 align-center">
+            <img src="../../../../../assets/img/mal rojo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                    of the
+                    card's
+                    content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6 align-center">
+            <h2>Pedidos Cancelados</h2>
+        </div>
+        <div class="col-3 align-center">
+
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Codigo de pedido</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="order" *ngFor="let order of cancelledOrders  | async">
+                    <td><label>{{order.codeID}}</label></td>
+                    <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>  
+                    <td>{{order.state}}</td>                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6 align-center">
+            <h2>Pedidos no entregados en tiempo estipulado</h2>
+        </div>
+        <div class="col-3 align-center">
+
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Codigo de pedido</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Demora</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="order" *ngFor="let order of delayedOrders  | async">
+                    <td><label>{{order.codeID}}</label></td>
+                    <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>  
+                    <td>{{order.delayed | date:'hh:mm'}}</td>                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+
+
+
+
+
+
+    </div>

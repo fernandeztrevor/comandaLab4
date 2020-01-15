@@ -15,6 +15,7 @@ export class Order
     public timeLeft: string;
     public timestamp: number;
     public completed: boolean;
+    public delayed: number;
 
     constructor()
     {
@@ -26,6 +27,7 @@ export class Order
         this.timeLeft = undefined;
         this.timestamp = Date.now();
         this.completed = false;
+        this.delayed = null;
 
     }
 

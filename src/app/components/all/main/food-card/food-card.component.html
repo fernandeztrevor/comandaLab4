@@ -19,10 +19,10 @@
 </div> -->
 
 
-<div *ngIf="product" class="card outside-shadow">
+<div *ngIf="product.state != 'Deshabilitado'" class="card outside-shadow">
 <div class="card align-center">
     <div class="align-center">
-        <img src="{{product.pathImg}}">
+        <img src="{{product.image}}">
     </div>
     <div class="card-body">
       <h5 class="card-title">{{product.name}}</h5>

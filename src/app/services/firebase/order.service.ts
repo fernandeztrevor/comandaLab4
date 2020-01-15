@@ -49,9 +49,6 @@ export class OrderService {
 		// It's not order by time yet. It requires to create an index.
 		//return this.db.collection("orders", ref => ref.where('waiter.email', '==', email).orderBy('timestamp', 'desc'));
 		return this.db.collection("pedidos", ref => ref.where('client.email', '==', email));
-		
-		
-
 	}
 
 	public GetAllByCook(cook: Cook): Observable<Order[]> {
@@ -121,5 +118,66 @@ export class OrderService {
 			})
 		});
 	}
+
+	public GetAllCancelled() {
+		return this.db.collection("pedidos").valueChanges()
+			.pipe(
+				map(orders => {
+					return orders.filter(order => {
+						order = Object.assign(new Order(), order);
+						if (order['state'] == "Cancelado")
+							return order;
+					});
+				})
+			);
+	}
+
+	public GetAllDelayed() {
+		return this.db.collection("pedidos").valueChanges()
+			.pipe(
+				map(orders => {
+					return orders.filter(order => {
+						order = Object.assign(new Order(), order);
+						if (order['delayed'] < 0) {
+							return order;
+						}
+
+					});
+				})
+			);
+	};
+
+	public GetAll() {
+		return this.db.collection("pedidos");
+	}
+
+	public GetTopBest() {
+		let listado = new Array<any>();
+
+		this.GetAllCompletedOrders_InArray().then(orders => {
+			orders.forEach(order => {
+				 order.items.forEach(element => {
+				 	listado.push(element.name);
+				 });
+			})
+		}).then(() => {
+
+			let cantidadNombres = new Array<any>() ;
+
+			cantidadNombres = listado.reduce((contadorNombre, nombre) => {
+				contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
+				return contadorNombre;
+			}, {});
+
+			//console.log(cantidadNombres);
+			
+			
+			console.log(cantidadNombres);
+
+		})
+	}
+
+
+
 
 }

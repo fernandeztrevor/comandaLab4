@@ -24,8 +24,7 @@ export class OrderListComponent implements OnInit {
 	constructor(private orderService: OrderService, private authService: AuthService) { }
 
 	ngOnInit() {
-		switch(this.role)
-		{
+		switch (this.role) {
 			case Role.mozo:
 				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
 					this.orders = this.orderService.GetAllByWaiterOrderByTime(this.me.email).valueChanges();
@@ -39,11 +38,11 @@ export class OrderListComponent implements OnInit {
 				break;
 			case Role.socio:
 				this.orders = this.orderService.GetAllOrderByTime().valueChanges();
-				
+
 				break;
 			case Role.cliente:
 
-			const terminado ='Terminado';
+				const terminado = 'Terminado';
 
 				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
 					this.orders = this.orderService.GetAllByWaiterOrderByTime2(this.me.email).valueChanges().pipe(
@@ -60,22 +59,16 @@ export class OrderListComponent implements OnInit {
 									return order;
 							});
 						})
-					);				
+					);
 
 				});
 		}
 	}
 
-	public SelectOrder(order: Order): void
-	{
+	public SelectOrder(order: Order): void {
 		this.orderSelected.emit(order);
 	}
 
-	public filtro(){
-		
 
-
-
-	}
 
 }
