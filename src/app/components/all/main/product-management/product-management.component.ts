@@ -32,8 +32,6 @@ export class ProductManagementComponent implements OnInit {
 
   ngOnInit() {
 
-
-
     this.productForm = new FormGroup({
       productName: new FormControl(null, [Validators.required]),
       productPrice: new FormControl(null, [Validators.required]),

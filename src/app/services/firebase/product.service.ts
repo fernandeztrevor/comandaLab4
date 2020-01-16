@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Product, FoodType, Cook } from 'src/app/models/product';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, toArray } from 'rxjs/operators';
 //import { getLocaleFirstDayOfWeek } from '@angular/common';
 //import { runInThisContext } from 'vm';
 import { FileService } from '../firestorage/file.service';
@@ -19,6 +19,8 @@ export class ProductService {
     //public listado: Array<Product>;
     public listado = new Array<Product>();
     public url: string;
+    public primerosTres = new Array<any>();
+    public ultimosTres = new Array<any>();
 
     constructor(private db: AngularFirestore, private afsFunc: AngularFireFunctions, private fileService: FileService) {
         this.productos = this.db.collection<Product>('productos');
@@ -151,30 +153,5 @@ export class ProductService {
             return product;
         })
     }
-
-    public sumarCantidades(array: Array<Product>) {
-        let nombres = new Array<string>();
-
-        array.forEach(elemento => {
-            
-        });
-
-        
-
-        const cantidadNombres = nombres.reduce((contadorNombre, nombre) => {
-            contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
-            return contadorNombre;
-        }, {});       
-
-
-        console.log(cantidadNombres);
-    }
-
-
-    
-    
-
-    
-
 
 }

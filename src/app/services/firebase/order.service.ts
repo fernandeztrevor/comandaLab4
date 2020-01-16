@@ -12,7 +12,16 @@ import { reject } from 'q';
 })
 export class OrderService {
 
-	constructor(private db: AngularFirestore) { }
+	
+    public primerosTres = new Array<any>();
+	public ultimosTres = new Array<any>();
+	public listado = new Array<Order>();
+	public ordenes: AngularFirestoreCollection;
+
+	constructor(private db: AngularFirestore) {
+		this.ordenes = this.db.collection<Order>('pedidos');
+		this.traerOrdenesArray();
+	 }
 
 	public Add(order: Order): void {
 		this.db.collection("pedidos").add(CommonHelper.ConvertToObject(order));
@@ -141,7 +150,6 @@ export class OrderService {
 						if (order['delayed'] < 0) {
 							return order;
 						}
-
 					});
 				})
 			);
@@ -151,17 +159,16 @@ export class OrderService {
 		return this.db.collection("pedidos");
 	}
 
-	public GetTopBest() {
+	public GetTopBest(): Promise<boolean> {
 		let listado = new Array<any>();
 
-		this.GetAllCompletedOrders_InArray().then(orders => {
+		 return this.GetAllCompletedOrders_InArray().then(orders => {
 			orders.forEach(order => {
 				 order.items.forEach(element => {
 				 	listado.push(element.name);
 				 });
 			})
 		}).then(() => {
-
 			let cantidadNombres = new Array<any>() ;
 
 			cantidadNombres = listado.reduce((contadorNombre, nombre) => {
@@ -169,12 +176,34 @@ export class OrderService {
 				return contadorNombre;
 			}, {});
 
-			//console.log(cantidadNombres);
+			var result = Object.keys(cantidadNombres).map(function(key) {
+				return [String(key), cantidadNombres[key]];
+			  });
+			  const cantidad = result.length;
+			  console.log(cantidad);
+			  this.primerosTres.push(result[0], result[1], result[2]);
+			  this.ultimosTres.push(result[cantidad-3], result[cantidad-2], result[cantidad-1]);
+		}).then(()=>{
+			return true;
+		}			
+		).catch(()=>{
+			return false;
+		}
 			
-			
-			console.log(cantidadNombres);
+		)
+	}
 
-		})
+	public traerOrdenesArray() {
+		this.db.collection("pedidos").get().toPromise()
+			.then(doc => {
+
+				let orders: Order[] = [];
+				doc.docs.forEach(el => {
+					orders.push(el.data() as Order);
+				});
+				
+				return orders;
+			})
 	}
 
 
