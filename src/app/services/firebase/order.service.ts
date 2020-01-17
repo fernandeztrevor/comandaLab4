@@ -159,41 +159,41 @@ export class OrderService {
 		return this.db.collection("pedidos");
 	}
 
-	public GetTopBest(fechaInicio: number, fechaFin: number): Promise<boolean> {
-		let listado = new Array<any>();
+	// public GetTopBest(fechaInicio: number, fechaFin: number): Promise<boolean> {
+	// 	let listado = new Array<any>();
 
-		return this.GetAllCompletedOrders_InArray().then(orders => {
-			orders.forEach(order => {	
-				if(order.timestamp > fechaInicio && order.timestamp < fechaFin)	{
-					order.items.forEach(element => {
-						listado.push(element.name);
-					});
-				}				
-			})
-		}).then(() => {
-			let cantidadNombres = new Array<any>();
+	// 	return this.GetAllCompletedOrders_InArray().then(orders => {
+	// 		orders.forEach(order => {	
+	// 			if(order.timestamp > fechaInicio && order.timestamp < fechaFin)	{
+	// 				order.items.forEach(element => {
+	// 					listado.push(element.name);
+	// 				});
+	// 			}				
+	// 		})
+	// 	}).then(() => {
+	// 		let cantidadNombres = new Array<any>();
 
-			cantidadNombres = listado.reduce((contadorNombre, nombre) => {
-				contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
-				return contadorNombre;
-			}, {});
+	// 		cantidadNombres = listado.reduce((contadorNombre, nombre) => {
+	// 			contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
+	// 			return contadorNombre;
+	// 		}, {});
 
-			var result = Object.keys(cantidadNombres).map(function (key) {
-				return [String(key), cantidadNombres[key]];
-			});
-			const cantidad = result.length;
-			console.log(cantidad);
-			this.primerosTres.push(result[0], result[1], result[2]);
-			this.ultimosTres.push(result[cantidad - 3], result[cantidad - 2], result[cantidad - 1]);
-		}).then(() => {
-			return true;
-		}
-		).catch(() => {
-			return false;
-		}
+	// 		var result = Object.keys(cantidadNombres).map(function (key) {
+	// 			return [String(key), cantidadNombres[key]];
+	// 		});
+	// 		const cantidad = result.length;
+	// 		console.log(cantidad);
+	// 		this.primerosTres.push(result[0], result[1], result[2]);
+	// 		this.ultimosTres.push(result[cantidad - 3], result[cantidad - 2], result[cantidad - 1]);
+	// 	}).then(() => {
+	// 		return true;
+	// 	}
+	// 	).catch(() => {
+	// 		return false;
+	// 	}
 
-		)
-	}
+	// 	)
+	// }
 
 	public traerOrdenesArray() {
 		this.db.collection("pedidos").get().toPromise()

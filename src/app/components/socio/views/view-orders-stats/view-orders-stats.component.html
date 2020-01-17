@@ -1,4 +1,4 @@
-<div class="align-center mar-top-1" *ngIf="!unaVariable" >
+<div class="align-center mar-top-1" *ngIf="this.topBest == null && this.topWorst == null">
     <div class="row top-row page-title">
         <div class="col-3"></div>
         <div class="col-6"></div>
@@ -20,61 +20,43 @@
     <hr>
     <app-spinner></app-spinner>
 </div>
-<div class="container" >
-    <div class="row top-row page-title">
+<div class="container" *ngIf="this.cancelledOrders != null">
+    <div class="row" *ngIf="this.topBest != null && this.topWorst != null">
         <div class="col-3"></div>
         <div class="col-6"></div>
         <div class="col-3"></div>
-    </div>
-    <hr>
-    <div class="row top-row page-title">
+        <hr>
         <div class="col-3"></div>
         <div class="col-6"></div>
         <div class="col-3"></div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-3 align-center">
-
+        <hr>
+        <div class="col-3">
         </div>
         <div class="col-6">
-            <button class="btn btn-success full-width" data-toggle="modal" data-target="#settingsModal">Personalizar <i
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#settingsModal">Personalizar<i
                     class="fas fa-cogs"></i></button>
         </div>
         <div class="col-3">
         </div>
-    </div>
 
-    <hr>
-
-    <div class="row">
-        <div class="col-3 align-center">
-
-        </div>
-        <div class="col-6 align-center">
-
-        </div>
-        <div class="col-3 align-center">
-
+        <div class="row">
+            <div class="col-3 align-center">
+            </div>
+            <div class="col-6 align-center">
+            </div>
+            <div class="col-3 align-center">
+            </div>
         </div>
     </div>
-
     <hr>
-
-
-
-    <div class="row">
+    <div class="row" *ngIf="this.topBest">
         <div class="col-3 align-center">
-
         </div>
         <div class="col-6 align-center">
             <h2>Top 3 mas vendidos</h2>
         </div>
         <div class="col-3 align-center">
-
         </div>
-    </div>
-    <div class="row" *ngIf="this.topBest">
 
         <div class="card col-3 align-center" *ngIf="this.topBest[0] != null">
             <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
@@ -103,23 +85,16 @@
             </div>
         </div>
 
-
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="this.topWorst">
         <div class="col-3 align-center">
-
         </div>
         <div class="col-6 align-center">
             <h2>Top 3 menos vendidos</h2>
         </div>
         <div class="col-3 align-center">
-
         </div>
-    </div>
-
-    <div class="row" *ngIf="this.topWorst">
-
         <div class="card col-3 align-center" *ngIf="this.topWorst[0] != null">
             <img src="../../../../../assets/img/mal amarillo.png" class="card-img-top">
             <div class="card-body">
@@ -130,8 +105,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class=" col-1 align-center"></div> -->
-
         <div class="card col-3 align-center" *ngIf="this.topWorst[1] != null">
             <img src="../../../../../assets/img/mal naranja.png" class="card-img-top">
             <div class="card-body">
@@ -141,8 +114,6 @@
                     {{this.topWorst[1][1]}} ventas </p>
             </div>
         </div>
-        <!-- <div class=" col-1 align-center"></div> -->
-
         <div class="card col-3 align-center" *ngIf="this.topWorst[2] != null">
             <img src="../../../../../assets/img/mal rojo.png" class="card-img-top">
             <div class="card-body">
@@ -151,9 +122,7 @@
                     {{this.topWorst[2][1]}} ventas </p>
             </div>
         </div>
-
     </div>
-
 
     <div class="row">
         <div class="col-3 align-center">
@@ -165,57 +134,57 @@
         <div class="col-3 align-center">
 
         </div>
-    </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Codigo de pedido</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="order" *ngFor="let order of cancelledOrders | async">
-                    <td><label>{{order.codeID}}</label></td>
-                    <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>
-                    <td>{{order.state}}</td>
-                </tr>                
-            </tbody>
-        </table>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo de pedido</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="order" *ngFor="let order of cancelledOrders | async">
+                        <td><label>{{order.codeID}}</label></td>
+                        <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>
+                        <td>{{order.state}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <hr>
 
     <div class="row">
         <div class="col-3 align-center">
-
         </div>
         <div class="col-6 align-center">
             <h2>Pedidos no entregados en tiempo estipulado</h2>
         </div>
         <div class="col-3 align-center">
-
         </div>
-    </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Codigo de pedido</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Demora</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="order" *ngFor="let order of delayedOrders | async">
-                    <td><label>{{order.codeID}}</label></td>
-                    <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>
-                    <td>{{order.delayed | date:'hh:mm'}}</td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo de pedido</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Demora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="order" *ngFor="let order of delayedOrders | async">
+                        <td><label>{{order.codeID}}</label></td>
+                        <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>
+                        <td>{{order.delayed | date:'hh:mm'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <hr>
 </div>
@@ -247,7 +216,8 @@
                                             <label>Desde fecha:</label>
                                         </div>
                                         <div class="col-12">
-                                            <input type="date" name="fechaInicio" formControlName="fechaInicio" (change)="setDate()">
+                                            <input type="date" name="fechaInicio" formControlName="fechaInicio"
+                                                (change)="setDate()">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -255,7 +225,8 @@
                                             <label>Hasta fecha:</label>
                                         </div>
                                         <div class="col-12">
-                                            <input type="date" name="fechaFin" formControlName="fechaFin" (change)="setDate(false)">
+                                            <input type="date" name="fechaFin" formControlName="fechaFin"
+                                                (change)="setDate(false)">
                                         </div>
                                     </div>
 

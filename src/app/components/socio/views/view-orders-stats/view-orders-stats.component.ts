@@ -13,16 +13,15 @@ import { Subject, Observable, observable } from 'rxjs';
   styleUrls: ['./view-orders-stats.component.scss']
 })
 export class ViewOrdersStatsComponent implements OnInit {
-
-  //public orders: Order[];
+  
   public orders: any;
   public showingOrders: Observable<any[]>;
-  public cancelledOrders: any;
-  public delayedOrders: any;
+  public cancelledOrders: any = null;
+  public delayedOrders: any = null;
   public topBest: any = null;
   public topWorst: any = null;
-  public me: User;
-  public unaVariable: boolean = false;
+  public me: User;  
+  public mostrar=false;
 
   public lista: any[];
 
@@ -32,24 +31,20 @@ export class ViewOrdersStatsComponent implements OnInit {
   @Input() fechaFin: number;
 
 
-  constructor(private orderService: OrderService, private authService: AuthService) { }
+  constructor(private orderService: OrderService) { }
 
   ngOnInit() {
-    console.log(this.unaVariable);
     this.settingsForm = new FormGroup({
       fechaInicio: new FormControl(null),
       fechaFin: new FormControl(null),
     });
     this.orders = this.orderService.GetAll();
-
     this.ClearFilters();
   }
 
 
   public ClearFilters(): void {
     this.search();
-    //this.getCancelled();
-    //this.getDelayed();
   }
 
   public Cancel(): void {
@@ -83,16 +78,13 @@ export class ViewOrdersStatsComponent implements OnInit {
           }
         });
       })
-    )
+    );
     this.getDelayed();
     this.getCancelled();
     this.getTop();
-    this.unaVariable = true;
   }
 
-  public getCancelled() {
-
-    
+  public getCancelled() {    
     this.cancelledOrders = this.showingOrders.pipe(
       map(orders => {
         return orders.filter(order => {
@@ -102,7 +94,7 @@ export class ViewOrdersStatsComponent implements OnInit {
           }
         });
       })
-    )
+    );
   }
 
   public getDelayed() {
@@ -116,7 +108,7 @@ export class ViewOrdersStatsComponent implements OnInit {
           }
         });
       })
-    )
+    );
   }
 
   public setDate() {
