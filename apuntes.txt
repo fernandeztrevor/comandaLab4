@@ -11,6 +11,8 @@ muestra mal la demora en la tabla
 primero hay que actualizar los productos y como los pide el usuario, despues seguir con pructservice sumarcantidades(fletarlo)
 
 
+no muestra nada por el ngif!!
+
 
 
 

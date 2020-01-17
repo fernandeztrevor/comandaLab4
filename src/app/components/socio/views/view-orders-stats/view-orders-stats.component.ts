@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { User } from 'src/app/models/user';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable, observable } from 'rxjs';
 
 @Component({
   selector: 'app-view-orders-stats',
@@ -16,12 +16,15 @@ export class ViewOrdersStatsComponent implements OnInit {
 
   //public orders: Order[];
   public orders: any;
-  public showingOrders: any;
+  public showingOrders: Observable<any[]>;
   public cancelledOrders: any;
   public delayedOrders: any;
   public topBest: any = null;
   public topWorst: any = null;
   public me: User;
+  public unaVariable: boolean = false;
+
+  public lista: any[];
 
   public settingsForm: FormGroup;
   public onReset: Subject<void> = new Subject<void>();
@@ -32,38 +35,21 @@ export class ViewOrdersStatsComponent implements OnInit {
   constructor(private orderService: OrderService, private authService: AuthService) { }
 
   ngOnInit() {
-
+    console.log(this.unaVariable);
     this.settingsForm = new FormGroup({
       fechaInicio: new FormControl(null),
       fechaFin: new FormControl(null),
     });
-
-    //this.orders = new Array<Order>();
-    //this.orders = this.orderService.listado;
     this.orders = this.orderService.GetAll();
 
     this.ClearFilters();
-
-    //esto de abajo se tiene que pasar a una funcion
-    //this.cancelledOrders = this.orderService.GetAllCancelled();
-    //this.delayedOrders = this.orderService.GetAllDelayed();
-
-    // this.orderService.GetTopBest().then(() => {
-    //   this.topBest = this.orderService.primerosTres;
-    //   this.topWorst = this.orderService.ultimosTres;
-    //   console.log(this.topWorst);
-    // });
-
-
-
   }
 
 
   public ClearFilters(): void {
-    //this.showingOrders = this.orders;
     this.search();
-    this.getCancelled();
-    this.getDelayed();
+    //this.getCancelled();
+    //this.getDelayed();
   }
 
   public Cancel(): void {
@@ -76,24 +62,17 @@ export class ViewOrdersStatsComponent implements OnInit {
 
   public search() {
 
-    console.log(this.fechaFin);
-    console.log(this.fechaInicio);
-
-
-    if (this.settingsForm.value.fechaInicio == null) {
+    if (this.settingsForm.value.fechaInicio == null || this.settingsForm.value.fechaInicio == NaN) {
       this.fechaInicio = 0;
     } else {
       this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
     }
 
-    if (this.settingsForm.value.fechaFin == null) {
+    if (this.settingsForm.value.fechaFin == null || this.settingsForm.value.fechaFin == NaN) {
       this.fechaFin = Date.now();
     } else {
       this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
     }
-
-    console.log(this.fechaFin);
-    console.log(this.fechaInicio);
 
     this.showingOrders = this.orderService.GetAll().valueChanges().pipe(
       map(orders => {
@@ -105,14 +84,16 @@ export class ViewOrdersStatsComponent implements OnInit {
         });
       })
     )
-
     this.getDelayed();
     this.getCancelled();
+    this.getTop();
+    this.unaVariable = true;
   }
 
   public getCancelled() {
-    console.log(this.showingOrders);
-    this.cancelledOrders = this.orderService.GetAll().valueChanges().pipe(
+
+    
+    this.cancelledOrders = this.showingOrders.pipe(
       map(orders => {
         return orders.filter(order => {
           order = Object.assign(new Order(), order);
@@ -125,11 +106,10 @@ export class ViewOrdersStatsComponent implements OnInit {
   }
 
   public getDelayed() {
-    console.log(this.showingOrders);
-    this.delayedOrders = this.orderService.GetAll().valueChanges().pipe(
+    this.delayedOrders = this.showingOrders.pipe(
       map(orders => {
         return orders.filter(order => {
-          order = Object.assign(new Order(), order);          
+          order = Object.assign(new Order(), order);
           if (order['delayed'] < 0) {
             console.log(order['delayed']);
             return order;
@@ -139,24 +119,50 @@ export class ViewOrdersStatsComponent implements OnInit {
     )
   }
 
-  public getTopBest() {
-    console.log(this.showingOrders);
-    let listado = new Array<any>();
-    this.showingOrders.valueChanges().pipe
-  }
-
-  
-
-  public setDate(){
+  public setDate() {
     console.log(Date.parse(this.settingsForm.value.fechaInicio.toString()));
-    if(this.settingsForm.value.fechaInicio != null){
-       this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
-     }
-     else{
-       this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
-     }
+    if (this.settingsForm.value.fechaInicio != null) {
+      this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
+    }
+    else {
+      this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
+    }
   }
+
+  public getTop() {
+    this.lista = new Array<any>();
+    let cantidadNombres = new Array<any>();
+    let cantidad:number;
+    let copia = this.showingOrders;
+
+    copia.subscribe(orders => {
+      orders.map(order => {
+        order.items.map(uno => {
+          this.lista.push(uno['name']);
+        }).map(() => {
+          cantidadNombres = this.lista.reduce((contadorNombre, nombre) => {
+            contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
+            return contadorNombre;
+          }, {});
+          
+          
+        })
+      })
+      var result = Object.keys(cantidadNombres).map(function (key) {
+        return [String(key), cantidadNombres[key]];
+      });
+      cantidad = result.length;
+      console.log(result);
+      this.topBest = new Array<any>();
+      this.topWorst = new Array<any>();
+
+      this.topBest.push(result[0], result[1], result[2]);
+			this.topWorst.push(result[cantidad - 3], result[cantidad - 2], result[cantidad - 1]);
+    });
+  }
+
 }
+
 
 
 

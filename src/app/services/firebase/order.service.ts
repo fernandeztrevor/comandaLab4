@@ -12,8 +12,8 @@ import { reject } from 'q';
 })
 export class OrderService {
 
-	
-    public primerosTres = new Array<any>();
+
+	public primerosTres = new Array<any>();
 	public ultimosTres = new Array<any>();
 	public listado = new Array<Order>();
 	public ordenes: AngularFirestoreCollection;
@@ -21,7 +21,7 @@ export class OrderService {
 	constructor(private db: AngularFirestore) {
 		this.ordenes = this.db.collection<Order>('pedidos');
 		this.traerOrdenesArray();
-	 }
+	}
 
 	public Add(order: Order): void {
 		this.db.collection("pedidos").add(CommonHelper.ConvertToObject(order));
@@ -159,52 +159,54 @@ export class OrderService {
 		return this.db.collection("pedidos");
 	}
 
-	public GetTopBest(): Promise<boolean> {
+	public GetTopBest(fechaInicio: number, fechaFin: number): Promise<boolean> {
 		let listado = new Array<any>();
 
-		 return this.GetAllCompletedOrders_InArray().then(orders => {
-			orders.forEach(order => {
-				 order.items.forEach(element => {
-				 	listado.push(element.name);
-				 });
+		return this.GetAllCompletedOrders_InArray().then(orders => {
+			orders.forEach(order => {	
+				if(order.timestamp > fechaInicio && order.timestamp < fechaFin)	{
+					order.items.forEach(element => {
+						listado.push(element.name);
+					});
+				}				
 			})
 		}).then(() => {
-			let cantidadNombres = new Array<any>() ;
+			let cantidadNombres = new Array<any>();
 
 			cantidadNombres = listado.reduce((contadorNombre, nombre) => {
 				contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
 				return contadorNombre;
 			}, {});
 
-			var result = Object.keys(cantidadNombres).map(function(key) {
+			var result = Object.keys(cantidadNombres).map(function (key) {
 				return [String(key), cantidadNombres[key]];
-			  });
-			  const cantidad = result.length;
-			  console.log(cantidad);
-			  this.primerosTres.push(result[0], result[1], result[2]);
-			  this.ultimosTres.push(result[cantidad-3], result[cantidad-2], result[cantidad-1]);
-		}).then(()=>{
+			});
+			const cantidad = result.length;
+			console.log(cantidad);
+			this.primerosTres.push(result[0], result[1], result[2]);
+			this.ultimosTres.push(result[cantidad - 3], result[cantidad - 2], result[cantidad - 1]);
+		}).then(() => {
 			return true;
-		}			
-		).catch(()=>{
+		}
+		).catch(() => {
 			return false;
 		}
-			
+
 		)
 	}
 
 	public traerOrdenesArray() {
 		this.db.collection("pedidos").get().toPromise()
 			.then(doc => {
-
 				let orders: Order[] = [];
 				doc.docs.forEach(el => {
 					orders.push(el.data() as Order);
 				});
-				
 				return orders;
 			})
 	}
+
+
 
 
 
