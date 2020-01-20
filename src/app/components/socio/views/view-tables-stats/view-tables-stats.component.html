@@ -1,1 +1,166 @@
-<p>view-tables-stats works!</p>
+<!-- <div class="align-center mar-top-1" *ngIf="this.bestTable == null && this.worstTable == null">
+    <div class="row top-row page-title">
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6">
+
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
+
+    <hr>
+    <app-spinner></app-spinner>
+</div> -->
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+        <hr>
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+        <hr>
+        <div class="col-3">
+        </div>
+        <div class="col-6">
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#settingsModal">Personalizar<i
+                    class="fas fa-cogs"></i></button>
+        </div>
+        <div class="col-3">
+        </div>
+
+        <div class="row">
+            <div class="col-3 align-center">
+            </div>
+            <div class="col-6 align-center">
+            </div>
+            <div class="col-3 align-center">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">   
+        <div class="card col-5 align-center" >
+            <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Mesa más usada</h5>
+                <p class="card-text">La mesa fue utilizada X veces </p>
+            </div>
+        </div>
+        <div class="card col-5 align-center">
+            <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Mesa menos usada</h5>
+                <p class="card-text">La mesa fue utilizada X veces </p>
+            </div>
+        </div>       
+        
+        <div class="card col-5 align-center" >
+            <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Mesa con mayor recaudación</h5>
+                <p class="card-text">La mesa recaudó X pesos </p>
+            </div>
+        </div>
+        <div class="card col-5 align-center">
+            <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Mesa con menor recaudación</h5>
+                <p class="card-text">La mesa recaudó X pesos </p>
+            </div>
+        </div>
+
+        <div class="card col-5 align-center" >
+            <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Mesa con mayor importe de factura</h5>
+                <p class="card-text">La mesa recaudó X pesos </p>
+            </div>
+        </div>
+        <div class="card col-5 align-center">
+            <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Mesa con menor importe de factura</h5>
+                <p class="card-text">La mesa recaudó X pesos </p>
+            </div>
+        </div>     
+    </div>
+</div>
+
+
+<!-- Settings modal -->
+<div class="modal fade" id="settingsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <h3 class="align-center">Personalizar Busqueda</h3>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+
+                    <hr class="mar-top-1">
+                    <form [formGroup]="settingsForm" (ngSubmit)="SendSettings()">
+
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="row middle-row">
+                                    <div class="col-6">
+                                        <div class="col-12">
+                                            <label>Desde fecha:</label>
+                                        </div>
+                                        <div>
+                                            <input type="date" name="fechaInicio" formControlName="fechaInicio"
+                                                (change)="setDate()">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="col-12">
+                                            <label>Hasta fecha:</label>
+                                        </div>
+                                        <div>
+                                            <input type="date" name="fechaFin" formControlName="fechaFin"
+                                                (change)="setDate(false)">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </form>
+
+                    <hr class="mar-top-1">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <div class="btn-group full-width">
+                                <button class="btn btn-outline-danger" title="Cancelar" (click)="Cancel()"
+                                    data-dismiss="modal"><i class="fas fa-times"></i></button>
+
+                                <button class="btn btn-outline-success" title="Filtrar tabla" (click)="search()"
+                                    data-dismiss="modal"><i class="fas fa-check"></i></button>
+
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

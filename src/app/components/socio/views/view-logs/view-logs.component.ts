@@ -47,8 +47,9 @@ export class ViewLogsComponent implements OnInit {
     this.arrayCB = new Array<boolean>();
 
     this.enableDisable();
+    
     this.cargarArrayCB();
-
+    
     this.logs = new Array<Log>();
     this.logs = this.logService.listado;
     this.showingLogs = this.logs;
