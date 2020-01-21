@@ -17,8 +17,8 @@ export class ViewTablesStatsComponent implements OnInit {
 
   public mesaMasUsada: any = null;
   public mesaMenosUsada: any = null;
-  public mesaMayorFacturacion: Order = null;
-  public mesaMenorFacturacion: Order = null;
+  public mesaMayorFacturacion: any = null;
+  public mesaMenorFacturacion: any = null;
   public facturaMayorImporte: any = null;
   public facturaMenorImporte: any = null;
 
@@ -55,6 +55,7 @@ export class ViewTablesStatsComponent implements OnInit {
   }
 
   public search() {
+    this.setNulls();
 
     if (this.settingsForm.value.fechaInicio == null || this.settingsForm.value.fechaInicio == NaN) {
       this.fechaInicio = 0;
@@ -82,41 +83,56 @@ export class ViewTablesStatsComponent implements OnInit {
     this.getTops();
   }
 
+  public setNulls(){
+    this.mesaMasUsada= null;
+    this.mesaMenosUsada= null;
+    this.mesaMayorFacturacion = null;
+    this.mesaMenorFacturacion = null;
+    this.facturaMayorImporte = null;
+    this.facturaMenorImporte = null;
+  
+    this.lista= null;
+    this.arrayAcumulador= null;
+  }
+
   public getTops() {
     this.lista = new Array<any>();
     let cantidadNombres = new Array<any>();
     let cantidad: number;
     let copia = this.showingOrders;
-    this.facturaMayorImporte, this.facturaMenorImporte = new Order();
-    this.arrayAcumulador = new Array<number>();    
+    this.facturaMayorImporte = new Order();
+    this.facturaMenorImporte = new Order();
+    this.arrayAcumulador = new Array<number>();
 
     copia.subscribe(orders => {
       orders.map(order => {
-        this.mayorMenorImporte(order);
-        this.sumarIngresos(order);
-        
+        if (order) {
 
-        this.lista.push(order.tableID);
+          this.sumarIngresos(order);
+          this.lista.push(order.tableID);
+          this.mayorMenorImporte(order);
+        }
+
       }).map(() => {
         cantidadNombres = this.lista.reduce((contadorNombre, nombre) => {
           contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
           return contadorNombre;
         }, {});
       });
-      //console.log(cantidadNombres);
 
       var result = Object.keys(cantidadNombres).map(function (key) {
         return [String(key), cantidadNombres[key]];
       });
+      this.getMayoryMenorFacturación();
       cantidad = result.length;
       this.mesaMasUsada = result[0];
       this.mesaMenosUsada = result[cantidad - 1];
       console.log(this.mesaMenosUsada);
       console.log(this.mesaMasUsada);
-      console.log(this.facturaMenorImporte); 
+      console.log(this.facturaMenorImporte);
       console.log(this.facturaMayorImporte);
-      
-      console.log(this.arrayAcumulador);
+      console.log(this.mesaMenorFacturacion);
+      console.log(this.mesaMayorFacturacion);
     });
 
   }
@@ -137,24 +153,43 @@ export class ViewTablesStatsComponent implements OnInit {
   }
 
   public sumarIngresos(order: Order) {
-    console.log(order.tableID);
-    if (this.arrayAcumulador[order.tableID] == null ) {
-      console.log(order.totalPrice);
+    if (this.arrayAcumulador[order.tableID] == null) {
       this.arrayAcumulador[order.tableID] = order.totalPrice;
     } else {
-      //this.arrayAcumulador.push(order.tableID, (this.arrayAcumulador[order.tableID] + order.totalPrice));
       this.arrayAcumulador[order.tableID] = this.arrayAcumulador[order.tableID] + order.totalPrice;
     }
-    console.log(this.arrayAcumulador);
-
-    //let otroarray = this.arrayAcumulador.filter(Boolean);    
-
-    // this.arrayAcumulador.sort(function(a, b) {
-    //   return (b.value - a.value)
-    // });
   }
 
-  
+  public getMayoryMenorFacturación() {
+    this.arrayAcumulador.forEach(elemento => {
+      console.log(elemento);
+      if (this.mesaMayorFacturacion == null || this.mesaMenorFacturacion == null) {
+        this.mesaMenorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+        this.mesaMayorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+      } else {
+        if (elemento < this.mesaMenorFacturacion) {
+          this.mesaMenorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+        }
+        if (elemento > this.mesaMayorFacturacion) {
+
+          this.mesaMayorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+        }
+      }
+
+    })
+
+  }
+
+  public setDate() {
+    console.log(Date.parse(this.settingsForm.value.fechaInicio.toString()));
+    if (this.settingsForm.value.fechaInicio != null) {
+      this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
+    }
+    else {
+      this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
+    }
+  } 
+
 
 
 

@@ -50,48 +50,48 @@
     </div>
     <hr>
     <div class="row">   
-        <div class="card col-5 align-center" >
+        <div class="card col-5 align-center" *ngIf="mesaMasUsada">
             <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa más usada</h5>
-                <p class="card-text">La mesa fue utilizada X veces </p>
+                <p class="card-text">La mesa {{ this.mesaMasUsada[0] }} fue utilizada {{ this.mesaMasUsada[1] }} veces </p>
             </div>
         </div>
-        <div class="card col-5 align-center">
+        <div class="card col-5 align-center" *ngIf="mesaMasUsada">
             <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa menos usada</h5>
-                <p class="card-text">La mesa fue utilizada X veces </p>
+                <p class="card-text">La mesa {{ this.mesaMenosUsada[0] }} fue utilizada {{ this.mesaMenosUsada[1] }} veces </p>
             </div>
         </div>       
         
-        <div class="card col-5 align-center" >
+        <div class="card col-5 align-center" *ngIf="mesaMayorFacturacion">
             <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con mayor recaudación</h5>
-                <p class="card-text">La mesa recaudó X pesos </p>
+                <p class="card-text">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMayorFacturacion) }} recaudó {{ this.mesaMayorFacturacion }} pesos </p>
             </div>
         </div>
-        <div class="card col-5 align-center">
+        <div class="card col-5 align-center" *ngIf="mesaMenorFacturacion">
             <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con menor recaudación</h5>
-                <p class="card-text">La mesa recaudó X pesos </p>
+                <p class="card-text">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMenorFacturacion) }} recaudó {{ this.mesaMenorFacturacion }} pesos </p>
             </div>
         </div>
 
-        <div class="card col-5 align-center" >
+        <div class="card col-5 align-center" *ngIf="mesaMenorFacturacion">
             <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con mayor importe de factura</h5>
-                <p class="card-text">La mesa recaudó X pesos </p>
+                <p class="card-text">La mesa {{ facturaMayorImporte.tableID }} tuvo una factura por {{ facturaMayorImporte.totalPrice }} pesos </p>
             </div>
         </div>
-        <div class="card col-5 align-center">
+        <div class="card col-5 align-center" *ngIf="mesaMenorFacturacion">
             <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con menor importe de factura</h5>
-                <p class="card-text">La mesa recaudó X pesos </p>
+                <p class="card-text">La mesa {{ facturaMenorImporte.tableID }} tuvo una factura por {{ facturaMenorImporte.totalPrice }} pesos </p>
             </div>
         </div>     
     </div>
