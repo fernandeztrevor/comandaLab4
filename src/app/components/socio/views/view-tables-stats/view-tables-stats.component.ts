@@ -4,6 +4,8 @@ import { Subject, Observable } from 'rxjs';
 import { OrderService } from 'src/app/services/firebase/order.service';
 import { Order } from 'src/app/models/order';
 import { map } from 'rxjs/operators';
+import { Survey } from 'src/app/models/survey';
+import { SurveyService } from 'src/app/services/firebase/survey.service';
 
 @Component({
   selector: 'app-view-tables-stats',
@@ -25,15 +27,21 @@ export class ViewTablesStatsComponent implements OnInit {
   public lista: any[];
   public arrayAcumulador: any[];
 
+  public surveys: any;
+  public survey: Survey;
+  public surveysGood: any;
+  public surveysBad: any;
 
   public settingsForm: FormGroup;
   public onReset: Subject<void> = new Subject<void>();
   @Input() fechaInicio: number;
   @Input() fechaFin: number;
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService, private surveyService: SurveyService) { }
 
   ngOnInit() {
+    this.surveys = this.surveyService.GetAll().valueChanges();
+
     this.settingsForm = new FormGroup({
       fechaInicio: new FormControl(null),
       fechaFin: new FormControl(null),
@@ -41,6 +49,11 @@ export class ViewTablesStatsComponent implements OnInit {
     this.orders = this.orderService.GetAll();
     this.ClearFilters();
   }
+
+  public SelectSurvey(surv: Survey): void
+	{
+		this.survey = surv;
+	}
 
   public ClearFilters(): void {
     this.search();
@@ -78,6 +91,34 @@ export class ViewTablesStatsComponent implements OnInit {
           }
         });
       })
+    );
+
+    this.surveysGood = this.surveyService.GetAll2().valueChanges().pipe(
+      map(surveys => {
+        return surveys.filter(survey => {
+          survey = Object.assign(new Survey(), survey);
+          if (survey['order']['timestamp'] > this.fechaInicio && survey['order']['timestamp'] < this.fechaFin) {
+            if(((survey['cookScore']+survey['restaurantScore']+survey['tableScore']+survey['waiterScore'])/4)>=7)
+            return survey;
+          }
+          console.log(surveys);
+        });
+      })
+      
+    );
+
+    this.surveysBad = this.surveyService.GetAll2().valueChanges().pipe(
+      map(surveys => {
+        return surveys.filter(survey => {
+          survey = Object.assign(new Survey(), survey);
+          if (survey['order']['timestamp'] > this.fechaInicio && survey['order']['timestamp'] < this.fechaFin) {
+            if(((survey['cookScore']+survey['restaurantScore']+survey['tableScore']+survey['waiterScore'])/4)<=4)
+            return survey;
+          }
+          console.log(surveys);
+        });
+      })
+      
     );
 
     this.getTops();

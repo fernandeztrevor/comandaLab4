@@ -1,4 +1,4 @@
-<!-- <div class="align-center mar-top-1" *ngIf="this.bestTable == null && this.worstTable == null">
+<div class="align-center mar-top-1" *ngIf="this.mesaMasUsada == null && this.mesaMenosUsada == null">
     <div class="row top-row page-title">
         <div class="col-3"></div>
         <div class="col-6"></div>
@@ -19,7 +19,7 @@
 
     <hr>
     <app-spinner></app-spinner>
-</div> -->
+</div>
 <div class="container">
     <div class="row">
         <div class="col-3"></div>
@@ -33,7 +33,7 @@
         <div class="col-3">
         </div>
         <div class="col-6">
-            <button class="btn btn-success full-width" data-toggle="modal" data-target="#settingsModal">Personalizar<i
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#settingsModal" *ngIf="this.mesaMasUsada != null">Personalizar<i
                     class="fas fa-cogs"></i></button>
         </div>
         <div class="col-3">
@@ -49,54 +49,161 @@
         </div>
     </div>
     <hr>
-    <div class="row">   
+    <div class="row">
         <div class="card col-5 align-center" *ngIf="mesaMasUsada">
-            <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
+            <img src="../../../../../assets/img/mesaConGente.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa más usada</h5>
-                <p class="card-text">La mesa {{ this.mesaMasUsada[0] }} fue utilizada {{ this.mesaMasUsada[1] }} veces </p>
+                <p class="card-text">La mesa {{ this.mesaMasUsada[0] }} fue utilizada {{ this.mesaMasUsada[1] }} veces
+                </p>
             </div>
         </div>
-        <div class="card col-5 align-center" *ngIf="mesaMasUsada">
-            <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
+        <div class="card col-5 align-center" *ngIf="mesaMenosUsada">
+            <img src="../../../../../assets/img/mesaSinGente.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa menos usada</h5>
-                <p class="card-text">La mesa {{ this.mesaMenosUsada[0] }} fue utilizada {{ this.mesaMenosUsada[1] }} veces </p>
+                <p class="card-text">La mesa {{ this.mesaMenosUsada[0] }} fue utilizada {{ this.mesaMenosUsada[1] }}
+                    veces </p>
             </div>
-        </div>       
-        
+        </div>
+
         <div class="card col-5 align-center" *ngIf="mesaMayorFacturacion">
-            <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
+            <img src="../../../../../assets/img/mayorFacturacion.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con mayor recaudación</h5>
-                <p class="card-text">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMayorFacturacion) }} recaudó {{ this.mesaMayorFacturacion }} pesos </p>
+                <p class="card-text">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMayorFacturacion) }} recaudó
+                    {{ this.mesaMayorFacturacion }} pesos </p>
             </div>
         </div>
         <div class="card col-5 align-center" *ngIf="mesaMenorFacturacion">
-            <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
+            <img src="../../../../../assets/img/menorFacturacion.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con menor recaudación</h5>
-                <p class="card-text">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMenorFacturacion) }} recaudó {{ this.mesaMenorFacturacion }} pesos </p>
+                <p class="card-text">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMenorFacturacion) }} recaudó
+                    {{ this.mesaMenorFacturacion }} pesos </p>
             </div>
         </div>
 
         <div class="card col-5 align-center" *ngIf="mesaMenorFacturacion">
-            <img src="../../../../../assets/img/primero-trofeo.png" class="card-img-top">
+            <img src="../../../../../assets/img/facturaLarga.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con mayor importe de factura</h5>
-                <p class="card-text">La mesa {{ facturaMayorImporte.tableID }} tuvo una factura por {{ facturaMayorImporte.totalPrice }} pesos </p>
+                <p class="card-text">La mesa {{ facturaMayorImporte.tableID }} tuvo una factura por
+                    {{ facturaMayorImporte.totalPrice }} pesos </p>
             </div>
         </div>
         <div class="card col-5 align-center" *ngIf="mesaMenorFacturacion">
-            <img src="../../../../../assets/img/segundo-trofeo.png" class="card-img-top">
+            <img src="../../../../../assets/img/facturaCorta.png" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Mesa con menor importe de factura</h5>
-                <p class="card-text">La mesa {{ facturaMenorImporte.tableID }} tuvo una factura por {{ facturaMenorImporte.totalPrice }} pesos </p>
+                <p class="card-text">La mesa {{ facturaMenorImporte.tableID }} tuvo una factura por
+                    {{ facturaMenorImporte.totalPrice }} pesos </p>
             </div>
-        </div>     
+        </div>
+    </div>
+
+    <div class="row middle-row" *ngIf="mesaMenorFacturacion">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <h3 class="align-center">Mejores Comentarios</h3>
+
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row middle-row" *ngIf="mesaMenorFacturacion">
+        <div class="col-12">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="align-center">
+                        <tr>
+                            <th scope="col">Pedido</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Mesa</th>
+                            <th scope="col">Mozo</th>
+                            <th scope="col">Comentario</th>
+
+                            <!-- <th scope="col">Punt. mesa</th>
+                            <th scope="col">Punt. mozo</th>
+                            <th scope="col">Punt. restaurante</th>
+                            <th scope="col">Punt. cocinero</th> -->
+                            <!-- <th scope="col">Fecha</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr [surveyAverage]="sur" *ngFor="let sur of surveysGood | async" class="survey align-center"
+                            data-toggle="modal" data-target="#surveyModal" (click)="SelectSurvey(sur)">
+                            
+                            <td>{{sur.order.codeID}}</td>
+                            <td>{{sur.order.client.name}} {{sur.order.client.lastname}}</td>
+                            <td>{{sur.order.tableID}}</td>
+                            <td>{{sur.order.waiter.name}} {{sur.order.waiter.lastname}}</td>
+                            <td>{{sur.comment}}</td>
+
+                            <!-- <td>{{sur.tableScore}}</td>
+                            <td>{{sur.waiterScore}}</td>
+                            <td>{{sur.restaurantScore}}</td>
+                            <td>{{sur.cookScore}}</td> -->
+                            <!-- <td>{{sur.order.timeLeft | neatDate}}</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row middle-row" *ngIf="mesaMenorFacturacion">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <h3 class="align-center">Peores Comentarios</h3>
+
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row middle-row" *ngIf="mesaMenorFacturacion">
+        <div class="col-12">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="align-center">
+                        <tr>
+                            <th scope="col">Pedido</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Mesa</th>
+                            <th scope="col">Mozo</th>
+                            <th scope="col">Comentario</th>
+
+                            <!-- <th scope="col">Punt. mesa</th>
+                            <th scope="col">Punt. mozo</th>
+                            <th scope="col">Punt. restaurante</th>
+                            <th scope="col">Punt. cocinero</th> -->
+                            <!-- <th scope="col">Fecha</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr [surveyAverage]="sur" *ngFor="let sur of surveysBad | async" class="survey align-center"
+                            data-toggle="modal" data-target="#surveyModal" (click)="SelectSurvey(sur)">
+                            
+                            <td>{{sur.order.codeID}}</td>
+                            <td>{{sur.order.client.name}} {{sur.order.client.lastname}}</td>
+                            <td>{{sur.order.tableID}}</td>
+                            <td>{{sur.order.waiter.name}} {{sur.order.waiter.lastname}}</td>
+                            <td>{{sur.comment}}</td>
+
+                            <!-- <td>{{sur.tableScore}}</td>
+                            <td>{{sur.waiterScore}}</td>
+                            <td>{{sur.restaurantScore}}</td>
+                            <td>{{sur.cookScore}}</td> -->
+                            <!-- <td>{{sur.order.timeLeft | neatDate}}</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
 </div>
-
 
 <!-- Settings modal -->
 <div class="modal fade" id="settingsModal">
@@ -158,6 +265,47 @@
                             </div>
                         </div>
                         <div class="col-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Survey modal -->
+<div class="modal fade" id="surveyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid" *ngIf="survey">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <h3 class="align-center">Pedido {{survey.order.codeID}}</h3>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <hr class="mar-top-1">
+                    <div class="row">
+                        <div class="col-12 align-center">
+                            <b>Promedio de los puntajes: </b> <span [surveyAverage]="survey"
+                                returnAverage="true"></span>
+                        </div>
+                    </div>
+                    <div class="row middle-row">
+                        <div class="col-12 align-center" [surveyComment]='survey.commentType'></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <span [surveyComment]="survey.commentType" isIcon="true"></span> - {{survey.comment}}
+                        </div>
+                    </div>
+                    <div class="row mar-top-1">
+                        <div class="col-1"></div>
+                        <div class="col-10 align-right">
+                            {{survey.order.client.name}} {{survey.order.client.lastname}}
+                        </div>
+                        <div class="col-1"></div>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,11 @@ export class SurveyService {
 		return this.db.collection('encuestas');
 	}
 
+	public GetAll2()
+	{
+		return this.db.collection('encuestas');
+	}
+
 	public Add(surv: Survey): Promise<void>
 	{
 		return new Promise((resolve, reject) => {
