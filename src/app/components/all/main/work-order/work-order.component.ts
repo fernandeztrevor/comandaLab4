@@ -32,7 +32,7 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 				let now = new Date();
 				this.remainingTime = new Date(this.order.timeLeft).getTime() - now.getTime();
 				if (this.remainingTime < 0) {
-					this.order.delayed = this.remainingTime;
+					this.order.delayed = now.getTime() - new Date(this.order.timeLeft).getTime();
 					this.orderService.Update(this.order);
 				}
 			}

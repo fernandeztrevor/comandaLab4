@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Product, FoodType, Cook } from 'src/app/models/product';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/firebase/product.service';
 import { FileService } from 'src/app/services/firestorage/file.service';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { LogService } from 'src/app/services/firebase/log.service';
 import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 import { Role } from 'src/app/models/user';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-management',
@@ -17,10 +18,11 @@ import { Role } from 'src/app/models/user';
 export class ProductManagementComponent implements OnInit {
 
 
-  public products: Product[];
-  //public showingProducts: Observable<Product[]>;
-  public showingProducts: Product[];
-  public showingProductsRole: Product[];
+  //public products: Product[];
+  public products: any;
+  public showingProducts: Observable<any[]>;
+  //public showingProducts: Product[];
+  //public showingProductsRole: Product[];
   public productForm: FormGroup;
   public onReset: Subject<void> = new Subject<void>();
   public file: File;
@@ -58,6 +60,12 @@ export class ProductManagementComponent implements OnInit {
 
   }
 
+  private laFuncion() {
+    this.products = new Array<Product>();
+    this.products = this.productService.listado;
+    this.ClearFilters();
+  }
+
   private showProd() {
     if (this.role == "socio") {
       this.showingProducts = this.products;
@@ -83,7 +91,7 @@ export class ProductManagementComponent implements OnInit {
   public addProduct(): void {
     let product: Product;
     let array: Array<any>;
-    
+
 
     array = this.traerFoodTypes();
     this.traerCook();
@@ -103,7 +111,7 @@ export class ProductManagementComponent implements OnInit {
         this.Cancel();
       }
       this.authService.GetCurrentUser().then(user => {
-        let mensaje:string = `El usuario ${user.email} dió de alta el producto ${product.name}`;
+        let mensaje: string = `El usuario ${user.email} dió de alta el producto ${product.name}`;
         this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.alta, mensaje);
       })
 
@@ -141,7 +149,7 @@ export class ProductManagementComponent implements OnInit {
   }
 
   public traerCook() {
-    
+
     if (this.role == null) {
       this.authService.GetCurrentUser().then(user => {
         this.role = user.role;
@@ -155,30 +163,31 @@ export class ProductManagementComponent implements OnInit {
         this.productForm.controls['productCook'].setValue(this.role);
       }
     }
-    
+
   }
 
   public changeState(uid: string, state: string) {
-    
-        this.productService.GetProductByID(uid).then(prod=>{
 
-          if (state == "Pendiente") {
-            this.productService.updateState(uid, "Deshabilitado");
-            this.authService.GetCurrentUser().then(user => {
-              let mensaje:string = `El usuario ${user.email} deshabilitó el producto ${prod.name}`;
-              this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.deshabilitacion, mensaje);
-            })
-          }
-          if (state == "Deshabilitado") {
-            this.productService.updateState(uid, "Pendiente");
-            this.authService.GetCurrentUser().then(user => {
-              let mensaje:string = `El usuario ${user.email} habilitó el producto ${prod.name}`;
-              this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.habilitacion, mensaje);
-            })
-          }
-        });
+    this.productService.GetProductByID(uid).then(prod => {
 
-    
+      if (state == "Pendiente") {
+        this.productService.updateState(uid, "Deshabilitado");
+        this.authService.GetCurrentUser().then(user => {
+          let mensaje: string = `El usuario ${user.email} deshabilitó el producto ${prod.name}`;
+          this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.deshabilitacion, mensaje);
+        })
+        this.laFuncion();
+      }
+      if (state == "Deshabilitado") {
+        this.productService.updateState(uid, "Pendiente");
+        this.authService.GetCurrentUser().then(user => {
+          let mensaje: string = `El usuario ${user.email} habilitó el producto ${prod.name}`;
+          this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.habilitacion, mensaje);
+        })
+      }
+    });
+
+
   }
 
   public editarProducto(producto: Product) {
@@ -211,7 +220,7 @@ export class ProductManagementComponent implements OnInit {
       this.haySeleccionado = false;
       this.file = null;
       this.authService.GetCurrentUser().then(user => {
-        let mensaje:string = `El usuario ${user.email} modificó el producto ${this.productoSeleccionado.name}`;
+        let mensaje: string = `El usuario ${user.email} modificó el producto ${this.productoSeleccionado.name}`;
         this.movimientoService.persistirMovimiento(user, TargetMovimiento.producto, TipoMovimiento.modificacion, mensaje);
       })
     });
@@ -266,18 +275,27 @@ export class ProductManagementComponent implements OnInit {
 
     this.authService.GetCurrentUser().then(user => {
       this.role = user.role;
-      this.showingProducts = this.products.filter((element) => {
-        if (element.cook == this.role || this.role == Role.socio)
-          return element;
-        //console.log(element.cook)
-      });
-      //console.log(this.role);
+      this.showingProducts = this.productService.GetAll2().valueChanges().pipe(
+        map(products => {
+          return products.filter(product => {
+            product = Object.assign(new Product(), product);
+            //if (product['timestamp'] > this.fechaInicio && order['timestamp'] < this.fechaFin) {
+              if (product['cook'] == this.role || this.role == Role.socio)
+              return product;
+            //}
+          });
+        })
+      );
+      this.productoSeleccionado = null;
+      this.haySeleccionado = false;
+      this.file = null;
     })
   }
 
   public Cancel(): void {
     this.productForm.reset();
     this.onReset.next();
+    this.laFuncion();
   }
 
 }

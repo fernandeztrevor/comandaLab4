@@ -68,6 +68,10 @@ export class ProductService {
         return this.db.collection("productos");
     }
 
+    public GetAll2() {
+        return this.db.collection("productos");
+    }
+
     traerProductos(): Observable<any[]> {
         return this.productos.snapshotChanges().pipe(
             map(actions => {

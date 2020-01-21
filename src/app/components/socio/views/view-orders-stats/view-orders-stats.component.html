@@ -180,7 +180,7 @@
                     <tr class="order" *ngFor="let order of delayedOrders | async">
                         <td><label>{{order.codeID}}</label></td>
                         <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>
-                        <td>{{order.delayed | date:'hh:mm'}}</td>
+                        <td>{{order.delayed | date:'hh:mm dd/MM/yyyy'}}</td>
                     </tr>
                 </tbody>
             </table>
