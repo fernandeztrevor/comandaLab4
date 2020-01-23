@@ -21,6 +21,25 @@ export class LogService {
     this.traerMovimientosArray()
   }
 
+  public GetAll3(): Observable<any[]> {
+    return this.db.collection("movimientos").valueChanges().pipe(
+      map(logs => {
+        return logs.filter(res => {
+          res = Object.assign(new Log(), res);
+          return res;
+        });
+      })
+    )
+
+  }
+
+  public GetAll2() {
+    return this.db.collection("movimientos");
+  }
+  public GetAll(): any {
+    return this.db.collection("movimientos");
+  }
+
 
   traerMovimientosArray() {
     let listadoObservable = null;
@@ -55,17 +74,6 @@ export class LogService {
       })
     );
   }
-
-  //   persistirMovimiento(movimiento: Log): Promise<boolean> {
-
-  //     return this.movimientos.add(CommonHelper.ConvertToObject(movimiento)).then(doc => {
-  //         this.movimientos.doc(doc.id).update({ id: doc.id });        
-  //     }).then(() => {
-  //         return true;
-  //     }).catch(() => {
-  //         return false;
-  //     });
-  // }
 
   persistirMovimiento(usuario: User, target: TargetMovimiento, tipo: TipoMovimiento, observacion: string): Promise<boolean> {
 

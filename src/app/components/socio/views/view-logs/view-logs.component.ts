@@ -3,8 +3,9 @@ import { Log, Role } from 'src/app/models/log';
 import { LogService } from 'src/app/services/firebase/log.service';
 import { SortPipePipe } from 'src/app/pipes/sort-pipe.pipe';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { map, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-logs',
@@ -13,10 +14,11 @@ import { typeWithParameters } from '@angular/compiler/src/render3/util';
 })
 export class ViewLogsComponent implements OnInit {
 
+  public esVisible = false;
 
-
-  public logs: Log[];
-  public showingLogs: Log[];
+  public logs: any;
+  //public showingLogs: Observable<any[]>;
+  public showingLogs = null;
 
   public busqueda: string;
   public coincidencias: number;
@@ -47,18 +49,73 @@ export class ViewLogsComponent implements OnInit {
     this.arrayCB = new Array<boolean>();
 
     this.enableDisable();
-    
+
     this.cargarArrayCB();
-    
+
     this.logs = new Array<Log>();
     this.logs = this.logService.listado;
-    this.showingLogs = this.logs;
+
+    console.log("this.showingLogs");
+    console.log(this.showingLogs);
+
+
+    this.ClearFilters();
   }
 
 
+  public async search() {
+    this.setFechas();
 
-  public search() {
+    this.showingLogs = this.logService.GetAll2().valueChanges().pipe(
 
+      map(logs => {
+        return logs.filter(res => {
+          res = Object.assign(new Log(), res);
+          // this.showingLogs = this.logs.filter(res => {
+          if (res['fecha'] > this.fechaInicio && res['fecha'] < this.fechaFin) {
+            if (res['usuario'].includes(this.busqueda) || this.busqueda == null) {
+              if (this.logForm.value.typeMozo && res['role'] == Role.mozo) {
+                this.coincidencias++;
+                return res;
+              }
+              if (this.logForm.value.typeBartender && res['role'] == Role.bartender) {
+                this.coincidencias++;
+                return res;
+              }
+              if (this.logForm.value.typeCervecero && res['role'] == Role.cervecero) {
+                this.coincidencias++;
+                return res;
+              }
+              if (this.logForm.value.typeCliente && res['role'] == Role.cliente) {
+                this.coincidencias++;
+                return res;
+              }
+              if (this.logForm.value.typeCocinero && res['role'] == Role.cocinero) {
+                this.coincidencias++;
+                return res;
+              }
+              if (this.logForm.value.typeDelivery && res['role'] == Role.delivery) {
+                this.coincidencias++;
+                return res;
+              }
+              if (this.logForm.value.typeSocio && res['role'] == Role.socio) {
+                this.coincidencias++;
+                return res;
+              }
+              if (this.logForm.value.typeTodos) {
+                this.coincidencias++;
+                return res;
+              };
+            };
+          }
+        });
+      })
+    );
+    console.log("4"+this.esVisible);
+
+  }
+
+  public setFechas() {
     this.coincidencias = 0;
     if (this.logForm.value.fechaInicio == null) {
       this.fechaInicio = 0;
@@ -71,47 +128,6 @@ export class ViewLogsComponent implements OnInit {
     } else {
       this.fechaFin = Date.parse(this.logForm.value.fechaFin.toString());
     }
-
-
-    this.showingLogs = this.logs.filter(res => {
-      if (res.fecha > this.fechaInicio && res.fecha < this.fechaFin) {
-        if (res.usuario.includes(this.busqueda) || this.busqueda == null) {
-          if (this.logForm.value.typeMozo && res.role == Role.mozo) {
-            this.coincidencias++;
-            return res;
-          }
-          if (this.logForm.value.typeBartender && res.role == Role.bartender) {
-            this.coincidencias++;
-            return res;
-          }
-          if (this.logForm.value.typeCervecero && res.role == Role.cervecero) {
-            this.coincidencias++;
-            return res;
-          }
-          if (this.logForm.value.typeCliente && res.role == Role.cliente) {
-            this.coincidencias++;
-            return res;
-          }
-          if (this.logForm.value.typeCocinero && res.role == Role.cocinero) {
-            this.coincidencias++;
-            return res;
-          }
-          if (this.logForm.value.typeDelivery && res.role == Role.delivery) {
-            this.coincidencias++;
-            return res;
-          }
-          if (this.logForm.value.typeSocio && res.role == Role.socio) {
-            this.coincidencias++;
-            return res;
-          }
-          if (this.logForm.value.typeTodos) {
-            this.coincidencias++;
-            return res;
-          };
-        };
-      }
-    });
-    console.log(this.coincidencias);
   }
 
   public Cancel(): void {
@@ -121,7 +137,7 @@ export class ViewLogsComponent implements OnInit {
     this.enableDisable();
     this.logForm.controls['fechaInicio'].setValue(null);
     this.logForm.controls['fechaFin'].setValue(null);
-    this.search();
+    this.ClearFilters();
   }
 
   public enableDisable() {
@@ -194,5 +210,28 @@ export class ViewLogsComponent implements OnInit {
         return res;
       };
     });
+  }
+
+  public ClearFilters() {
+
+    if (this.logForm.value.fechaInicio == null || this.logForm.value.fechaInicio == NaN) {
+      this.fechaInicio = 0;
+    } else {
+      this.fechaInicio = Date.parse(this.logForm.value.fechaInicio.toString());
+    }
+
+    if (this.logForm.value.fechaFin == null || this.logForm.value.fechaFin == NaN) {
+      this.fechaFin = Date.now();
+    } else {
+      this.fechaFin = Date.parse(this.logForm.value.fechaFin.toString());
+    }
+    console.log("1"+this.esVisible);
+    this.search().then(()=>{
+      this.esVisible = true;
+      console.log("2"+this.esVisible);
+    }
+    )
+    console.log("3"+this.esVisible);
+
   }
 }

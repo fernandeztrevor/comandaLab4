@@ -60,6 +60,7 @@ import { ViewLogsComponent } from './components/socio/views/view-logs/view-logs.
 import { SortPipePipe } from './pipes/sort-pipe.pipe';
 import { ViewOrdersStatsComponent } from './components/socio/views/view-orders-stats/view-orders-stats.component';
 import { ViewTablesStatsComponent } from './components/socio/views/view-tables-stats/view-tables-stats.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { ViewTablesStatsComponent } from './components/socio/views/view-tables-s
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

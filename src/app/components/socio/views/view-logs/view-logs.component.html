@@ -1,3 +1,26 @@
+
+<div class="align-center mar-top-1" *ngIf="showingLogs == null">
+    <div class="row top-row page-title">
+        <div class="col-3"></div>
+        <div class="col-6"></div>
+        <div class="col-3"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3 align-center">
+
+        </div>
+        <div class="col-6">
+
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
+
+    <hr>
+    <app-spinner></app-spinner>
+</div>
 <div class="container">
     <div class="row top-row page-title">
         <div class="col-3"></div>
@@ -51,7 +74,7 @@
                 </tr>
             </thead>
             <tbody *ngIf="logs">
-                <tr class="log" *ngFor="let log of showingLogs | sortPipe:'fecha'">
+                <tr class="log" *ngFor="let log of showingLogs | async | sortPipe:'fecha'">
                     <td>{{log.usuario}}</td>
                     <td>{{log.fecha | date: 'hh:mm dd-MM-yyyy'}}</td>
                     <td>{{log.observacion}}</td>
