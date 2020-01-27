@@ -3,9 +3,10 @@ import { Log, Role } from 'src/app/models/log';
 import { LogService } from 'src/app/services/firebase/log.service';
 import { SortPipePipe } from 'src/app/pipes/sort-pipe.pipe';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, observable } from 'rxjs';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { map, flatMap } from 'rxjs/operators';
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-view-logs',
@@ -14,9 +15,11 @@ import { map, flatMap } from 'rxjs/operators';
 })
 export class ViewLogsComponent implements OnInit {
 
+
   public esVisible = false;
 
-  public logs: any;
+  //public logs: any;
+  public logs: AngularFirestoreCollection<Log>;
   //public showingLogs: Observable<any[]>;
   public showingLogs = null;
 
@@ -46,18 +49,18 @@ export class ViewLogsComponent implements OnInit {
       fechaInicio: new FormControl(null),
       fechaFin: new FormControl(null),
     });
+    //this.hola();
     this.arrayCB = new Array<boolean>();
 
     this.enableDisable();
 
     this.cargarArrayCB();
 
-    this.logs = new Array<Log>();
-    this.logs = this.logService.listado;
+    //this.logs = new Array<Log>();
+    //this.logs = this.logService.listado;
 
-    console.log("this.showingLogs");
-    console.log(this.showingLogs);
 
+    this.logs = this.logService.GetAll2();
 
     this.ClearFilters();
   }
@@ -66,10 +69,16 @@ export class ViewLogsComponent implements OnInit {
   public async search() {
     this.setFechas();
 
-    this.showingLogs = this.logService.GetAll2().valueChanges().pipe(
+    //this.showingLogs = this.logService.GetAll2().valueChanges().pipe(
+     this.showingLogs = this.logs.valueChanges().pipe(
+
 
       map(logs => {
+
+
         return logs.filter(res => {
+
+          //this.showingLogs = this.logs.filter(res => {
           res = Object.assign(new Log(), res);
           // this.showingLogs = this.logs.filter(res => {
           if (res['fecha'] > this.fechaInicio && res['fecha'] < this.fechaFin) {
@@ -111,9 +120,20 @@ export class ViewLogsComponent implements OnInit {
         });
       })
     );
-    console.log("4"+this.esVisible);
+    console.log("4" + this.esVisible);
 
   }
+
+  // public hola() {
+    
+  //   this.showingLogs = this.logs.valueChanges().pipe(
+  //     map(a=>{
+  //       a.filter(b=>{
+
+  //       })
+  //     })
+  //   )
+  // }
 
   public setFechas() {
     this.coincidencias = 0;
@@ -183,7 +203,10 @@ export class ViewLogsComponent implements OnInit {
   public sendSettings() {
 
 
-    this.showingLogs = this.logs.filter(res => {
+    // this.showingLogs = this.logs.filter(res => {
+      this.showingLogs = this.logs.valueChanges().pipe(
+        map(logs=>{
+          logs.filter(res => {
 
       if (this.logForm.value.typeMozo && res.role == Role.mozo) {
         return res;
@@ -210,6 +233,8 @@ export class ViewLogsComponent implements OnInit {
         return res;
       };
     });
+  })
+      )
   }
 
   public ClearFilters() {
@@ -225,13 +250,13 @@ export class ViewLogsComponent implements OnInit {
     } else {
       this.fechaFin = Date.parse(this.logForm.value.fechaFin.toString());
     }
-    console.log("1"+this.esVisible);
-    this.search().then(()=>{
+    console.log("1" + this.esVisible);
+    this.search().then(() => {
       this.esVisible = true;
-      console.log("2"+this.esVisible);
+      console.log("2" + this.esVisible);
     }
     )
-    console.log("3"+this.esVisible);
+    console.log("3" + this.esVisible);
 
   }
 }

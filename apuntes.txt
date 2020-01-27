@@ -8,7 +8,7 @@ ordenar las tablas con un pipe y ponerle un scroll
 
 muestra mal la demora en la tabla
 
-showingLogs del viewlogs tiene que ser un observable como showingOrders: Observable<any[]> del view order stats, lo mismo hay que hacerlo con otras listas.(con productmanagement ya esta)
+showingLogs del viewlogs tiene que ser un observable como showingOrders: Observable<any[]> del view order stats, lo mismo hay que hacerlo con otras listas (manage users tambien, y home cliente).(con productmanagement ya esta)
 
 arreglar el ver encuestas, muestra todos los comentarios buenos y malos, tiene qu emostrar los mejores y peores puntuados
 
@@ -18,8 +18,3 @@ que no traiga todos los pedidos del cliente cuando los lista
 
 SUGERENCIAS:
 - si el usuario esta en la base pero no en auth te podría redireccionar directamente a una pagina para cambiar la contraseña
-
-
-
-1579630619
--47409

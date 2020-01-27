@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/firebase/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { FileService } from 'src/app/services/firestorage/file.service';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { LogService } from 'src/app/services/firebase/log.service';
 import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
+import { map } from 'rxjs/operators';
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-manage-users',
@@ -15,8 +18,12 @@ import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 })
 export class ManageUsersComponent implements OnInit {
 
-  public users: User[];
-  public showingUsers: User[];
+  // public users: User[];
+  // public showingUsers: User[];
+  //public users: any;
+  public users: AngularFirestoreCollection<User>;
+  //public users: Observable<any[]>;
+  public showingUsers = null;
   public showingUsersRole: User[];
   public userForm: FormGroup;
   public onReset: Subject<void> = new Subject<void>();
@@ -37,13 +44,20 @@ export class ManageUsersComponent implements OnInit {
       userImage: new FormControl('', [Validators.required])
     })
 
-    this.users = new Array<User>();
-    this.users = this.userService.listado;
+    //this.users = new Array<User>();
 
-    this.showingUsers = this.users;
+    this.users = this.userService.GetAll2();
+
+    console.log(this.userService.GetAll2());
+
+    //this.users = this.userService.listado;
+
+    //this.showingUsers = this.users;
 
     this.haySeleccionado = false;
     this.usuarioSeleccionado = null;
+
+    this.ClearFilters();
   }
 
   public addUser(): void {
@@ -85,8 +99,6 @@ export class ManageUsersComponent implements OnInit {
   onFileChanged(event) {
     this.file = event.target.files[0];
   }
-
-
 
   public changeState(uid: string, state: string) {
 
@@ -139,36 +151,43 @@ export class ManageUsersComponent implements OnInit {
   // ##### FILTER FUNCTIONS #####
 
   public Filter(type: string): void {
-    this.showingUsers = this.users.filter((element) => {
 
-      if (type == 'true' || type == 'false') {
-        if (type == 'true') {
-          if (element.state == 'deshabilitado')
-            return element;
-        } else {
-          if (element.state == 'habilitado')
-            return element;
-        }
-      } else {
-        if (element.role == type)
-          return element;
-      }
-    })
+    this.showingUsers = this.users.valueChanges().pipe(
+      map(users => {
+        return users.filter(element => {
+          element = Object.assign(new User(), element);          
+
+          if (type == 'habilitados' || type == 'suspendidos') {            
+            if (type == 'habilitados' && element.state == 'deshabilitado') {
+              //if (element.state == 'deshabilitado')
+                return element;
+            } else {
+              if (element.state == 'habilitado')
+                return element;
+            }
+          } else {
+            if (element.role == type)
+              return element;
+          }
+        });
+      })
+    );
+
   }
 
   public search() {
-    this.showingUsers = this.users.filter(res => {
-      if (res.name.includes(this.busqueda) || res.lastname.includes(this.busqueda) || res.email.includes(this.busqueda)) {
-        return res;
-      };
-    });
+    this.showingUsers = this.users.valueChanges().pipe(
+      map(usuarios => {
+        return usuarios.filter(res => {
+          res = Object.assign(new User(), res);
+          console.log(res.state);
+          if (res.email.includes(this.busqueda) || this.busqueda == null)
+          if(!res.deleted)
+            return res;
+        });
+      })
+    );
   }
-
-  public filtro(valor: string) {
-    console.log(valor);
-  }
-
-
 
   public Cancel(): void {
     this.userForm.reset();
@@ -176,11 +195,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   public ClearFilters(): void {
-
-    this.showingUsers = this.users.filter((element) => {
-      return element;
-    });
-
+    this.search();
   }
 
 }

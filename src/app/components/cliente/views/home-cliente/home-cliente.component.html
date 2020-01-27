@@ -33,11 +33,11 @@
         Tu código de pedido es <b>{{order.codeID}}</b> y tu mozo es <b>{{order.waiter.name}} {{order.waiter.lastname}}</b>.
     </div>
     <div>
-        <input type="button" (click)="dalequeva()">
+        
     </div>
     <hr>
     <div class="row card-group">
-        <div class="col-3 mar-top-2"  *ngFor="let prod of showingProducts">
+        <div class="col-3 mar-top-2"  *ngFor="let prod of showingProducts | async">
             <app-food-card (added)="AddToOrder($event)" [resetEvent]="onReset" [product]="prod"></app-food-card>
         </div>
     </div>

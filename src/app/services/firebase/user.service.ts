@@ -39,6 +39,20 @@ export class UserService {
 			})
 	}
 
+	public GetAll() : Observable<User[]>{
+		return this.db.collection("usuarios").valueChanges().pipe(			
+			map(actions => {
+                return actions.map(action => {
+					return action = Object.assign(new User(), action);                    
+                });
+            })
+            );			
+	  }
+
+	  public GetAll2() : AngularFirestoreCollection<User>{
+		return this.db.collection("usuarios");
+	  }
+
 	public SetRole(email: string, role: string): void
 	{
 		this.SetRoleInFirebase(email, role);

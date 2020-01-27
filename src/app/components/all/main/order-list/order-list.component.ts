@@ -43,6 +43,7 @@ export class OrderListComponent implements OnInit {
 			case Role.cliente:
 
 				const terminado = 'Terminado';
+				const pagado = 'Pagado';
 
 				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
 					this.orders = this.orderService.GetAllByWaiterOrderByTime2(this.me.email).valueChanges().pipe(
@@ -50,13 +51,13 @@ export class OrderListComponent implements OnInit {
 							return orders.filter(order => {
 								order = Object.assign(new Order(), order);
 								var hasRole = false;
-								order['items'].forEach(el => {
-									console.log(el.state);
-									if (el.state != terminado)
-										hasRole = true;
-								});
-								if (hasRole)
-									return order;
+								 order['items'].forEach(el => {
+								 	console.log(el.state);
+								 	if (el.state != terminado || el.state != pagado)
+								 		hasRole = true;
+								 });
+								 if (hasRole)
+								 	return order;
 							});
 						})
 					);

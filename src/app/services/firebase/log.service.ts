@@ -33,7 +33,7 @@ export class LogService {
 
   }
 
-  public GetAll2() {
+  public GetAll2() : AngularFirestoreCollection<Log>{
     return this.db.collection("movimientos");
   }
   public GetAll(): any {

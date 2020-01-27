@@ -28,9 +28,9 @@
                         class="fas fa-fire"></i></button>
                         <button title="Mozos" class="btn btn-outline-success" (click)="Filter('mozo')"><i
                             class="fas fa-book"></i></button>
-                <button title="Suspendidos" class="btn btn-outline-success" (click)="Filter('true')"><i
+                <button title="Suspendidos" class="btn btn-outline-success" (click)="Filter('suspendidos')"><i
                         class="fas fa-ban"></i></button>
-                <button title="Habilitados" class="btn btn-outline-success" (click)="Filter('false')"><i
+                <button title="Habilitados" class="btn btn-outline-success" (click)="Filter('habilitados')"><i
                         class="fas fa-check"></i></button>
 
             </div>
@@ -69,7 +69,7 @@
                 </tr>
             </thead>
             <tbody *ngIf="users">
-                <tr class="user" *ngFor="let user of showingUsers">
+                <tr class="user" *ngFor="let user of showingUsers | async">
                     <td><img [src]="user.image" width="30px" height="30px">
                     </td>
                     <td>{{user.name}}</td>

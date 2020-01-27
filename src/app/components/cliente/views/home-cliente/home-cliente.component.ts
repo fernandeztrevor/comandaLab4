@@ -10,6 +10,8 @@ import { TableService } from 'src/app/services/firebase/table.service';
 import { ToastrService } from 'ngx-toastr';
 import { TableState } from 'src/app/models/table';
 import { ProductService } from 'src/app/services/firebase/product.service';
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-home-cliente',
@@ -20,9 +22,10 @@ import { ProductService } from 'src/app/services/firebase/product.service';
 export class HomeClienteComponent implements OnInit {
 
 	public order: Order = null;
-	public products: Product[];
-
-	public showingProducts: Product[];
+	//public products: Product[];
+	//public showingProducts: Product[];
+	public products: AngularFirestoreCollection<any>;
+	public showingProducts: any;
 	public somethingOrdered: boolean;
 	public onReset: Subject<void> = new Subject<void>();
 	public hasOrder = false;
@@ -34,39 +37,39 @@ export class HomeClienteComponent implements OnInit {
 	constructor(private orderService: OrderService, private userService: UserService, private authService: AuthService, private tableService: TableService,
 		private toastr: ToastrService, private productService: ProductService) { }
 
-	ngOnInit() 
-	{
+	ngOnInit() {
 		this.InitializeOrder();
 		//this.products = this.CreateTestProducts();
 		//this.products = this.productService.listado;
-		this.products = new Array<Product>();
-    	this.products = this.productService.listado;
-		this.showingProducts = this.products;
+
+		this.products = this.productService.GetAll2();
+
+		//this.products = new Array<Product>();
+		//this.products = this.productService.listado;
+
+		//this.showingProducts = this.products;
 		this.authService.GetCurrentUser().then(userLogged => this.currentUser = userLogged);
 		this.SelectRandomWaiter().then(waiter => this.currentWorker = waiter);
-		
+		this.ClearFilters();
 	}
 
 	// ##### CORE FUNCTIONS #####
 
-	public AddToOrder(prod: Product): void
-	{
+	public AddToOrder(prod: Product): void {
 		this.order.items.push(prod);
 		this.order.CalculateTotal();
 		this.somethingOrdered = true;
 		console.log('order:', this.order);
 	}
 
-	public CancelOrder(): void
-	{
+	public CancelOrder(): void {
 		this.somethingOrdered = false;
 		this.order.items = [];
 		this.order.CalculateTotal();
 		this.onReset.next();
 	}
-	
-	public MakeOrder(): void	
-	{
+
+	public MakeOrder(): void {
 
 		//this.orderService.GetTopBest();
 		// if(this.order.tableID == 'No hay')
@@ -90,38 +93,47 @@ export class HomeClienteComponent implements OnInit {
 		// 	}
 		// 	else
 		// 		this.toastr.error('Hay algo erróneo con este pedido.');
-				
+
 		// }
 	}
 
-	
+
 
 	// ##### FILTER FUNCTIONS #####
 
-	public Filter(type: string): void
-	{
-		this.showingProducts = this.products.filter((element) => {
-			if(element.IsFoodType(type))
-			return element;
+	public Filter(type: string): void {
+		this.showingProducts = this.products.valueChanges().pipe(
+			map(productos => {
+			  return productos.filter(res => {
+				res = Object.assign(new Product(), res);
+				if (res.IsFoodType(type))
+				return res;
+			  });
 		})
+		);
 	}
-	
-	public ClearFilters(): void
-	{
-		this.showingProducts = this.products;
+
+	public ClearFilters(): void {
+		this.showingProducts = this.products.valueChanges().pipe(
+			map(productos => {
+			  return productos.filter(res => {
+				res = Object.assign(new Product(), res);				
+				  return res;
+			  });
+			})
+		  );
 	}
 
 	// ###### PRIVATE FUNCTIONS #####
 
-	 private InitializeOrder(): void
-	 {
-	 	this.tableService.FindAvailable()
-	 		.then(table => {
-	 			this.order = Order.Create(table.tableID);
-	 			this.somethingOrdered = false;
-	 		})
-			
-	 }
+	private InitializeOrder(): void {
+		this.tableService.FindAvailable()
+			.then(table => {
+				this.order = Order.Create(table.tableID);
+				this.somethingOrdered = false;
+			})
+
+	}
 
 	// private InitializeOrder(): void
 	// {
@@ -130,12 +142,12 @@ export class HomeClienteComponent implements OnInit {
 
 	// 		this.waitingOrder = true;
 	// 		const email = this.currentUser.email;
-	
+
 	// 		this.orderService.GetByCodeUser(email)
 	// 			.then(ord => this.order = ord)
 	// 			.catch(error => this.toastr.error(error, 'Error'))
 	// 			.finally(() => this.waitingOrder = false);		
-			
+
 	// 		if(this.waitingOrder){
 	// 			this.tableService.FindAvailable()
 	// 			.then(table => {
@@ -145,32 +157,30 @@ export class HomeClienteComponent implements OnInit {
 	// 		}
 	// 	})			
 	// }
-	
-	private SelectRandomWaiter(): Promise<User>
-	{
+
+	private SelectRandomWaiter(): Promise<User> {
 		return this.userService.GetAllWaiters().then(waiters => {
 			let random = Math.floor(Math.random() * waiters.length);
 			return waiters[random];
 		})
 	}
 
-	 private CreateTestProducts(): Product[]
-	 {
-	 	return [
-	 		Product.Create('B-CER-QUIL', 'Cerveza Quilmes', 'assets/img/B-CER-QUIL.jpg', 50, [FoodType.bebida, FoodType.alcohol], Cook.cervecero, "Bebida con alcohol, no recomendada si vas a conducir"),
-	 		Product.Create('C-COM-MCFR', 'Milanesa con fritas', 'assets/img/C-COM-MCFR.jpg', 300, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de papas fritas"),
-	 		Product.Create('C-COM-MACF', 'Milanesa a caballo con fritas', 'assets/img/C-COM-MACF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de huevo frito y papas fritas"),
-	 		Product.Create('C-COM-MNAF', 'Milanesa napo con fritas', 'assets/img/C-COM-MNAF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa con salsa de tomate, jamón y muzzarella acompañada de papas fritas"),
-	 		Product.Create('B-GAS-COCA', 'Coca-Cola', 'assets/img/B-GAS-COCA.jpg', 60, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol gasificada de extractos naturales"),
-	 		Product.Create('B-AGU-BONA', 'Bon Aqua', 'assets/img/B-AGU-BONA.jpg', 45, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol y sin gas de origenes naturales"),
-	 		Product.Create('B-TRA-DDFR', 'Daikiri de frutilla', 'assets/img/B-TRA-DDFR.jpg', 70, [FoodType.bebida, FoodType.alcohol, FoodType.postre], Cook.bartender, "Bebida con alcohol, no recomendada si vas a manejar"),
-	 		Product.Create('C-COM-ENCE', 'Ensalada el Cesar', 'assets/img/C-COM-ENCE.jpg', 150, [FoodType.comida, FoodType.vegano], Cook.cocinero, " Ensalada de lechuga romana y croûtons con jugo de limón, aceite de oliva, huevo, salsa Worcestershire, anchoas, ajo, mostaza de Dijon, queso parmesano y pimienta negra"),
-	 		Product.Create('C-COM-EMPA', 'Empanada', 'assets/img/C-COM-EMPA.jpg', 50, [FoodType.comida], Cook.cocinero, " Empanada de pollo"),
-	 		Product.Create('B-VIN-VINO', 'Vino', 'assets/img/B-VIN-VINO.jpg', 550, [FoodType.bebida, FoodType.alcohol], Cook.bartender, "Bebida con alcohol, no recomendada si vas a conducir"),
-	 	];
-	 }
+	// private CreateTestProducts(): Product[] {
+	// 	return [
+	// 		Product.Create('B-CER-QUIL', 'Cerveza Quilmes', 'assets/img/B-CER-QUIL.jpg', 50, [FoodType.bebida, FoodType.alcohol], Cook.cervecero, "Bebida con alcohol, no recomendada si vas a conducir"),
+	// 		Product.Create('C-COM-MCFR', 'Milanesa con fritas', 'assets/img/C-COM-MCFR.jpg', 300, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de papas fritas"),
+	// 		Product.Create('C-COM-MACF', 'Milanesa a caballo con fritas', 'assets/img/C-COM-MACF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de huevo frito y papas fritas"),
+	// 		Product.Create('C-COM-MNAF', 'Milanesa napo con fritas', 'assets/img/C-COM-MNAF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa con salsa de tomate, jamón y muzzarella acompañada de papas fritas"),
+	// 		Product.Create('B-GAS-COCA', 'Coca-Cola', 'assets/img/B-GAS-COCA.jpg', 60, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol gasificada de extractos naturales"),
+	// 		Product.Create('B-AGU-BONA', 'Bon Aqua', 'assets/img/B-AGU-BONA.jpg', 45, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol y sin gas de origenes naturales"),
+	// 		Product.Create('B-TRA-DDFR', 'Daikiri de frutilla', 'assets/img/B-TRA-DDFR.jpg', 70, [FoodType.bebida, FoodType.alcohol, FoodType.postre], Cook.bartender, "Bebida con alcohol, no recomendada si vas a manejar"),
+	// 		Product.Create('C-COM-ENCE', 'Ensalada el Cesar', 'assets/img/C-COM-ENCE.jpg', 150, [FoodType.comida, FoodType.vegano], Cook.cocinero, " Ensalada de lechuga romana y croûtons con jugo de limón, aceite de oliva, huevo, salsa Worcestershire, anchoas, ajo, mostaza de Dijon, queso parmesano y pimienta negra"),
+	// 		Product.Create('C-COM-EMPA', 'Empanada', 'assets/img/C-COM-EMPA.jpg', 50, [FoodType.comida], Cook.cocinero, " Empanada de pollo"),
+	// 		Product.Create('B-VIN-VINO', 'Vino', 'assets/img/B-VIN-VINO.jpg', 550, [FoodType.bebida, FoodType.alcohol], Cook.bartender, "Bebida con alcohol, no recomendada si vas a conducir"),
+	// 	];
+	// }
 
-	
 
-	
+
+
 }
