@@ -31,24 +31,31 @@ export class LoginComponent implements OnInit {
 		const pass = this.loginForm.get('password').value;
 
 		this.userService.GetUserByEmail(usr)
-		.then(()=>{
+		.then(usuario=>{
 
 			console.log("esta en la base");
-
-			this.authService.LoginWithEmail(usr, pass)
+			if(!usuario.deleted && usuario.state == 'habilitado'){
+				this.authService.LoginWithEmail(usr, pass)
 		 	.then(() => {
 		 		this.toastr.success('¡Bienvenido!');
 		 	})
-		 	.catch(() => {
+		 	.catch(() => {				
 				 console.log("no estaba auth asi que lo creo");
 		 		this.authService.RegisterWithEmailAdmin(usr);
-			 })
-
-		})
-			 
+			 });
+			}else{
+				this.toastr.error('Usuario deshabilitado o inexistente');
+			}	
+		})		 
 		.catch(()=>
 			this.toastr.error('Usuario y/o contraseña incorrecto.')
-		);
+			
+		).finally(()=>{
+			this.loading = false;
+			this.userOption = 'none';
+			this.loginForm.get('email').setValue('');
+			this.loginForm.get('password').setValue('');			
+		});
 	}
 
 	private BindUser(usuario: string) {

@@ -10,6 +10,7 @@ import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 import { map } from 'rxjs/operators';
 import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import { element } from 'protractor';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-manage-users',
@@ -33,7 +34,7 @@ export class ManageUsersComponent implements OnInit {
   public role: string;
   public busqueda: string;
 
-  constructor(private userService: UserService, private fileService: FileService, private authService: AuthService, private movimientoService: LogService) { }
+  constructor(private userService: UserService, private fileService: FileService, private authService: AuthService, private movimientoService: LogService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.userForm = new FormGroup({
@@ -64,35 +65,34 @@ export class ManageUsersComponent implements OnInit {
 
     let user: User;
 
-    user = User.CreateUserFromAdmin(
-      this.userForm.value.userName,
-      this.userForm.value.userLastname,
-      this.userForm.value.userMail,
-      this.userForm.value.userRole
-    );
-
-    // this.authService.RegisterWithEmailAdmin(user).then(() => {
-    //   this.userService.persistirUsuario(user, this.file).then((value) => {
-    //     if (value) {
-    //       this.Cancel();
-    //     }
-    //     this.authService.GetCurrentUser().then(user => {
-    //       this.movimientoService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.alta);
-    //     })
-    //   });;
-    // });
-
-
-    this.userService.persistirUsuario(user, this.file).then((value) => {
-      if (value) {
+    this.userService.buscarEmail(this.userForm.value.userMail).then(resultado => {
+      if (resultado) {
+        this.toastr.error("Email duplicado");
         this.Cancel();
-      }
-      this.authService.GetCurrentUser().then(usr => {
-        let mensaje: string = `El usuario ${usr.email} dió de alta el usuario ${user.email}`;
+      } else if (!resultado) {
+        user = User.CreateUserFromAdmin(
+          this.userForm.value.userName,
+          this.userForm.value.userLastname,
+          this.userForm.value.userMail,
+          this.userForm.value.userRole
+        );
+        this.userService.persistirUsuario(user, this.file).then((value) => {
+          if (value) {
+            this.Cancel();
+          }
+          this.authService.GetCurrentUser().then(usr => {
+            let mensaje: string = `El usuario ${usr.email} dió de alta el usuario ${user.email}`;
+            this.movimientoService.persistirMovimiento(usr, TargetMovimiento.usuario, TipoMovimiento.alta, mensaje);
+          });
+        });
 
-        this.movimientoService.persistirMovimiento(usr, TargetMovimiento.usuario, TipoMovimiento.alta, mensaje);
-      })
-    });;
+      };
+
+    })
+
+
+
+
 
   }
 
@@ -155,12 +155,12 @@ export class ManageUsersComponent implements OnInit {
     this.showingUsers = this.users.valueChanges().pipe(
       map(users => {
         return users.filter(element => {
-          element = Object.assign(new User(), element);          
+          element = Object.assign(new User(), element);
 
-          if (type == 'habilitados' || type == 'suspendidos') {            
+          if (type == 'habilitados' || type == 'suspendidos') {
             if (type == 'habilitados' && element.state == 'deshabilitado') {
               //if (element.state == 'deshabilitado')
-                return element;
+              return element;
             } else {
               if (element.state == 'habilitado')
                 return element;
@@ -182,8 +182,8 @@ export class ManageUsersComponent implements OnInit {
           res = Object.assign(new User(), res);
           console.log(res.state);
           if (res.email.includes(this.busqueda) || this.busqueda == null)
-          if(!res.deleted)
-            return res;
+            if (!res.deleted)
+              return res;
         });
       })
     );

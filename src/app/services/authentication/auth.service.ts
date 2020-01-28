@@ -9,6 +9,7 @@ import { reject } from 'q';
 import { LogService } from '../firebase/log.service';
 import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
 	providedIn: 'root'
@@ -69,13 +70,16 @@ export class AuthService {
 		return new Promise((resolve, reject) => {
 			this.afsAuth.auth.signInWithEmailAndPassword(email, pwd)
 				.then(userData => {
-					resolve(userData);
-					console.log('Login success', userData);
-					this.RedirectForRole(email);
-					this.userService.GetUserByEmail(email).then(user => {
-						let mensaje: string = `El usuario ${user.email} inició sesión`;
-						this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.ingreso, mensaje);
-					});
+					this.userService.GetUserByEmail(userData.user.email).then(user => {
+						resolve(userData);
+						console.log('Login success', userData);
+						this.RedirectForRole(email);
+						this.userService.GetUserByEmail(email).then(user => {
+							let mensaje: string = `El usuario ${user.email} inició sesión`;
+							this.logService.persistirMovimiento(user, TargetMovimiento.usuario, TipoMovimiento.ingreso, mensaje);
+						});
+
+					})
 				})
 				.catch(error => reject(error));
 		});

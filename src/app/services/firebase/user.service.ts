@@ -15,18 +15,17 @@ import { FileService } from '../firestorage/file.service';
 export class UserService {
 
 	public usuarios: AngularFirestoreCollection;
-    //public listado: Product[];
-    //public listado: Array<Product>;
-    public listado = new Array<User>();
-    public url: string;
+	//public listado: Product[];
+	//public listado: Array<Product>;
+	public listado = new Array<User>();
+	public url: string;
 
 	constructor(private db: AngularFirestore, private afsFunc: AngularFireFunctions, private fileService: FileService) {
 		this.usuarios = this.db.collection<User>('usuarios');
-        this.traerUsuariosArray();
-	 }
+		this.traerUsuariosArray();
+	}
 
-	public GetAll_InArray(): Promise<User[]>
-	{
+	public GetAll_InArray(): Promise<User[]> {
 		return this.db.collection('usuarios').get().toPromise()
 			.then(doc => {
 				let users: User[] = [];
@@ -39,40 +38,36 @@ export class UserService {
 			})
 	}
 
-	public GetAll() : Observable<User[]>{
-		return this.db.collection("usuarios").valueChanges().pipe(			
+	public GetAll(): Observable<User[]> {
+		return this.db.collection("usuarios").valueChanges().pipe(
 			map(actions => {
-                return actions.map(action => {
-					return action = Object.assign(new User(), action);                    
-                });
-            })
-            );			
-	  }
+				return actions.map(action => {
+					return action = Object.assign(new User(), action);
+				});
+			})
+		);
+	}
 
-	  public GetAll2() : AngularFirestoreCollection<User>{
+	public GetAll2(): AngularFirestoreCollection<User> {
 		return this.db.collection("usuarios");
-	  }
+	}
 
-	public SetRole(email: string, role: string): void
-	{
+	public SetRole(email: string, role: string): void {
 		this.SetRoleInFirebase(email, role);
 		this.SetRoleInCloudFunctions(email, role);
 	}
 
-	public Add(user: User): void
-	{
+	public Add(user: User): void {
 		this.db.collection("usuarios").add(CommonHelper.ConvertToObject(user));
 	}
 
-	private SetRoleInCloudFunctions(email: string, role: string): void
-	{
+	private SetRoleInCloudFunctions(email: string, role: string): void {
 		const setRoleFunction = this.afsFunc.httpsCallable('setRole');
-		setRoleFunction({email: email, desiredRole: role})
+		setRoleFunction({ email: email, desiredRole: role })
 			.subscribe(response => console.log(response));
 	}
 
-	private SetRoleInFirebase(email: string, role: string): void
-	{
+	private SetRoleInFirebase(email: string, role: string): void {
 		this.GetUserByEmail(email).then(doc => {
 			let user = doc;
 			user.role = role as Role;
@@ -81,18 +76,33 @@ export class UserService {
 		})
 	}
 
-	public GetUserByEmail(email: string): Promise<User>
-	{
+	public GetUserByEmail(email: string): Promise<User> {
 		let docRef = this.db.collection('usuarios', ref => ref.where('email', '==', email));
 		return docRef.get().toPromise().then(doc => {
-			let user = doc.docs[0].data() as User;
-			user.id = doc.docs[0].id;
-			return user;
-		})
+			if(!doc.empty){
+				let user = doc.docs[0].data() as User;
+				user.id = doc.docs[0].id;
+				return user;
+			} else {				
+				return null;
+			}
+		});
 	}
-	
-	public GetAllWaiters(): Promise<User[]>
-	{
+
+	public buscarEmail(email: string): Promise<boolean> {
+		let docRef = this.db.collection('usuarios', ref => ref.where('email', '==', email));
+		return docRef.get().toPromise().then(doc => {
+			if(!doc.empty){
+				return true;
+			} else {				
+				return false;
+			}
+		});
+	}
+
+
+
+	public GetAllWaiters(): Promise<User[]> {
 		let documents = this.db.collection('usuarios', ref => ref.where('role', '==', 'mozo'));
 		return documents.get().toPromise().then(doc => {
 			var waiters: User[] = [];
@@ -105,8 +115,7 @@ export class UserService {
 		})
 	}
 
-	public GetUserByID(id: string): Promise<User>
-	{		
+	public GetUserByID(id: string): Promise<User> {
 		let docRef = this.db.collection('usuarios', ref => ref.where('id', '==', id));
 		return docRef.get().toPromise().then(doc => {
 			let user = doc.docs[0].data() as User;
@@ -125,8 +134,7 @@ export class UserService {
 	// 	})
 	// }
 
-	public ModifyProfileImage(email: string, image: File): Promise<void>
-	{
+	public ModifyProfileImage(email: string, image: File): Promise<void> {
 		return this.GetUserByEmail(email).then(doc => {
 			let user = doc;
 			this.fileService.subirFotoUsuarios(image, user.id);
@@ -134,12 +142,12 @@ export class UserService {
 	}
 
 	traerUsuariosArray() {
-        let listadoObservable = null;
+		let listadoObservable = null;
 
-        listadoObservable = this.traerUsuarios();
-        console.log("traerUsuariosArray ListadoObservable");
-        listadoObservable.subscribe(usrs => {
-            usrs.forEach(unUser => {
+		listadoObservable = this.traerUsuarios();
+		console.log("traerUsuariosArray ListadoObservable");
+		listadoObservable.subscribe(usrs => {
+			usrs.forEach(unUser => {
 
 				let u = new User;
 
@@ -153,52 +161,52 @@ export class UserService {
 				u.deleted = unUser.deleted;
 				u.password = unUser.password;
 
-				if(!u.deleted){
-					if(u.role != Role.cliente)
-					this.listado.push(u);
-				}                
-            });
-        });
+				if (!u.deleted) {
+					if (u.role != Role.cliente)
+						this.listado.push(u);
+				}
+			});
+		});
 	}
-	
+
 	traerUsuarios(): Observable<any[]> {
-        return this.usuarios.snapshotChanges().pipe(
-            map(actions => {
-                return actions.map(action => {
-                    const datos = action.payload.doc.data() as User;
-                    const id = action.payload.doc.id;
-                    return { id, ...datos };
-                });
-            })
-        );
+		return this.usuarios.snapshotChanges().pipe(
+			map(actions => {
+				return actions.map(action => {
+					const datos = action.payload.doc.data() as User;
+					const id = action.payload.doc.id;
+					return { id, ...datos };
+				});
+			})
+		);
 	}
 
 	persistirUsuario(usuario: User, foto: File): Promise<boolean> {
- 		let idGenerado: string;
+		let idGenerado: string;
 
-        return this.usuarios.add(CommonHelper.ConvertToObject(usuario)).then(doc => {
-			this.usuarios.doc(doc.id).update({ id: doc.id });  
-			idGenerado = doc.id;			           
-		})		
-		.then(() => {
-            if (foto) {				
-            return  this.fileService.subirFotoUsuarios(foto, idGenerado).then(()=>{
-					return true;
-				});
-            }             
-        }).catch(() => {
-            return false;
-        });
-    }
-	
-	updateState(uid: string, state: string) {
-        this.usuarios.doc(uid).update({ state: state });
+		return this.usuarios.add(CommonHelper.ConvertToObject(usuario)).then(doc => {
+			this.usuarios.doc(doc.id).update({ id: doc.id });
+			idGenerado = doc.id;
+		})
+			.then(() => {
+				if (foto) {
+					return this.fileService.subirFotoUsuarios(foto, idGenerado).then(() => {
+						return true;
+					});
+				}
+			}).catch(() => {
+				return false;
+			});
 	}
-	
-	delete(uid:string){
+
+	updateState(uid: string, state: string) {
+		this.usuarios.doc(uid).update({ state: state });
+	}
+
+	delete(uid: string) {
 		this.usuarios.doc(uid).update({ deleted: true });
 	}
 
 
-	
+
 }
