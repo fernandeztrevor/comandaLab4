@@ -18,7 +18,7 @@ export class OrderListComponent implements OnInit {
 	@Output() orderSelected = new EventEmitter<Order>();
 
 	public orders: any;
-	public orders2: any;
+	public showingOrders: boolean = true;
 	public me: User;
 
 	constructor(private orderService: OrderService, private authService: AuthService) { }
@@ -42,7 +42,7 @@ export class OrderListComponent implements OnInit {
 				break;
 			case Role.cliente:
 
-				const terminado = 'Terminado';
+				const cancelado = 'Cancelado';
 				const pagado = 'Pagado';
 
 				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
@@ -51,25 +51,28 @@ export class OrderListComponent implements OnInit {
 							return orders.filter(order => {
 								order = Object.assign(new Order(), order);
 								var hasRole = false;
-								 order['items'].forEach(el => {
-								 	console.log(el.state);
-								 	if (el.state != terminado || el.state != pagado)
-								 		hasRole = true;
-								 });
-								 if (hasRole)
-								 	return order;
+
+								if (order['state'] != pagado && order['state'] != cancelado) {
+								//if (order['state'] != cancelado) {
+									console.log(order['codeID']);
+									hasRole = true;
+									this.showingOrders = false;
+								}
+								//order['items'].forEach(el => {
+								//console.log(el.state);
+								//if (el.state != terminado || el.state != pagado)
+								//hasRole = true;
+								//});
+								if (hasRole)
+									return order;
 							});
 						})
 					);
-
-				});
+				})
 		}
 	}
 
 	public SelectOrder(order: Order): void {
 		this.orderSelected.emit(order);
 	}
-
-
-
 }

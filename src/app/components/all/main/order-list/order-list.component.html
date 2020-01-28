@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive" >
     <table class="table table-hover">
         <thead>
             <tr>
@@ -19,7 +19,11 @@
             </tr>
         </tbody>
     </table>
+    <div class="align-center mar-top-1" *ngIf="showingOrders">
+        <label><h2>No hay ordenes para mostrar</h2></label>
+    </div>
     <div *ngIf="!orders" class="align-center mar-top-1">
         <app-spinner></app-spinner>
     </div>
+    
 </div>
