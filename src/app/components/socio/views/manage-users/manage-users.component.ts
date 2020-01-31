@@ -28,7 +28,7 @@ export class ManageUsersComponent implements OnInit {
   public showingUsersRole: User[];
   public userForm: FormGroup;
   public onReset: Subject<void> = new Subject<void>();
-  public file: File;
+  public file: File = null;
   public usuarioSeleccionado: User;
   public haySeleccionado: boolean;
   public role: string;
@@ -85,15 +85,8 @@ export class ManageUsersComponent implements OnInit {
             this.movimientoService.persistirMovimiento(usr, TargetMovimiento.usuario, TipoMovimiento.alta, mensaje);
           });
         });
-
       };
-
     })
-
-
-
-
-
   }
 
   onFileChanged(event) {
@@ -145,7 +138,35 @@ export class ManageUsersComponent implements OnInit {
     this.userForm.controls['userLastname'].setValue(usuario.lastname);
     this.userForm.controls['userMail'].setValue(usuario.email);
     this.userForm.controls['userRole'].setValue(usuario.role);
+    console.log(this.usuarioSeleccionado);
 
+  }
+
+  public updateUser() {
+
+    let rol = this.usuarioSeleccionado.role;
+
+    this.usuarioSeleccionado.name = this.userForm.value.userName;
+    this.usuarioSeleccionado.lastname = this.userForm.value.userLastname;
+    this.usuarioSeleccionado.email = this.userForm.value.userMail;
+    this.usuarioSeleccionado.role = this.userForm.value.userRole;
+
+    this.userService.updateUser(this.usuarioSeleccionado, this.file).then(() => {
+      if (rol != this.usuarioSeleccionado.role) {
+        this.userService.SetRole(this.usuarioSeleccionado.email, this.usuarioSeleccionado.role);
+      }
+      // console.log(value);
+      // if (value) {
+      //   this.Cancel();
+      // }
+      this.authService.GetCurrentUser().then(usr => {
+
+        let mensaje: string = `El usuario ${usr.email} dió de modificó el usuario ${this.usuarioSeleccionado.email}`;
+        this.movimientoService.persistirMovimiento(usr, TargetMovimiento.usuario, TipoMovimiento.alta, mensaje);
+      }).then(() => {
+        this.Cancel();
+      });
+    });
   }
 
   // ##### FILTER FUNCTIONS #####
@@ -158,11 +179,13 @@ export class ManageUsersComponent implements OnInit {
           element = Object.assign(new User(), element);
 
           if (type == 'habilitados' || type == 'suspendidos') {
-            if (type == 'habilitados' && element.state == 'deshabilitado') {
+
+            console.log(type);
+            if (type == 'suspendidos' && element.state == 'deshabilitado') {
               //if (element.state == 'deshabilitado')
               return element;
             } else {
-              if (element.state == 'habilitado')
+              if (type == 'habilitados' && element.state == 'habilitado')
                 return element;
             }
           } else {
@@ -181,7 +204,7 @@ export class ManageUsersComponent implements OnInit {
         return usuarios.filter(res => {
           res = Object.assign(new User(), res);
           console.log(res.state);
-          if (res.email.includes(this.busqueda) || this.busqueda == null)
+          if (res.name.includes(this.busqueda) || res.email.includes(this.busqueda) || this.busqueda == null)
             if (!res.deleted)
               return res;
         });
@@ -192,6 +215,8 @@ export class ManageUsersComponent implements OnInit {
   public Cancel(): void {
     this.userForm.reset();
     this.onReset.next();
+    this.haySeleccionado = false;
+    this.usuarioSeleccionado = null;
   }
 
   public ClearFilters(): void {

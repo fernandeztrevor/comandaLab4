@@ -54,9 +54,10 @@ export class FileService {
 			this.storage
 				.ref(pathFoto)
 				.getDownloadURL().subscribe(url => {
-					this.updatePhotoUrlUsers(url, uid).then(()=>{
-						location.reload();
-					});
+					this.updatePhotoUrlUsers(url, uid);
+					//this.updatePhotoUrlUsers(url, uid).then(()=>{
+						//location.reload();
+					//});
 				});
 		}).then(() => {
 			//location.reload();
@@ -64,6 +65,13 @@ export class FileService {
 		}).catch(() => {
 			return false;
 		});;
+	}
+
+	public subirFotoGenericaUsuarios(uid: string): Promise<boolean> {
+		const url:string = 'https://firebasestorage.googleapis.com/v0/b/tplab4-aa5ae.appspot.com/o/imagenesUsuarios%2Fdefault-profile.png?alt=media&token=e03046d0-3237-4039-8bd3-a1ba051c0645';
+		return this.users.doc(uid).update({ image: url }).then(()=>{
+			return true;
+		});
 	}
 
 	public updatePhotoUrlUsers(url: string, uid: string): Promise<boolean>{

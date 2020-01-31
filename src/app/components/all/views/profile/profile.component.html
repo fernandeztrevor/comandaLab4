@@ -1,20 +1,21 @@
-<br><br><div class="container" *ngIf="user">
+<br><br>
+<div class="container" *ngIf="user">
     <div class="row top-row">
         <div class="col-4 align-center">
             <!-- <img src="{{user.image}}"> -->
         </div>
-        <!-- <div class="col-6">
-            <h1 class="page-title">
+        <div class="col-6">
+            <!-- <h1 class="page-title">
                 {{user.name}} {{user.lastname}}
-            </h1>
-        </div> -->
+            </h1> -->
+        </div>
         <div class="col-2"></div>
     </div>
     <div class="row middle-row">
         <!-- <p>Tu privacidad está segura en este sitio. La información detallada anteriormente no se expone ni es visible
             para nadie público. Solamente un administrador del sistema tiene acceso a estos datos.</p> -->
     </div>
-    <div class="row middle-row">
+    <!-- <div class="row middle-row">
         <div class="col-2"></div>
         <div class="col-8">
             <div class="card outside-shadow">
@@ -42,7 +43,166 @@
         </div>
         <div class="col-2"></div>
     </div>
-    <input accept=".png,.jpg" type="file" #fileInput style="display: none;" (change)="OnFileSelected($event)">
+    <input accept=".png,.jpg" type="file" #fileInput style="display: none;" (change)="OnFileSelected($event)"> -->
+    <div class="row middle-row">
+        <!-- <div class="row"> -->
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+
+                <!-- <div class="row">
+                    <div class="col-5"></div>
+                    <div class="col-2">
+                        <img [src]="this.user.image" width="60px" height="60px">
+                    </div>
+                    <div class="col-5"></div>
+                </div> -->
+
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="row middle-row">
+                            <div class="col-5"></div>
+                            <div class="col-2">
+                                <img [src]="this.user.image" width="60px" height="60px">
+                            </div>
+                            <div class="col-5"></div>
+                        </div>
+
+                        <div class="row middle-row">
+                            <div class="col-12">
+                                <label>Nombre:</label>
+                            </div>
+                            <div class="col-12">
+                                <input formControlName="userName" class="form-control full-width align-center"
+                                    type="text" placeholder="Nombre del usuario" (change)="cambio()" required>
+                            </div>
+                        </div>
+
+                        <div class="row middle-row">
+                            <div class="col-12">
+                                <label>Apellido:</label>
+                            </div>
+                            <div class="col-12">
+                                <input formControlName="userLastname" class="form-control full-width align-center"
+                                    type="text" placeholder="Apellido del usuario" (change)="cambio()" required>
+                            </div>
+                        </div>
+
+                        <div class="row middle-row">
+                            <div class="col-12">
+                                <label>Email:</label>
+                            </div>
+                            <div class="col-12">
+                                <input formControlName="userMail" class="form-control full-width align-center"
+                                    type="email" placeholder="Email del usuario" [readonly]="true" required>
+                            </div>
+                        </div>
+
+
+                        <div class="row middle-row">
+                            <div class="col-12">
+                                <label>Foto de perfil:</label>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="btn btn-primary btn-sm float-left col-12">
+                                    <input type="file" (change)="onFileChanged($event)" formControlName="userImage"
+                                        name="userImage">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row middle-row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="btn-group full-width">
+                                    <button type="button" class="btn btn-outline-danger" title="Cancelar" (click)="resetForm()"
+                                    ><i class="fas fa-times"></i></button>
+
+                                    <button class="btn btn-outline-success" title="Actualizar usuario"
+                                        (click)="updateUser()"><i
+                                            class="fas fa-check"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div> 
+            </form>
+        </div>
+        <div class="col-2"></div>
+        <!-- </div> -->
+
+        <!-- <hr class="mar-top-1"> -->
+        <!-- <form [formGroup]="userForm" (ngSubmit)="SendUser()">
+
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-2">
+                    <img [src]="this.user.image" width="60px" height="60px">
+                </div>
+                <div class="col-5"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+
+                    <div class="row middle-row">
+                        <div class="col-12">
+                            <label>Nombre:</label>
+                        </div>
+                        <div class="col-12">
+                            <input formControlName="userName" class="form-control full-width align-center" type="text"
+                                placeholder="Nombre del usuario" required>
+                        </div>
+                    </div>
+
+                    <div class="row middle-row">
+                        <div class="col-12">
+                            <label>Apellido:</label>
+                        </div>
+                        <div class="col-12">
+                            <input formControlName="userLastname" class="form-control full-width align-center"
+                                type="text" placeholder="Apellido del usuario" required>
+                        </div>
+                    </div>
+
+                    <div class="row middle-row">
+                        <div class="col-12">
+                            <label>Email:</label>
+                        </div>
+                        <div class="col-12">
+                            <input formControlName="userMail" class="form-control full-width align-center" type="email"
+                                placeholder="Email del usuario" [readonly]="true" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row middle-row">
+                        <div class="col-12">
+                            <label>Foto de perfil:</label>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="btn btn-primary btn-sm float-left">
+                                <input type="file" (change)="onFileChanged($event)" formControlName="userImage"
+                                    name="userImage">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </form> -->
+
+        <hr class="mar-top-1">
+        
+    </div>
+
 </div>
 
 <app-footer></app-footer>

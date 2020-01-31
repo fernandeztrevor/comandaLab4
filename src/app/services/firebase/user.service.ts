@@ -79,11 +79,11 @@ export class UserService {
 	public GetUserByEmail(email: string): Promise<User> {
 		let docRef = this.db.collection('usuarios', ref => ref.where('email', '==', email));
 		return docRef.get().toPromise().then(doc => {
-			if(!doc.empty){
+			if (!doc.empty) {
 				let user = doc.docs[0].data() as User;
 				user.id = doc.docs[0].id;
 				return user;
-			} else {				
+			} else {
 				return null;
 			}
 		});
@@ -92,15 +92,13 @@ export class UserService {
 	public buscarEmail(email: string): Promise<boolean> {
 		let docRef = this.db.collection('usuarios', ref => ref.where('email', '==', email));
 		return docRef.get().toPromise().then(doc => {
-			if(!doc.empty){
+			if (!doc.empty) {
 				return true;
-			} else {				
+			} else {
 				return false;
 			}
 		});
 	}
-
-
 
 	public GetAllWaiters(): Promise<User[]> {
 		let documents = this.db.collection('usuarios', ref => ref.where('role', '==', 'mozo'));
@@ -193,6 +191,10 @@ export class UserService {
 					return this.fileService.subirFotoUsuarios(foto, idGenerado).then(() => {
 						return true;
 					});
+				} else {
+					return this.fileService.subirFotoGenericaUsuarios(idGenerado).then(() => {
+						return true;
+					});
 				}
 			}).catch(() => {
 				return false;
@@ -207,6 +209,25 @@ export class UserService {
 		this.usuarios.doc(uid).update({ deleted: true });
 	}
 
+	updateUser(usuario: User, foto: File): Promise<boolean> {
+		let retorno = this.usuarios.doc(usuario.id).update({
+			name: usuario.name,
+			lastname: usuario.lastname,
+		})
+			.then(() => {
+				if (foto) {
+					return this.fileService.subirFotoUsuarios(foto, usuario.id).then(() => {
+						return true;
+					});
+				}
+			}).catch(() => {
+				return false;
+			});
 
+			console.log(retorno);
+			return retorno;
+
+
+	}
 
 }
