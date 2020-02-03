@@ -100,7 +100,7 @@ export class ProductManagementComponent implements OnInit {
       '',
       this.productForm.value.productName,
       '',
-      this.productForm.value.productPrice,
+      Number.parseFloat(this.productForm.value.productPrice),
       array,
       this.productForm.value.productCook,
       this.productForm.value.productDescription

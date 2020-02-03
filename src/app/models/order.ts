@@ -62,7 +62,7 @@ export class Order
     public CalculateTotal(): void
     {
         this.totalPrice = this.items.reduce((before, actual) => {
-            return before + actual.price;
+            return before  + actual.price ;
         }, 0);
     }
 

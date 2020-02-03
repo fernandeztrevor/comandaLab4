@@ -71,30 +71,27 @@ export class HomeClienteComponent implements OnInit {
 
 	public MakeOrder(): void {
 
-		//this.orderService.GetTopBest();
-		// if(this.order.tableID == 'No hay')
-		// 	this.toastr.error('No hay mesas disponibles. Vuelva más tarde.');
-		// else
-		// {
-		// 	if(this.order.CheckOrder())
-		// 	{
-		// 		this.order.waiter = this.currentWorker;
-		// 		this.order.client = this.currentUser;
-		// 		this.tableService.UpdateStatus(this.order.tableID, TableState.waitingOrder);
-		// 		//this.orderService.Add(this.order);
-		// 		this.productService.sumarCantidades(this.order.items);
-		// 		this.orderService.Update(this.order).then((value) => {
-		// 			if(!value){
-		// 				this.orderService.Add(this.order);
-		// 			} 
-		// 		});;
-		// 		this.toastr.success("El pedido se ha realizado correctamente! Este es tu número de pedido: " + this.order.codeID);
-		// 		this.hasOrder = true;
-		// 	}
-		// 	else
-		// 		this.toastr.error('Hay algo erróneo con este pedido.');
-
-		// }
+		 if(this.order.tableID == 'No hay')
+		 	this.toastr.error('No hay mesas disponibles. Vuelva más tarde.');
+		 else
+		 {
+		 	if(this.order.CheckOrder())
+		 	{
+		 		this.order.waiter = this.currentWorker;
+		 		this.order.client = this.currentUser;
+		 		this.tableService.UpdateStatus(this.order.tableID, TableState.waitingOrder);
+		 		//this.orderService.Add(this.order);
+		 		this.orderService.Update(this.order).then((value) => {
+		 			if(!value){
+		 				this.orderService.Add(this.order);
+		 			} 
+		 		});;
+		 		this.toastr.success("El pedido se ha realizado correctamente! Este es tu número de pedido: " + this.order.codeID);
+		 		this.hasOrder = true;
+		 	}
+		 	else
+		 		this.toastr.error('Hay algo erróneo con este pedido.');
+		 }
 	}
 
 
