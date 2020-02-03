@@ -24,45 +24,59 @@ export class OrderListComponent implements OnInit {
 	constructor(private orderService: OrderService, private authService: AuthService) { }
 
 	ngOnInit() {
+		const cancelado = 'Cancelado';
+		const pagado = 'Pagado';
+
 		switch (this.role) {
 			case Role.mozo:
 				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
-					this.orders = this.orderService.GetAllByWaiterOrderByTime(this.me.email).valueChanges();
+					this.orders = this.orderService.GetAllByWaiterOrderByTime(this.me.email).valueChanges().pipe(
+						map(orders => {
+							return orders.filter(order => {
+								order = Object.assign(new Order(), order);
+								if (order['state'] != cancelado) {
+									this.showingOrders = false;
+									return order;
+								}
+							});
+						})
+					);;
 				});
 				break;
 			case Role.cervecero:
 			case Role.bartender:
 			case Role.cocinero:
 				const cook: string = this.role;
-				this.orders = this.orderService.GetAllByCook(cook as Cook);
+				console.log(cook);
+
+				this.orders = this.orderService.GetAllByCook(cook as Cook).pipe(
+					map(orders => {
+						return orders.filter(order => {							
+							order = Object.assign(new Order(), order);
+							console.log(order['state']);
+							if (order['state'] != cancelado) {
+								this.showingOrders = false;
+								return order;
+							}
+						});
+					})
+				);
 				break;
 			case Role.socio:
 				this.orders = this.orderService.GetAllOrderByTime().valueChanges();
 
 				break;
 			case Role.cliente:
-
-				const cancelado = 'Cancelado';
-				const pagado = 'Pagado';
-
 				this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
 					this.orders = this.orderService.GetAllByWaiterOrderByTime2(this.me.email).valueChanges().pipe(
 						map(orders => {
 							return orders.filter(order => {
 								order = Object.assign(new Order(), order);
 								var hasRole = false;
-
 								if (order['state'] != pagado && order['state'] != cancelado) {
-								//if (order['state'] != cancelado) {
-									console.log(order['codeID']);
 									hasRole = true;
 									this.showingOrders = false;
 								}
-								//order['items'].forEach(el => {
-								//console.log(el.state);
-								//if (el.state != terminado || el.state != pagado)
-								//hasRole = true;
-								//});
 								if (hasRole)
 									return order;
 							});
