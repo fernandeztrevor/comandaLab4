@@ -6,6 +6,7 @@ import { Order } from 'src/app/models/order';
 import { map } from 'rxjs/operators';
 import { Survey } from 'src/app/models/survey';
 import { SurveyService } from 'src/app/services/firebase/survey.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-tables-stats',
@@ -37,7 +38,7 @@ export class ViewTablesStatsComponent implements OnInit {
   @Input() fechaInicio: number;
   @Input() fechaFin: number;
 
-  constructor(private orderService: OrderService, private surveyService: SurveyService) { }
+  constructor(private orderService: OrderService, private surveyService: SurveyService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.surveys = this.surveyService.GetAll().valueChanges();
@@ -50,10 +51,9 @@ export class ViewTablesStatsComponent implements OnInit {
     this.ClearFilters();
   }
 
-  public SelectSurvey(surv: Survey): void
-	{
-		this.survey = surv;
-	}
+  public SelectSurvey(surv: Survey): void {
+    this.survey = surv;
+  }
 
   public ClearFilters(): void {
     this.search();
@@ -93,18 +93,20 @@ export class ViewTablesStatsComponent implements OnInit {
       })
     );
 
+
+
     this.surveysGood = this.surveyService.GetAll2().valueChanges().pipe(
       map(surveys => {
         return surveys.filter(survey => {
           survey = Object.assign(new Survey(), survey);
           if (survey['order']['timestamp'] > this.fechaInicio && survey['order']['timestamp'] < this.fechaFin) {
-            if(((survey['cookScore']+survey['restaurantScore']+survey['tableScore']+survey['waiterScore'])/4)>=7)
-            return survey;
+            if (((survey['cookScore'] + survey['restaurantScore'] + survey['tableScore'] + survey['waiterScore']) / 4) >= 7)
+              return survey;
           }
-          console.log(surveys);
+          //console.log(surveys);
         });
       })
-      
+
     );
 
     this.surveysBad = this.surveyService.GetAll2().valueChanges().pipe(
@@ -112,28 +114,28 @@ export class ViewTablesStatsComponent implements OnInit {
         return surveys.filter(survey => {
           survey = Object.assign(new Survey(), survey);
           if (survey['order']['timestamp'] > this.fechaInicio && survey['order']['timestamp'] < this.fechaFin) {
-            if(((survey['cookScore']+survey['restaurantScore']+survey['tableScore']+survey['waiterScore'])/4)<=4)
-            return survey;
+            if (((survey['cookScore'] + survey['restaurantScore'] + survey['tableScore'] + survey['waiterScore']) / 4) <= 4)
+              return survey;
           }
-          console.log(surveys);
+          //console.log(surveys);
         });
       })
-      
+
     );
 
     this.getTops();
   }
 
-  public setNulls(){
-    this.mesaMasUsada= null;
-    this.mesaMenosUsada= null;
+  public setNulls() {
+    this.mesaMasUsada = null;
+    this.mesaMenosUsada = null;
     this.mesaMayorFacturacion = null;
     this.mesaMenorFacturacion = null;
     this.facturaMayorImporte = null;
     this.facturaMenorImporte = null;
-  
-    this.lista= null;
-    this.arrayAcumulador= null;
+
+    this.lista = null;
+    this.arrayAcumulador = null;
   }
 
   public getTops() {
@@ -168,12 +170,12 @@ export class ViewTablesStatsComponent implements OnInit {
       cantidad = result.length;
       this.mesaMasUsada = result[0];
       this.mesaMenosUsada = result[cantidad - 1];
-      console.log(this.mesaMenosUsada);
-      console.log(this.mesaMasUsada);
-      console.log(this.facturaMenorImporte);
-      console.log(this.facturaMayorImporte);
-      console.log(this.mesaMenorFacturacion);
-      console.log(this.mesaMayorFacturacion);
+      // console.log(this.mesaMenosUsada);
+      // console.log(this.mesaMasUsada);
+      // console.log(this.facturaMenorImporte);
+      // console.log(this.facturaMayorImporte);
+      // console.log(this.mesaMenorFacturacion);
+      // console.log(this.mesaMayorFacturacion);
     });
 
   }
@@ -229,7 +231,29 @@ export class ViewTablesStatsComponent implements OnInit {
     else {
       this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
     }
-  } 
+  }
+
+  public exportCSV() {
+    this.toastr.info('Exportando estadística...');
+
+    let csvData = 'categoria,numDeMesa,cantidad,tipo\n';
+    csvData += 'masUsada' + ',' + this.mesaMasUsada[0] + ',' + this.mesaMasUsada[1] + ',veces\n';
+    csvData += 'menosUsada' + ',' + this.mesaMenosUsada[0] + ',' + this.mesaMenosUsada[1] + ',veces\n';
+    csvData += 'mayorRecaudacion' + ',' + this.arrayAcumulador.indexOf(this.mesaMayorFacturacion) + ',' + this.mesaMayorFacturacion + ',pesos\n';
+    csvData += 'menorRecaudacion' + ',' + this.arrayAcumulador.indexOf(this.mesaMenorFacturacion) + ',' + this.mesaMenorFacturacion + ',pesos\n';
+    csvData += 'mayorFactura' + ',' + this.facturaMayorImporte.tableID + ',' + this.facturaMayorImporte.totalPrice + ',pesos\n';
+    csvData += 'menorFactura' + ',' + this.facturaMenorImporte.tableID + ',' + this.facturaMenorImporte.totalPrice + ',pesos\n';
+
+    console.log(csvData);
+    let file = new Blob([csvData], { type: 'text/csv' });
+    let fileUrl = URL.createObjectURL(file);
+    let hiddenEl = document.createElement('a');
+    hiddenEl.href = fileUrl;
+    hiddenEl.target = '_blank';
+    hiddenEl.download = 'EstadisticasMesas.csv';
+    hiddenEl.click();
+
+  }
 
 
 

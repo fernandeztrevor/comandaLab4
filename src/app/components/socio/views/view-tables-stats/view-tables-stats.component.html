@@ -32,11 +32,13 @@
         <hr>
         <div class="col-3">
         </div>
-        <div class="col-6">
-            <button class="btn btn-success full-width" data-toggle="modal" data-target="#settingsModal" *ngIf="this.mesaMasUsada != null">Personalizar<i
+        <div class="col-6" *ngIf="this.mesaMasUsada">
+            <button class="btn btn-success full-width" data-toggle="modal" data-target="#settingsModal">Personalizar<i
                     class="fas fa-cogs"></i></button>
         </div>
-        <div class="col-3">
+        <div class="col-3" *ngIf="this.mesaMasUsada">
+            <button type="button" class="btn btn-info full-width" (click)="exportCSV()">Exportar a CSV<i
+                class="fas fa-angle-double-down" ></i></button>
         </div>
 
         <div class="row">

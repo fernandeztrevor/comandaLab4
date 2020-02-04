@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/firebase/user.service';
 import { OrderService } from 'src/app/services/firebase/order.service';
 import * as jsPDF from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
+import { SurveyService } from 'src/app/services/firebase/survey.service';
 
 @Component({
 	selector: 'app-home-socio',
@@ -55,6 +56,7 @@ export class HomeSocioComponent implements OnInit {
 			hiddenEl.click();
 		})
 	}
+	
 
 	public GeneratePDF(): void
 	{
