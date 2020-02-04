@@ -83,9 +83,11 @@ export class HomeClienteComponent implements OnInit {
 		 		//this.orderService.Add(this.order);
 		 		this.orderService.Update(this.order).then((value) => {
 		 			if(!value){
-		 				this.orderService.Add(this.order);
+						 this.orderService.Add(this.order);						 
 		 			} 
-		 		});;
+		 		}).then(()=>{
+					this.orderService.UpdateImageURL(this.order, this.currentUser.image);
+				 });
 		 		this.toastr.success("El pedido se ha realizado correctamente! Este es tu número de pedido: " + this.order.codeID);
 		 		this.hasOrder = true;
 		 	}

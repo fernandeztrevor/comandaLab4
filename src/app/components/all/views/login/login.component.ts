@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
 
 		this.userService.GetUserByEmail(usr)
 		.then(usuario=>{
-
 			console.log("esta en la base");
 			if(!usuario.deleted && usuario.state == 'habilitado'){
 				this.authService.LoginWithEmail(usr, pass)
@@ -51,10 +50,13 @@ export class LoginComponent implements OnInit {
 			this.toastr.error('Usuario y/o contraseña incorrecto.')
 			
 		).finally(()=>{
-			this.loading = false;
+			//this.loading = false;
+			//console.log("lo corto");
 			this.userOption = 'none';
-			this.loginForm.get('email').setValue('');
-			this.loginForm.get('password').setValue('');			
+			this.loginForm.get('email').disable();
+			this.loginForm.get('password').disable();
+			//this.loginForm.get('email').setValue('');
+			// this.loginForm.get('password').setValue('');			
 		});
 	}
 

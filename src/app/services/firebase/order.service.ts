@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Cook } from 'src/app/models/product';
 import { reject } from 'q';
+import { FileService } from '../firestorage/file.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -18,7 +19,7 @@ export class OrderService {
 	public listado = new Array<Order>();
 	public ordenes: AngularFirestoreCollection;
 
-	constructor(private db: AngularFirestore) {
+	constructor(private db: AngularFirestore, private fileService: FileService) {
 		this.ordenes = this.db.collection<Order>('pedidos');
 		this.traerOrdenesArray();
 	}
@@ -98,6 +99,20 @@ export class OrderService {
 			})
 	}
 
+	public UpdateImage(order: Order, image: File){
+		return this.fileService.subirFotoPedido(image, order.id).then(() => {
+			return true;
+		});
+	}
+
+	public UpdateImageURL(order: Order, url: string){
+		this.GetByCodeID(order.codeID).then(ord=>{
+			this.fileService.updatePhotoUrlOrders(url, ord.id);
+		}).catch(()=>{
+			console.log("no se pudo actualizar url de imagen");
+		});
+	}
+
 	public GetByCodeID(code: string): Promise<Order> {
 		let documents = this.db.collection("pedidos", ref => ref.where('codeID', '==', code));
 		return documents.get().toPromise().then(doc => {
@@ -111,6 +126,14 @@ export class OrderService {
 					reject('No se encontró el pedido.');
 			})
 		});
+	}
+
+	public setOrderImage(code: string, image: File){
+		this.GetByCodeID(code).then(ord=>{
+			this.UpdateImage(ord, image);
+		}).catch(()=>{
+			console.log("no se pudo subir");
+		})
 	}
 
 	public GetByCodeUser(code: string): Promise<Order> {

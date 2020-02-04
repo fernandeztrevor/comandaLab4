@@ -105,6 +105,17 @@
                         <div class="col-2"></div>
                     </div>
                     <hr>
+                    <div class="row align-center">
+                        <div class="btn btn-primary btn-sm align-center">
+                            <input type="file" (change)="onFileChanged($event)" [(ngModel)]="imagen"
+                                >
+                        </div>
+                        <div class="col-12">
+                            <button [disabled]="this.file == null" (click)="cambiarImagen()" *ngIf="!notCancelled()"
+                                class="btn btn-info full-width">Cambiar Foto</button>
+                        </div>
+                    </div>
+                    <hr>
                     <div class="row">
                         <div class="col-12">
                             <button [disabled]="CanPayNow()" (click)="Cancel()" *ngIf="!notCancelled()"

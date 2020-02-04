@@ -13,10 +13,12 @@ import { promise } from 'protractor';
 export class FileService {
 	products: AngularFirestoreCollection;
 	users: AngularFirestoreCollection;
+	orders: AngularFirestoreCollection;
 
 	constructor(private angularFirestore: AngularFirestore, private storage: AngularFireStorage) {
 		this.products = this.angularFirestore.collection<Product>('productos');
 		this.users = this.angularFirestore.collection<User>('usuarios');
+		this.orders = this.angularFirestore.collection<User>('pedidos');
 	}
 
 	public Upload(fileName: string, file: File): Promise<void> {
@@ -78,5 +80,32 @@ export class FileService {
 		return this.users.doc(uid).update({ image: url }).then(()=>{
 			return true;
 		});
+	}
+
+	public updatePhotoUrlOrders(url: string, uid: string): Promise<boolean>{
+		console.log(url);
+		console.log(uid);
+		return this.orders.doc(uid).update({ image: url }).then(()=>{
+			return true;
+		});
+	}
+
+	public subirFotoPedido(foto: File, uid: string): Promise<boolean> {
+		const pathFoto = `imagenesPedidos/${uid}`;
+		const tarea = this.storage.upload(pathFoto, foto);	
+		console.log("uid"+uid);	
+
+		return tarea.then(() => {
+			
+			this.storage
+				.ref(pathFoto)
+				.getDownloadURL().subscribe(url => {					
+					this.updatePhotoUrlOrders(url, uid);
+				});
+		}).then(() => {
+			return true;
+		}).catch(() => {
+			return false;
+		});;
 	}
 }

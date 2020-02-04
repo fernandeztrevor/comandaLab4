@@ -30,6 +30,8 @@ export class SearchOrderComponent implements OnInit {
 	public user: User;
 	public orders: any;
 
+	public file: File = null;
+
 	//public misOrders: string[];
 
 	constructor(private authService: AuthService, private surveyService: SurveyService, private toastr: ToastrService, private orderService: OrderService, private tableService: TableService) { }
@@ -67,10 +69,20 @@ export class SearchOrderComponent implements OnInit {
 			})
 	}
 
-	public Cancel(): void{
+	public Cancel(): void {
 		this.order.state = OrderState.cancelled;
+		this.order.completed = true;
 		this.orderService.ChangeStatus(OrderState.cancelled, this.order.codeID);
 
+	}
+
+	public onFileChanged(event) {
+		this.file = event.target.files[0];
+	}
+
+
+	public cambiarImagen() {
+		this.orderService.setOrderImage(this.order.codeID, this.file);
 	}
 
 	public IsServed(): boolean {
@@ -94,7 +106,7 @@ export class SearchOrderComponent implements OnInit {
 			.then(ord => this.order = ord)
 			.catch(error => this.toastr.error(error, 'Error'))
 			.finally(() => this.waitingOrder = false);
-	}	
+	}
 
 	public CanPayNow(): boolean {
 		let can = false;
@@ -105,7 +117,7 @@ export class SearchOrderComponent implements OnInit {
 		return can;
 	}
 
-	public notCancelled(): boolean{
+	public notCancelled(): boolean {
 		let can = false;
 		if (this.order) {
 			if (this.order.state == OrderState.cancelled || this.order.state == OrderState.paidOut)
@@ -136,10 +148,9 @@ export class SearchOrderComponent implements OnInit {
 	///////////////////////////
 	//public currentOrder: Order;
 
-	
 
-	public SelectOrder(order: Order): void
-	{
+
+	public SelectOrder(order: Order): void {
 		this.order = order;
 	}
 
