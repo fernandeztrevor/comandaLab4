@@ -99,16 +99,16 @@ export class OrderService {
 			})
 	}
 
-	public UpdateImage(order: Order, image: File){
+	public UpdateImage(order: Order, image: File) {
 		return this.fileService.subirFotoPedido(image, order.id).then(() => {
 			return true;
 		});
 	}
 
-	public UpdateImageURL(order: Order, url: string){
-		this.GetByCodeID(order.codeID).then(ord=>{
+	public UpdateImageURL(order: Order, url: string) {
+		this.GetByCodeID(order.codeID).then(ord => {
 			this.fileService.updatePhotoUrlOrders(url, ord.id);
-		}).catch(()=>{
+		}).catch(() => {
 			console.log("no se pudo actualizar url de imagen");
 		});
 	}
@@ -128,10 +128,10 @@ export class OrderService {
 		});
 	}
 
-	public setOrderImage(code: string, image: File){
-		this.GetByCodeID(code).then(ord=>{
+	public setOrderImage(code: string, image: File) {
+		this.GetByCodeID(code).then(ord => {
 			this.UpdateImage(ord, image);
-		}).catch(()=>{
+		}).catch(() => {
 			console.log("no se pudo subir");
 		})
 	}
@@ -224,6 +224,34 @@ export class OrderService {
 				let orders: Order[] = [];
 				doc.docs.forEach(el => {
 					orders.push(el.data() as Order);
+				});
+				return orders;
+			})
+	}
+
+	public GetAllCancelledOrders_InArray(): Promise<Order[]> {
+		return this.db.collection("pedidos").get().toPromise()
+			.then(doc => {
+				let orders: Order[] = [];
+				doc.docs.forEach(el => {
+					let ela = el.data() as Order;
+					if (ela['state'] == 'Cancelado') {
+						orders.push(ela);
+					}
+				});
+				return orders;
+			})
+	}
+
+	public GetAllDelayedOrders_InArray(): Promise<Order[]> {
+		return this.db.collection("pedidos").get().toPromise()
+			.then(doc => {
+				let orders: Order[] = [];
+				doc.docs.forEach(el => {
+					let ela = el.data() as Order;
+					if (ela['delayed'] != null) {
+						orders.push(ela);
+					}
 				});
 				return orders;
 			})
