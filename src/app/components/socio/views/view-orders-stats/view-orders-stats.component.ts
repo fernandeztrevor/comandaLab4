@@ -157,7 +157,7 @@ export class ViewOrdersStatsComponent implements OnInit {
     this.toastr.info('Exportando estadística...');
     let csvData;
 
-    let data = this.unafuncion();
+    let data = this.getData();
 
     setTimeout(function () {
       data.map(row => {
@@ -175,7 +175,7 @@ export class ViewOrdersStatsComponent implements OnInit {
 
   }
 
-  unafuncion(): Array<any> {
+  getData(): Array<any> {
 
     let data: string[][] = [];
 
