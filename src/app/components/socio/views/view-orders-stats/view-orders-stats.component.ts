@@ -195,8 +195,17 @@ export class ViewOrdersStatsComponent implements OnInit {
         if (order.timestamp > this.fechaInicio && order.timestamp < this.fechaFin) {
           const datePipe = new DatePipe('en-US');
           const myFormattedDate = datePipe.transform(order.timestamp, 'hh:mm dd/MM/yyyy');
+
+          let diff = Math.floor(order.delayed / (1000 * 60));
+          let res;
+
+          if (diff < 0)
+            res = 'Pasado por ' + (diff * -1) + ' minutos.';
+          else
+            res = diff + ' minutos.'
+
           data.push(
-            [order.codeID + ',' + myFormattedDate + ',' + order.state + '\n']);
+            [order.codeID + ',' + myFormattedDate + ',' + res + '\n']);
         }
       })
     }).then(() => {

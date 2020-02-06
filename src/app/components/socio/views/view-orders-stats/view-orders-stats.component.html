@@ -175,14 +175,14 @@
                     <tr>
                         <th scope="col">Codigo de pedido</th>
                         <th scope="col">Fecha</th>
-                        <!-- <th scope="col">Demora</th> -->
+                        <th scope="col">Demora</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="order" *ngFor="let order of delayedOrders | async">
                         <td><label>{{order.codeID}}</label></td>
                         <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>
-                        <!-- <td>{{order.delayed | date:'hh:mm dd/MM/yyyy'}}</td> -->
+                        <td>{{order.delayed | timeleft}}</td>
                     </tr>
                 </tbody>
             </table>
