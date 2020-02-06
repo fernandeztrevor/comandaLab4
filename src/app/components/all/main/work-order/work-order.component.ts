@@ -31,10 +31,10 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 			if (this.order) {
 				let now = new Date();
 				this.remainingTime = new Date(this.order.timeLeft).getTime() - now.getTime();
-				if (this.remainingTime < 0) {
-					this.order.delayed = now.getTime() - new Date(this.order.timeLeft).getTime();
-					this.orderService.Update(this.order);
-				}
+				// if (this.remainingTime < 0) {
+				// 	this.order.delayed = now.getTime() - new Date(this.order.timeLeft).getTime();
+				// 	this.orderService.Update(this.order);
+				// }
 			}
 		}, 10)
 	}
@@ -42,6 +42,7 @@ export class WorkOrderComponent implements OnInit, OnChanges {
 	ngOnChanges() {
 		this.selectedItem = null;
 	}
+	
 
 	public IsPending(): boolean {
 		let is = false;

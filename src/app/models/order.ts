@@ -35,6 +35,14 @@ export class Order
     {
         this.completed = true;
         this.state = OrderState.served;
+
+        if(this.timeLeft != null){
+            let resta = (Date.parse(this.timeLeft))-Date.now();
+            if(resta < 0){
+                this.delayed = resta;
+            }
+
+        }
     }
 
     public CalculateTimeInMinutes(): number

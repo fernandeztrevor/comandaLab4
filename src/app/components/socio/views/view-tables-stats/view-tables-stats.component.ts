@@ -93,8 +93,6 @@ export class ViewTablesStatsComponent implements OnInit {
       })
     );
 
-
-
     this.surveysGood = this.surveyService.GetAll2().valueChanges().pipe(
       map(surveys => {
         return surveys.filter(survey => {

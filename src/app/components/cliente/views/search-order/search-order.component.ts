@@ -9,6 +9,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Survey } from 'src/app/models/survey';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { User } from 'src/app/models/user';
+import * as jsPDF from 'jspdf';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -141,6 +143,54 @@ export class SearchOrderComponent implements OnInit {
 			.then(() => this.toastr.success('Encuesta enviada correctamente!'))
 			.catch(() => this.toastr.error('Se ha producido un error al enviar la encuesta.'))
 			.finally(() => this.surveyDone = true);
+	}
+
+	ticketPDF() {
+		let items = this.order.items;
+		let start;
+		let usersHtml = '';
+		let end = '</ul></div>';
+		let nombreArchivo: string;
+		let liSt: string = '<li>';
+		let liEnd: string = '</li>';
+		var img = new Image()
+		img.src = '../../../../../assets/img/logo.jpg';
+		
+
+		this.order = Object.assign(new Order(), this.order);
+		this.toastr.info('Generando archivo PDF...');
+
+		start = '<div style="text-align: center"><h1>Pedido: ' + this.order.codeID + '</h1>';
+
+
+		usersHtml += liSt + 'Mozo: ' + this.order.waiter.email + liEnd;
+		usersHtml += liSt + 'Mesa N°: ' + this.order.tableID + liEnd;
+		usersHtml += liSt + 'Pedido: ' + this.order.codeID + liEnd;
+		const datePipe = new DatePipe('en-US');
+		const myFormattedDate = datePipe.transform(this.order.timestamp, 'hh:mm dd/MM/yyyy');
+		usersHtml += liSt + 'Fecha del pedido: ' + myFormattedDate + liEnd;
+
+
+		items.forEach(unItem => {
+			let item: string = ' Producto: ' + unItem.name + ' Precio: $ ' + unItem.price;
+			let fullLine = liSt + item + liEnd;
+			usersHtml += fullLine;
+		});
+
+		usersHtml += liSt + 'Total: $' + this.order.totalPrice + liEnd;
+
+		let html = start + usersHtml + end;
+
+		console.log(html);
+		let pdf = new jsPDF();
+		pdf.addImage(img, 'jpg', 20, 0, 100, 100);
+		
+		pdf.fromHTML(html, 20, 80);
+
+		nombreArchivo = this.order.codeID + '.pdf';
+
+		pdf.save(nombreArchivo);
+
 	}
 
 

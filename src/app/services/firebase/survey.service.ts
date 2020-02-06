@@ -29,4 +29,8 @@ export class SurveyService {
 				.catch(() => reject());
 		})
 	}
+
+	public getAllGood(){
+		return this.db.collection('encuestas', ref => ref.where('commentType', '==', true));
+	}
 }

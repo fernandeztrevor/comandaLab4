@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row top-row">
+    <div class="row middle-row">
         <div class="col-3"></div>
         <div class="col-6">
             <!-- <h1 class="page-title">- Buscar un pedido -</h1> -->
@@ -122,6 +122,14 @@
                                 class="btn btn-danger full-width">Cancelar Pedido</button>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <button [disabled]="!CanPayNow()" (click)="ticketPDF()"
+                                class="btn btn-warning full-width">Descargar Ticket</button>
+                        </div>
+                    </div>
+                    <hr>
                     <div class="row">
                         <div class="col-12">
                             <button [disabled]="!CanPayNow()" (click)="Pay()"
