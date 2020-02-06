@@ -289,10 +289,10 @@ export class ViewLogsComponent implements OnInit {
 
     data.push(['categoria,nombre,cantidad,tipo\n']);
 
-    this.data.forEach(log=>{
+    this.data.forEach(log => {
       const datePipe = new DatePipe('en-US');
-           const myFormattedDate = datePipe.transform(log.fecha, 'hh:mm dd/MM/yyyy');
-           
+      const myFormattedDate = datePipe.transform(log.fecha, 'hh:mm dd/MM/yyyy');
+
       data.push([log.usuario + ',' + myFormattedDate + ',' + log.observacion + '\n']);
     });
 

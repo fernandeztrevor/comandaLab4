@@ -8,6 +8,8 @@ import { TableState } from 'src/app/models/table';
 import { TargetMovimiento, TipoMovimiento } from 'src/app/models/log';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { LogService } from 'src/app/services/firebase/log.service';
+import * as jsPDF from 'jspdf';
+import { DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'app-select-order',
@@ -49,16 +51,53 @@ export class SelectOrderComponent implements OnInit {
 		this.tableService.UpdateStatus(this.order.tableID, TableState.eating);
 		this.order.CompleteOrder();
 		this.orderService.Update(this.order).then(() => {
-			this.authService.GetCurrentUser().then(user =>{
+			this.authService.GetCurrentUser().then(user => {
 				let mensaje: string = `El usuario ${user.email} entregó un pedido ${this.order.codeID}`;
 				this.movimientoService.persistirMovimiento(user, TargetMovimiento.pedido, TipoMovimiento.entrega, mensaje);
-			  })
 			})
+		})
 			.then(() => {
 				this.toastr.success('Orden servida.');
 			})
 			.catch(() => {
 				this.toastr.error('Hubo un error al servir la orden.', 'Error');
 			})
+	}
+
+	public comandaPDF() {
+		let items = this.order.items;
+		let start;
+		let usersHtml = '';
+		let end = '</ul></div>';
+		let nombreArchivo: string;
+		let liSt: string = '<li>';
+		let liEnd: string = '</li>';
+
+		this.order = Object.assign(new Order(), this.order);
+		this.toastr.info('Generando archivo PDF...');
+
+		start = '<div style="text-align: center"><h1>Pedido: ' + this.order.codeID + '</h1><hr><ul>';
+
+		usersHtml += liSt + 'Mozo: ' + this.order.waiter.email + liEnd;
+		usersHtml += liSt + 'Mesa N°: ' + this.order.tableID + liEnd;
+		usersHtml += liSt + 'Pedido: ' + this.order.codeID + liEnd;
+		const datePipe = new DatePipe('en-US');
+		const myFormattedDate = datePipe.transform(this.order.timestamp, 'hh:mm dd/MM/yyyy');
+		usersHtml += liSt + 'Fecha del pedido: ' + myFormattedDate + liEnd;
+
+
+		items.forEach(unItem => {
+			let item: string = ' Producto: ' + unItem.name + ' Area: ' + unItem.cook;
+			let fullLine = liSt + item + liEnd;
+			usersHtml += fullLine;
+		})
+
+		let html = start + usersHtml + end;
+		let pdf = new jsPDF();
+		pdf.fromHTML(html, 20, 20);
+
+		nombreArchivo = this.order.codeID + '.pdf';
+
+		pdf.save(nombreArchivo);
 	}
 }

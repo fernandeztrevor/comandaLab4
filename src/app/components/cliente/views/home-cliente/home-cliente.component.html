@@ -9,7 +9,7 @@
         <div class="col-3 align-center">
             <div class="btn-group full-width" *ngIf="order">
                 <button class="btn btn-info" disabled>${{order.totalPrice}}</button>
-                <button class="btn btn-info" disabled>{{order.tableID | table}}</button>
+                <!-- <button class="btn btn-info" disabled>{{order.tableID | table}}</button> -->
             </div>
             <app-spinner *ngIf="!order"></app-spinner>
         </div>

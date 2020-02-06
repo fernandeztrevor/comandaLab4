@@ -159,10 +159,12 @@ export class HomeClienteComponent implements OnInit {
 
 	private SelectRandomWaiter(): Promise<User> {
 		return this.userService.GetAllWaiters().then(waiters => {
-			let random;
-			do{
-				random = Math.floor(Math.random() * waiters.length);
-			}while(!waiters[random].deleted && waiters[random].state != 'deshabilitado')
+			// let random;
+			// do{
+			// 	random = Math.floor(Math.random() * waiters.length);
+			// }while(!waiters[random].deleted && waiters[random].state != 'deshabilitado')
+
+			let random = Math.floor(Math.random() * waiters.length);
 
 			return waiters[random];
 		})

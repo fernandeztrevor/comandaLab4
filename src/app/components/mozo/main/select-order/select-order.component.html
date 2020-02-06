@@ -44,6 +44,12 @@
             <hr>
             <div class="row">
                 <div class="col-12">
+                    <button (click)="comandaPDF()" class="btn btn-info full-width">Descargar comanda</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
                     <select class="form-control" [ngModel]="selectedItem" (ngModelChange)="SelectItem($event)">
                         <option [ngValue]="it" *ngFor="let it of order.items">{{it.name}}</option>
                     </select>
