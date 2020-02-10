@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
 			'email': new FormControl(null, [Validators.required]),
 			'password': new FormControl(null, [Validators.required]),
 			'chkHorario': new FormControl(false, [Validators.required]),
+			'chkLunes': new FormControl(false, [Validators.required]),
 			'captcha': new FormControl('', [Validators.required])
 		});
 	}
@@ -77,22 +78,29 @@ export class LoginComponent implements OnInit {
 	private restriccionHoraria(chk: boolean): boolean {
 		let retorno = true;
 		const date = new Date();
-		const day = date.getDay();
+		let day = date.getDay();
 		const hour = date.getHours();
 		const min = date.getMinutes();
+
+		if (this.loginForm.get('chkLunes').value) {
+			day = 1;
+		}
 
 
 		console.log("dia: " + day);
 		console.log("hora: " + hour);
 		console.log("minuto: " + min);
 
-		if (!chk || chk == null) {
+		if (!chk || chk == null || this.loginForm.get('chkLunes').value) {
 			if (day == 1 || day == 2) {
-				if (hour >= 2 && hour <= 17) {
-					retorno = false;
-				}
+				retorno = false;
+			}
+			else if (hour >= 2 && hour <= 17) {
+				retorno = false;
 			}
 		}
+		console.log(this.loginForm.get('chkLunes').value);
+		console.log(retorno);
 
 		return retorno;
 	}
