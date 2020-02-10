@@ -143,15 +143,24 @@ export class ViewOrdersStatsComponent implements OnInit {
       var result = Object.keys(cantidadNombres).map(function (key) {
         return [String(key), cantidadNombres[key]];
       });
-      cantidad = result.length;
-      console.log(result);
+      //console.log(result);
+
+      console.table(result);
+      const mejores  = Object.assign([], result);
+      const peores  = Object.assign([], result);
+      mejores.sort((a,b) => (a[1] > b[1]) ? -1 : ((b[1] > a[1]) ? 1 : 0));
+      peores.sort((a,b) => (a[1] > b[1]) ? 1 : ((b[1] > a[1]) ? -1 : 0));
+
+      console.table(mejores);
+      console.table(peores);
       this.topBest = new Array<any>();
       this.topWorst = new Array<any>();
 
-      this.topBest.push(result[0], result[1], result[2]);
-      this.topWorst.push(result[cantidad - 3], result[cantidad - 2], result[cantidad - 1]);
+      this.topBest.push(mejores[0], mejores[1], mejores[2]);
+      this.topWorst.push(peores[0], peores[1], peores[2]);
     });
   }
+
 
   public exportCSV() {
     this.toastr.info('Exportando estadística...');
