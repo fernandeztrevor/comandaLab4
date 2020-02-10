@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 		this.loginForm = new FormGroup({
 			'email': new FormControl(null, [Validators.required]),
 			'password': new FormControl(null, [Validators.required]),
+			'chkHorario': new FormControl(false, [Validators.required]),
 			'captcha': new FormControl('', [Validators.required])
 		});
 	}
@@ -29,35 +30,71 @@ export class LoginComponent implements OnInit {
 		this.loading = true;
 		const usr = this.loginForm.get('email').value;
 		const pass = this.loginForm.get('password').value;
+		let restriccion = this.restriccionHoraria(this.loginForm.get('chkHorario').value);
 
 		this.userService.GetUserByEmail(usr)
-		.then(usuario=>{
-			console.log("esta en la base");
-			if(!usuario.deleted && usuario.state == 'habilitado'){
-				this.authService.LoginWithEmail(usr, pass)
-		 	.then(() => {
-		 		this.toastr.success('¡Bienvenido!');
-		 	})
-		 	.catch(() => {				
-				 console.log("no estaba auth asi que lo creo");
-		 		this.authService.RegisterWithEmailAdmin(usr);
-			 });
-			}else{
-				this.toastr.error('Usuario deshabilitado o inexistente');
-			}	
-		})		 
-		.catch(()=>
-			this.toastr.error('Usuario y/o contraseña incorrecto.')
-			
-		).finally(()=>{
-			//this.loading = false;
-			//console.log("lo corto");
-			this.userOption = 'none';
-			this.loginForm.get('email').disable();
-			this.loginForm.get('password').disable();
-			//this.loginForm.get('email').setValue('');
-			// this.loginForm.get('password').setValue('');			
-		});
+			.then(usuario => {
+				console.log("esta en la base");
+				if (!usuario.deleted && usuario.state == 'habilitado') {
+					if (usuario.role == "cliente" && !restriccion) {
+						this.toastr.info('El horario de atencion es de Miercoles a Domingo de 18:00 a 2:00');
+						setTimeout(() => {
+							this.loading = false;
+							this.loginForm.get('email').setValue('');
+							this.loginForm.get('password').setValue('');
+							this.loginForm.get('email').enable();
+							this.loginForm.get('password').enable();
+						}, 2000)
+					} else {
+						this.authService.LoginWithEmail(usr, pass)
+							.then(() => {
+								this.toastr.success('¡Bienvenido!');
+							})
+							.catch(() => {
+								console.log("no estaba auth asi que lo creo");
+								this.authService.RegisterWithEmailAdmin(usr);
+							});
+					}
+
+				} else {
+					this.toastr.error('Usuario deshabilitado o inexistente');
+				}
+			})
+			.catch(() =>
+				this.toastr.error('Usuario y/o contraseña incorrecto.')
+
+			).finally(() => {
+				//this.loading = false;
+				//console.log("lo corto");
+				this.userOption = 'none';
+				this.loginForm.get('email').disable();
+				this.loginForm.get('password').disable();
+				//this.loginForm.get('email').setValue('');
+				// this.loginForm.get('password').setValue('');			
+			});
+	}
+
+	private restriccionHoraria(chk: boolean): boolean {
+		let retorno = true;
+		const date = new Date();
+		const day = date.getDay();
+		const hour = date.getHours();
+		const min = date.getMinutes();
+
+
+		console.log("dia: " + day);
+		console.log("hora: " + hour);
+		console.log("minuto: " + min);
+
+		if (!chk || chk == null) {
+			if (day == 1 || day == 2) {
+				if (hour >= 2 && hour <= 17) {
+					retorno = false;
+				}
+			}
+		}
+
+		return retorno;
 	}
 
 	private BindUser(usuario: string) {
