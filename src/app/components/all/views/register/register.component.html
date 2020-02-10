@@ -20,6 +20,25 @@
 							</div>
 							<div class="col-2"></div>
 						</div>
+						<div class="row mar-top-2">
+							<div class="col-2"></div>
+							<div class="col-8 align-center">						
+								<div class="col-12">
+									<label class="mr-sm-2">Seleccione el numero {{ this.random }}</label>
+								</div>	
+
+								<select class="browser-default custom-select" formControlName="customCaptcha">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+								 </select>		
+							</div>
+							<div class="col-2"></div>
+						</div>
+						
 						<button *ngIf="!loading" [disabled]="!registerForm.valid" type="submit" class="btn btn-success full-width separate-top-input">Registrarse</button>
 						<div class="mar-top-2" *ngIf="loading">
 							<app-spinner></app-spinner>

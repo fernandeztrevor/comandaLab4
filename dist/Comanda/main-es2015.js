@@ -45,7 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- <div *ngIf=\"product\" class=\"card outside-shadow\">\r\n    <div class=\"card-body align-center\">\r\n        <div class=\"card-title\">{{product.name}}</div>\r\n        <img src=\"{{product.pathImg}}\" class=\"img-shadow\" (click)=\"AddToOrder(product)\">\r\n        <div class=\"price\">\r\n            <div class=\"row\">\r\n                <div class=\"col-3\">\r\n                    <span class=\"ordered\" *ngIf=\"ordered\"><i class=\"fas fa-clipboard-check\"></i></span>\r\n                </div>\r\n                <div class=\"col-6\">\r\n                    ${{product.price}}.00\r\n                </div>\r\n                <div class=\"col-3\">\r\n                    <span class=\"quant\" *ngIf=\"quantity > 1\">x{{quantity}}</span>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div> -->\r\n\r\n\r\n<div *ngIf=\"product\" class=\"card outside-shadow\">\r\n<div class=\"card align-center\">\r\n    <div class=\"align-center\">\r\n        <img src=\"{{product.pathImg}}\">\r\n    </div>\r\n    <div class=\"card-body\">\r\n      <h5 class=\"card-title\">{{product.name}}</h5>\r\n      <p class=\"card-text\">{{product.description}}</p>\r\n      <div class=\"price\">\r\n        <div class=\"row\">\r\n            <div class=\"col-3\">\r\n                <span class=\"ordered\" *ngIf=\"ordered\"><i class=\"fas fa-clipboard-check\"></i></span>\r\n            </div>\r\n            <div class=\"col-6\">\r\n                ${{product.price}}.00\r\n            </div>\r\n            <div class=\"col-3\">\r\n                <span class=\"quant\" *ngIf=\"quantity > 1\">x{{quantity}}</span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n        <button class=\"btn btn-primary\" (click)=\"AddToOrder(product)\">Añadir a pedido</button>\r\n      <!-- <a href=\"#\" class=\"btn btn-primary\" (click)=\"AddToOrder(product)\"></a> -->\r\n    </div>\r\n  </div>\r\n</div>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- <div *ngIf=\"product\" class=\"card outside-shadow\">\r\n    <div class=\"card-body align-center\">\r\n        <div class=\"card-title\">{{product.name}}</div>\r\n        <img src=\"{{product.pathImg}}\" class=\"img-shadow\" (click)=\"AddToOrder(product)\">\r\n        <div class=\"price\">\r\n            <div class=\"row\">\r\n                <div class=\"col-3\">\r\n                    <span class=\"ordered\" *ngIf=\"ordered\"><i class=\"fas fa-clipboard-check\"></i></span>\r\n                </div>\r\n                <div class=\"col-6\">\r\n                    ${{product.price}}.00\r\n                </div>\r\n                <div class=\"col-3\">\r\n                    <span class=\"quant\" *ngIf=\"quantity > 1\">x{{quantity}}</span>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div> -->\r\n\r\n\r\n<div *ngIf=\"product.state != 'Deshabilitado'\" class=\"card outside-shadow\">\r\n<div class=\"card align-center\">\r\n    <div class=\"align-center\">\r\n        <img src=\"{{product.image}}\">\r\n    </div>\r\n    <div class=\"card-body\">\r\n      <h5 class=\"card-title\">{{product.name}}</h5>\r\n      <p class=\"card-text\">{{product.description}}</p>\r\n      <div class=\"price\">\r\n        <div class=\"row\">\r\n            <div class=\"col-3\">\r\n                <span class=\"ordered\" *ngIf=\"ordered\"><i class=\"fas fa-clipboard-check\"></i></span>\r\n            </div>\r\n            <div class=\"col-6\">\r\n                ${{product.price}}.00\r\n            </div>\r\n            <div class=\"col-3\">\r\n                <span class=\"quant\" *ngIf=\"quantity > 1\">x{{quantity}}</span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n        <button class=\"btn btn-primary\" (click)=\"AddToOrder(product)\">Añadir a pedido</button>\r\n      <!-- <a href=\"#\" class=\"btn btn-primary\" (click)=\"AddToOrder(product)\"></a> -->\r\n    </div>\r\n  </div>\r\n</div>\r\n");
 
 /***/ }),
 
@@ -71,7 +71,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"table-responsive\">\r\n    <table class=\"table table-hover\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">ID</th>\r\n                <th scope=\"col\">Cliente</th>\r\n                <th scope=\"col\">Estado</th>\r\n                <th scope=\"col\">Mozo</th>\r\n                <th scope=\"col\">Imagen</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody *ngIf=\"orders\">\r\n            <tr class=\"order\" *ngFor=\"let or of orders | async\" (click)=\"SelectOrder(or)\">\r\n                <td class=\"arial\">{{or.codeID}}</td>\r\n                <td>{{or.client.name}}</td>\r\n                <td>{{or.state}}</td>\r\n                <td>{{or.waiter.name}}</td>\r\n                <td><img src=\"{{or.client.image}}\" width=\"30px\" height=\"30px\"></td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n    <div *ngIf=\"!orders\" class=\"align-center mar-top-1\">\r\n        <app-spinner></app-spinner>\r\n    </div>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"table-responsive\" >\r\n    <table class=\"table table-hover\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">ID</th>\r\n                <th scope=\"col\">Cliente</th>\r\n                <th scope=\"col\">Estado</th>\r\n                <th scope=\"col\">Mozo</th>\r\n                <th scope=\"col\">Imagen</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody *ngIf=\"orders\">\r\n            <tr class=\"order\" *ngFor=\"let or of orders | async\" (click)=\"SelectOrder(or)\">\r\n                <td class=\"arial\">{{or.codeID}}</td>\r\n                <td>{{or.client.name}}</td>\r\n                <td>{{or.state}}</td>\r\n                <td>{{or.waiter.name}}</td>\r\n                <td><img src=\"{{or.image}}\" width=\"30px\" height=\"30px\"></td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n    <div class=\"align-center mar-top-1\" *ngIf=\"showingOrders\">\r\n        <label><h2>No hay ordenes para mostrar</h2></label>\r\n    </div>\r\n    <div *ngIf=\"!orders\" class=\"align-center mar-top-1\">\r\n        <app-spinner></app-spinner>\r\n    </div>\r\n    \r\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/all/main/product-management/product-management.component.html":
+/*!********************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/all/main/product-management/product-management.component.html ***!
+  \********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <div class=\"row top-row page-title\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\"></div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n    <div class=\"row\">\n        <div class=\"col-3 align-center\">\n\n        </div>\n        <div class=\"col-6\">\n            <button class=\"btn btn-success full-width\" data-toggle=\"modal\" data-target=\"#productModal\">Agregar\n                Producto</button>\n        </div>\n        <div class=\"col-3\">\n            <div class=\"btn-group full-width\">\n                <button title=\"Todo\" class=\"btn btn-outline-success\" (click)=\"ClearFilters()\"><i\n                        class=\"fas fa-asterisk\"></i></button>\n                <button title=\"Comida\" class=\"btn btn-outline-success\" (click)=\"Filter('comida')\"><i\n                        class=\"fas fa-utensils\"></i></button>\n                <button title=\"Bebidas\" class=\"btn btn-outline-success\" (click)=\"Filter('bebida')\"><i\n                        class=\"fas fa-wine-glass-alt\"></i></button>\n                <button title=\"Postres\" class=\"btn btn-outline-success\" (click)=\"Filter('postre')\"><i\n                        class=\"fas fa-ice-cream\"></i></button>\n                <button title=\"Alcohol\" class=\"btn btn-outline-success\" (click)=\"Filter('alcohol')\"><i\n                        class=\"fas fa-beer\"></i></button>\n                <button title=\"Sin TACC\" class=\"btn btn-outline-success\" (click)=\"Filter('celiaco')\"><i\n                        class=\"fas fa-seedling\"></i></button>\n                <button title=\"Vegana\" class=\"btn btn-outline-success\" (click)=\"Filter('vegano')\"><i\n                        class=\"fas fa-carrot\"></i></button>\n            </div>\n        </div>\n    </div>\n\n    <hr>\n    <div class=\"table-responsive\">\n        <table class=\"table table-hover\">\n            <thead>\n                <tr>\n                    <th scope=\"col\">Producto</th>\n                    <th scope=\"col\">Precio</th>\n                    <th scope=\"col\">Imagen</th>\n                    <th scope=\"col\">Habilitar/Desabilitar</th>\n                    <th scope=\"col\">Editar</th>\n                </tr>\n            </thead>\n            <tbody *ngIf=\"products\">\n                <tr class=\"product\" *ngFor=\"let prod of showingProducts | async\">\n                    <td><label>{{prod.name}}</label></td>\n                    <td>${{prod.price}}</td>\n                    <td><img [src]=\"prod.image\" width=\"30px\" height=\"30px\">\n                    </td>\n\n                    <td><button class=\"btn btn-outline-danger\" *ngIf=\"prod.state != 'Deshabilitado'\"\n                            (click)=\"changeState(prod.codeID, prod.state)\">Deshabilitar</button>\n                        <button class=\"btn btn-outline-success\" *ngIf=\"prod.state == 'Deshabilitado'\"\n                            (click)=\"changeState(prod.codeID, prod.state)\">Habilitar</button>\n                    </td>\n                    <td>\n                        <button class=\"btn btn-outline-primary\" data-toggle=\"modal\" data-target=\"#productModal\"\n                            (click)=\"editarProducto(prod)\">Editar</button>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n    <hr>\n\n</div>\n\n<!-- Product modal -->\n<div class=\"modal fade\" id=\"productModal\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-body\">\n                <div class=\"container-fluid\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\" *ngIf=\"!this.haySeleccionado\">\n                            <h3 class=\"align-center\">Agregar Producto</h3>\n                        </div>\n                        <div class=\"col-8\" *ngIf=\"this.haySeleccionado\">\n                            <h3 class=\"align-center\">Editar Producto</h3>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n\n                    <hr class=\"mar-top-1\">\n                    <form [formGroup]=\"productForm\" (ngSubmit)=\"SendProduct()\">\n\n\n                        <div class=\"row\" *ngIf=\"this.haySeleccionado\">\n                            <div class=\"col-5\"></div>\n                            <div class=\"col-2\">\n                                <img [src]=\"this.productoSeleccionado.image\" width=\"60px\" height=\"60px\">\n                            </div>\n                            <div class=\"col-5\"></div>\n                        </div>\n\n\n                        <div class=\"row\">\n                            <div class=\"col-1\"></div>\n                            <div class=\"col-10\">\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Nombre:</label>\n                                    </div>\n                                    <div class=\"col-12\">\n                                        <input formControlName=\"productName\"\n                                            class=\"form-control full-width align-center\" type=\"text\"\n                                            placeholder=\"Nombre del producto\" required>\n                                    </div>\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Precio:</label>\n                                    </div>\n                                    <div class=\"col-12\">\n                                        <input formControlName=\"productPrice\"\n                                            class=\"form-control full-width align-center\" type=\"text\"\n                                            placeholder=\"Precio del producto\" required>\n                                    </div>\n                                </div>\n\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Descripción:</label>\n                                    </div>\n                                    <div class=\"col-12\">\n                                        <input formControlName=\"productDescription\"\n                                            class=\"form-control full-width align-center\" type=\"text\"\n                                            placeholder=\"Descripción del producto\" required>\n                                    </div>\n                                </div>\n\n\n                                <div class=\"row middle-row\">\n                                    <!-- <fieldset class=\"scheduler-border\">\n                                        <legend class=\"scheduler-border\">Tipo de producto</legend> -->\n                                    <label class=\"mr-sm-2\">Tipo de producto</label>\n\n                                    <div class=\"input-group mb-3 col-12\">\n\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeComida\"\n                                                formControlName=\"typeComida\" value=\"comida\">\n                                            <label class=\"custom-control-label\" for=\"typeComida\">Comida</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeBebida\"\n                                                formControlName=\"typeBebida\">\n                                            <label class=\"custom-control-label\" for=\"typeBebida\">Bebida</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeAlcohol\"\n                                                formControlName=\"typeAlcohol\">\n                                            <label class=\"custom-control-label\" for=\"typeAlcohol\">Alcohol</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typePostre\"\n                                                formControlName=\"typePostre\">\n                                            <label class=\"custom-control-label\" for=\"typePostre\">Postre</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeCeliaco\"\n                                                formControlName=\"typeCeliaco\">\n                                            <label class=\"custom-control-label\" for=\"typeCeliaco\">Celiaco</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeVegano\"\n                                                formControlName=\"typeVegano\">\n                                            <label class=\"custom-control-label\" for=\"typeVegano\">Vegano</label>\n                                        </div>\n\n                                    </div>\n                                    <!-- </fieldset> -->\n                                    <!-- <input type=\"button\" (click)=\"traerFoodTypes()\"> -->\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <select class=\"custom-select mr-sm-2\" id=\"inlineFormCustomSelect\"\n                                        formControlName=\"productCook\" *ngIf=\"this.role == 'socio'\">\n                                        <!-- <option selected>Encargado</option> -->\n                                        <option value=\"cocinero\">Cocinero</option>\n                                        <option value=\"cervecero\">Cervecero</option>\n                                        <option value=\"bartender\">Bartender</option>\n                                    </select>\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <h4 *ngIf=\"this.role != 'socio'\" >El producto será para un {{ this.role }}</h4>\n                                </div>\n\n                                <div class=\"row middle-row\">\n\n                                    <div class=\"btn btn-primary btn-sm float-left\">\n                                        <input type=\"file\" (change)=\"onFileChanged($event)\"\n                                            formControlName=\"productImage\" name=\"productImage\">\n                                    </div>\n                                </div>\n\n                            </div>\n                            <div class=\"col-1\"></div>\n                        </div>\n\n\n\n                    </form>\n\n                    <hr class=\"mar-top-1\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\">\n                            <div class=\"btn-group full-width\">\n                                <button class=\"btn btn-outline-danger\" title=\"Cancelar\" (click)=\"Cancel()\"\n                                    data-dismiss=\"modal\"><i class=\"fas fa-times\"></i></button>\n\n                                <button class=\"btn btn-outline-success\" *ngIf=\"!this.haySeleccionado\"\n                                    title=\"Agregar producto\" (click)=\"addProduct()\" data-dismiss=\"modal\"><i\n                                        class=\"fas fa-check\"></i></button>\n\n                                <button class=\"btn btn-outline-success\" *ngIf=\"this.haySeleccionado\"\n                                    title=\"Actualizar producto\" (click)=\"updateProduct()\" data-dismiss=\"modal\"><i\n                                        class=\"fas fa-check\"></i></button>\n                            </div>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -149,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\" >\r\n\t<div class=\"row top-row\">\r\n\t\t<div class=\"col-6\"></div>\r\n\t\t<div class=\"col-6\">\r\n\t\t\t<div class=\"card\">\r\n\t\t\t\t<div class=\"card-body align-center\">\r\n\t\t\t\t\t<h4 class=\"form-title\">Bienvenido al Restaurant</h4>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\r\n\t\t\t\t\t\t<input type=\"text\" formControlName=\"email\" class=\"form-control separate-top-input align-center\"\r\n\t\t\t\t\t\t\tplaceholder=\"Ingrese su email\" autofocus>\r\n\t\t\t\t\t\t<input type=\"password\" formControlName=\"password\"\r\n\t\t\t\t\t\t\tclass=\"form-control separate-top-input align-center\" placeholder=\"Ingrese su contraseña\">\r\n\t\t\t\t\t\t<div class=\"row mar-top-2\">\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t\t<div class=\"col-8 align-center\">\r\n\t\t\t\t\t\t\t\t<ngx-recaptcha2 formControlName=\"captcha\" #captchaElem\r\n\t\t\t\t\t\t\t\t\t[siteKey]=\"'6LdyPcgUAAAAABC2X0t5JiKItsjuBIXC8_rQAy7r'\" [useGlobalDomain]=\"false\">\r\n\t\t\t\t\t\t\t\t</ngx-recaptcha2>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<button *ngIf=\"!loading\" [disabled]=\"!loginForm.valid\" type=\"submit\"\r\n\t\t\t\t\t\t\tclass=\"btn btn-success full-width separate-top-input\">Entrar</button>\r\n\t\t\t\t\t\t<div class=\"mar-top-1\">\r\n\t\t\t\t\t\t\t<app-spinner *ngIf=\"loading\"></app-spinner>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</form>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<button routerLink=\"/app/register\" class=\"btn btn-primary full-width\">Registrarse</button>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<!-- <div class=\"col-3\"></div> -->\r\n\t</div>\r\n\t<div class=\"row middle-row\" [isProd]>\r\n\t\t<div class=\"col-6\"></div>\r\n\t\t<div class=\"col-6\">\r\n\t\t\t<div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\">\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opJuan\" value=\"juan\" (click)=\"BindUser('juan')\">Juan -\r\n\t\t\t\t\tCliente\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opJose\" value=\"jose\" (click)=\"BindUser('jose')\">Jose -\r\n\t\t\t\t\tMozo\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opPablo\" value=\"pablo\" (click)=\"BindUser('pablo')\">Pablo\r\n\t\t\t\t\t- Cocinero\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opMartin\" value=\"martin\" (click)=\"BindUser('martin')\">Martin - Bartender\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opRoman\" value=\"roman\" (click)=\"BindUser('roman')\">Roman\r\n\t\t\t\t\t- Cervecero\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opIvan\" value=\"ivan\" (click)=\"BindUser('ivan')\">Ivan -\r\n\t\t\t\t\tSocio\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t<!-- <div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opJuan\" value=\"juan\" [(ngModel)]=\"userOption\" (click)=\"LoadUser()\">Juan\r\n\t\t\t\t\t- Cliente</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opMario\" value=\"mario\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Mario - Cliente</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opJose\" value=\"jose\" [(ngModel)]=\"userOption\" (click)=\"LoadUser()\">Jose\r\n\t\t\t\t\t- Mozo</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opPablo\" value=\"pablo\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Pablo - Cocinero</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opMartin\" value=\"martin\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Martin - Bartender</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opRoman\" value=\"roman\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Roman - Cervecero</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opIvan\" value=\"ivan\" [(ngModel)]=\"userOption\" (click)=\"LoadUser()\">ivan\r\n\t\t\t\t\t- Socio</label>\r\n\t\t\t</div> -->\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\t<div class=\"col-3\"></div>\r\n\t</div>\r\n</div>\r\n\r\n<app-footer></app-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n\t<div class=\"row top-row\">\r\n\t\t<div class=\"col-6\"></div>\r\n\t\t<div class=\"col-6\">\r\n\t\t\t<div class=\"card\">\r\n\t\t\t\t<div class=\"card-body align-center\">\r\n\t\t\t\t\t<h4 class=\"form-title\">Bienvenido al Restaurant</h4>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\r\n\t\t\t\t\t\t<input type=\"text\" formControlName=\"email\" class=\"form-control separate-top-input align-center\"\r\n\t\t\t\t\t\t\tplaceholder=\"Ingrese su email\" autofocus>\r\n\t\t\t\t\t\t<input type=\"password\" formControlName=\"password\"\r\n\t\t\t\t\t\t\tclass=\"form-control separate-top-input align-center\" placeholder=\"Ingrese su contraseña\">\r\n\t\t\t\t\t\t<div class=\"row mar-top-2\">\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t\t<div class=\"col-8 align-center\">\r\n\t\t\t\t\t\t\t\t<!-- <ngx-recaptcha2 formControlName=\"captcha\" #captchaElem [siteKey]=\"'6LdyPcgUAAAAABC2X0t5JiKItsjuBIXC8_rQAy7r'\" [useGlobalDomain]=\"false\"> -->\r\n\t\t\t\t\t\t\t\t<ngx-recaptcha2 formControlName=\"captcha\" #captchaElem\r\n\t\t\t\t\t\t\t\t\t[siteKey]=\"'6Lef0cgUAAAAAO0_mOu5t8UWgk1jVhJQjkgCSmG_'\" [useGlobalDomain]=\"false\">\r\n\t\t\t\t\t\t\t\t</ngx-recaptcha2>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<div class=\"row mar-top-2\">\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t\t<div class=\"col-8 align-center\">\r\n\t\t\t\t\t\t\t\t<div class=\"custom-control custom-checkbox\">\r\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"custom-control-input\" id=\"chkHorario\"\r\n\t\t\t\t\t\t\t\t\t\tformControlName=\"chkHorario\">\r\n\t\t\t\t\t\t\t\t\t<label class=\"custom-control-label\" for=\"chkHorario\">Ignorar restricción\r\n\t\t\t\t\t\t\t\t\t\thoraria</label>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<div class=\"row mar-top-2\">\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t\t<div class=\"col-8 align-center\">\r\n\t\t\t\t\t\t\t\t<div class=\"custom-control custom-checkbox\">\r\n\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"custom-control-input\" id=\"chkLunes\"\r\n\t\t\t\t\t\t\t\t\t\tformControlName=\"chkLunes\">\r\n\t\t\t\t\t\t\t\t\t<label class=\"custom-control-label\" for=\"chkLunes\">Que sea lunes!\r\n\t\t\t\t\t\t\t\t\t</label>\r\n\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t</div>\r\n\r\n\r\n\t\t\t\t\t\t<button *ngIf=\"!loading\" [disabled]=\"!loginForm.valid\" type=\"submit\"\r\n\t\t\t\t\t\t\tclass=\"btn btn-success full-width separate-top-input\">Entrar</button>\r\n\t\t\t\t\t\t<div class=\"mar-top-1\">\r\n\t\t\t\t\t\t\t<app-spinner *ngIf=\"loading\"></app-spinner>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</form>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<button routerLink=\"/app/register\" class=\"btn btn-primary full-width\">Registrarse</button>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<!-- <div class=\"col-3\"></div> -->\r\n\t</div>\r\n\t<div class=\"row middle-row\" [isProd]>\r\n\t\t<div class=\"col-6\"></div>\r\n\t\t<div class=\"col-6\">\r\n\t\t\t<div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\">\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opJuan\" value=\"juan\" (click)=\"BindUser('juan')\">Juan -\r\n\t\t\t\t\tCliente\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opJose\" value=\"jose\" (click)=\"BindUser('jose')\">Jose -\r\n\t\t\t\t\tMozo\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opPablo\" value=\"pablo\" (click)=\"BindUser('pablo')\">Pablo\r\n\t\t\t\t\t- Cocinero\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opMartin\" value=\"martin\" (click)=\"BindUser('martin')\">Martin - Bartender\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opRoman\" value=\"roman\" (click)=\"BindUser('roman')\">Roman\r\n\t\t\t\t\t- Cervecero\r\n\t\t\t\t</label>\r\n\t\t\t\t<label class=\"btn btn-secondary\">\r\n\t\t\t\t\t<input type=\"radio\" name=\"opIvan\" value=\"ivan\" (click)=\"BindUser('ivan')\">Ivan -\r\n\t\t\t\t\tSocio\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\r\n\r\n\r\n\t\t\t<!-- <div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opJuan\" value=\"juan\" [(ngModel)]=\"userOption\" (click)=\"LoadUser()\">Juan\r\n\t\t\t\t\t- Cliente</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opMario\" value=\"mario\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Mario - Cliente</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opJose\" value=\"jose\" [(ngModel)]=\"userOption\" (click)=\"LoadUser()\">Jose\r\n\t\t\t\t\t- Mozo</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opPablo\" value=\"pablo\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Pablo - Cocinero</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opMartin\" value=\"martin\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Martin - Bartender</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opRoman\" value=\"roman\" [(ngModel)]=\"userOption\"\r\n\t\t\t\t\t\t(click)=\"LoadUser()\">Roman - Cervecero</label>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label><input type=\"radio\" name=\"opIvan\" value=\"ivan\" [(ngModel)]=\"userOption\" (click)=\"LoadUser()\">ivan\r\n\t\t\t\t\t- Socio</label>\r\n\t\t\t</div> -->\r\n\r\n\r\n\r\n\t\t</div>\r\n\t\t<div class=\"col-3\"></div>\r\n\t</div>\r\n</div>\r\n\r\n<app-footer></app-footer>");
 
 /***/ }),
 
@@ -175,7 +188,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<br><br><div class=\"container\" *ngIf=\"user\">\r\n    <div class=\"row top-row\">\r\n        <div class=\"col-4 align-center\">\r\n            <!-- <img src=\"{{user.image}}\"> -->\r\n        </div>\r\n        <!-- <div class=\"col-6\">\r\n            <h1 class=\"page-title\">\r\n                {{user.name}} {{user.lastname}}\r\n            </h1>\r\n        </div> -->\r\n        <div class=\"col-2\"></div>\r\n    </div>\r\n    <div class=\"row middle-row\">\r\n        <!-- <p>Tu privacidad está segura en este sitio. La información detallada anteriormente no se expone ni es visible\r\n            para nadie público. Solamente un administrador del sistema tiene acceso a estos datos.</p> -->\r\n    </div>\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-2\"></div>\r\n        <div class=\"col-8\">\r\n            <div class=\"card outside-shadow\">\r\n                <div class=\"card-header align-center\">\r\n                    <b>Editar perfil</b>\r\n                </div>\r\n                <div class=\"card-body\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-6 align-center\">\r\n                            <h5 class=\"card-title\">Foto</h5>\r\n                            <p class=\"card-text\">Cambia la foto de tu perfil en solo dos pasos: elegir y cargar.</p>\r\n                            <div class=\"btn-group\">\r\n                                <button class=\"btn btn-primary\" (click)=\"fileInput.click()\">Elegir imagen</button>\r\n                                <button [disabled]=\"!isLoaded\" class=\"btn btn-success\" (click)=\"Upload()\">Cargar imagen</button>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"col-6 align-center\">\r\n                            <h5 class=\"card-title\">Nombre</h5>\r\n                            <p class=\"card-text\">Modificá tu nombre, apellido y/o email de una forma simple.</p>\r\n                            <button class=\"btn btn-primary\" disabled>Cambiar mis datos</button>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-2\"></div>\r\n    </div>\r\n    <input accept=\".png,.jpg\" type=\"file\" #fileInput style=\"display: none;\" (change)=\"OnFileSelected($event)\">\r\n</div>\r\n\r\n<app-footer></app-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<br><br>\r\n<div class=\"container\" *ngIf=\"user\">\r\n    <div class=\"row top-row\">\r\n        <div class=\"col-4 align-center\">\r\n            <!-- <img src=\"{{user.image}}\"> -->\r\n        </div>\r\n        <div class=\"col-6\">\r\n            <!-- <h1 class=\"page-title\">\r\n                {{user.name}} {{user.lastname}}\r\n            </h1> -->\r\n        </div>\r\n        <div class=\"col-2\"></div>\r\n    </div>\r\n    <div class=\"row middle-row\">\r\n        <!-- <p>Tu privacidad está segura en este sitio. La información detallada anteriormente no se expone ni es visible\r\n            para nadie público. Solamente un administrador del sistema tiene acceso a estos datos.</p> -->\r\n    </div>\r\n    <!-- <div class=\"row middle-row\">\r\n        <div class=\"col-2\"></div>\r\n        <div class=\"col-8\">\r\n            <div class=\"card outside-shadow\">\r\n                <div class=\"card-header align-center\">\r\n                    <b>Editar perfil</b>\r\n                </div>\r\n                <div class=\"card-body\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-6 align-center\">\r\n                            <h5 class=\"card-title\">Foto</h5>\r\n                            <p class=\"card-text\">Cambia la foto de tu perfil en solo dos pasos: elegir y cargar.</p>\r\n                            <div class=\"btn-group\">\r\n                                <button class=\"btn btn-primary\" (click)=\"fileInput.click()\">Elegir imagen</button>\r\n                                <button [disabled]=\"!isLoaded\" class=\"btn btn-success\" (click)=\"Upload()\">Cargar imagen</button>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"col-6 align-center\">\r\n                            <h5 class=\"card-title\">Nombre</h5>\r\n                            <p class=\"card-text\">Modificá tu nombre, apellido y/o email de una forma simple.</p>\r\n                            <button class=\"btn btn-primary\" disabled>Cambiar mis datos</button>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-2\"></div>\r\n    </div>\r\n    <input accept=\".png,.jpg\" type=\"file\" #fileInput style=\"display: none;\" (change)=\"OnFileSelected($event)\"> -->\r\n    <div class=\"row middle-row\">\r\n        <!-- <div class=\"row\"> -->\r\n        <div class=\"col-2\"></div>\r\n        <div class=\"col-8\">\r\n            <form [formGroup]=\"userForm\" (ngSubmit)=\"updateUser()\">\r\n\r\n                <!-- <div class=\"row\">\r\n                    <div class=\"col-5\"></div>\r\n                    <div class=\"col-2\">\r\n                        <img [src]=\"this.user.image\" width=\"60px\" height=\"60px\">\r\n                    </div>\r\n                    <div class=\"col-5\"></div>\r\n                </div> -->\r\n\r\n                <div class=\"row\">\r\n                    <div class=\"col-1\"></div>\r\n                    <div class=\"col-10\">\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-5\"></div>\r\n                            <div class=\"col-2\">\r\n                                <img [src]=\"this.user.image\" width=\"60px\" height=\"60px\">\r\n                            </div>\r\n                            <div class=\"col-5\"></div>\r\n                        </div>\r\n\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-12\">\r\n                                <label>Nombre:</label>\r\n                            </div>\r\n                            <div class=\"col-12\">\r\n                                <input formControlName=\"userName\" class=\"form-control full-width align-center\"\r\n                                    type=\"text\" placeholder=\"Nombre del usuario\" (change)=\"cambio()\" required>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-12\">\r\n                                <label>Apellido:</label>\r\n                            </div>\r\n                            <div class=\"col-12\">\r\n                                <input formControlName=\"userLastname\" class=\"form-control full-width align-center\"\r\n                                    type=\"text\" placeholder=\"Apellido del usuario\" (change)=\"cambio()\" required>\r\n                            </div>\r\n                        </div>\r\n\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-12\">\r\n                                <label>Email:</label>\r\n                            </div>\r\n                            <div class=\"col-12\">\r\n                                <input formControlName=\"userMail\" class=\"form-control full-width align-center\"\r\n                                    type=\"email\" placeholder=\"Email del usuario\" [readonly]=\"true\" required>\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-12\">\r\n                                <label>Foto de perfil:</label>\r\n                            </div>\r\n\r\n                            <div class=\"col-12\">\r\n                                <div class=\"btn btn-primary btn-sm float-left col-12\">\r\n                                    <input type=\"file\" (change)=\"onFileChanged($event)\" formControlName=\"userImage\"\r\n                                        name=\"userImage\">\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-1\"></div>\r\n                            <div class=\"col-10\">\r\n                                <div class=\"btn-group full-width\">\r\n                                    <button type=\"button\" class=\"btn btn-outline-danger\" title=\"Cancelar\" (click)=\"resetForm()\"\r\n                                    ><i class=\"fas fa-times\"></i></button>\r\n\r\n                                    <button class=\"btn btn-outline-success\" title=\"Actualizar usuario\"\r\n                                        (click)=\"updateUser()\"><i\r\n                                            class=\"fas fa-check\"></i></button>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-1\"></div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-1\"></div>\r\n                </div> \r\n            </form>\r\n        </div>\r\n        <div class=\"col-2\"></div>\r\n        <!-- </div> -->\r\n\r\n        <!-- <hr class=\"mar-top-1\"> -->\r\n        <!-- <form [formGroup]=\"userForm\" (ngSubmit)=\"SendUser()\">\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-5\"></div>\r\n                <div class=\"col-2\">\r\n                    <img [src]=\"this.user.image\" width=\"60px\" height=\"60px\">\r\n                </div>\r\n                <div class=\"col-5\"></div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-1\"></div>\r\n                <div class=\"col-10\">\r\n\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <label>Nombre:</label>\r\n                        </div>\r\n                        <div class=\"col-12\">\r\n                            <input formControlName=\"userName\" class=\"form-control full-width align-center\" type=\"text\"\r\n                                placeholder=\"Nombre del usuario\" required>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <label>Apellido:</label>\r\n                        </div>\r\n                        <div class=\"col-12\">\r\n                            <input formControlName=\"userLastname\" class=\"form-control full-width align-center\"\r\n                                type=\"text\" placeholder=\"Apellido del usuario\" required>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <label>Email:</label>\r\n                        </div>\r\n                        <div class=\"col-12\">\r\n                            <input formControlName=\"userMail\" class=\"form-control full-width align-center\" type=\"email\"\r\n                                placeholder=\"Email del usuario\" [readonly]=\"true\" required>\r\n                        </div>\r\n                    </div>\r\n\r\n\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <label>Foto de perfil:</label>\r\n                        </div>\r\n\r\n                        <div class=\"col-12\">\r\n                            <div class=\"btn btn-primary btn-sm float-left\">\r\n                                <input type=\"file\" (change)=\"onFileChanged($event)\" formControlName=\"userImage\"\r\n                                    name=\"userImage\">\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-1\"></div>\r\n            </div>\r\n        </form> -->\r\n\r\n        <hr class=\"mar-top-1\">\r\n        \r\n    </div>\r\n\r\n</div>\r\n\r\n<app-footer></app-footer>");
 
 /***/ }),
 
@@ -201,7 +214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n\t<div class=\"row top-row\">\r\n\t\t<div class=\"col-3\"></div>\r\n\t\t<div class=\"col-6\">\r\n\t\t\t<div class=\"card\">\r\n\t\t\t\t<div class=\"card-body align-center\">\r\n\t\t\t\t\t<h4 class=\"form-title\">Registrarse</h4>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<form [formGroup]=\"registerForm\" (ngSubmit)=\"onSubmit()\">\r\n                        <input type=\"text\" formControlName=\"name\" class=\"form-control separate-top-input align-center\" placeholder=\"Nombre\" autofocus>\r\n                        <input type=\"text\" formControlName=\"lastname\" class=\"form-control separate-top-input align-center\" placeholder=\"Apellido\">\r\n\t\t\t\t\t\t<input type=\"text\" formControlName=\"email\" class=\"form-control separate-top-input align-center\" placeholder=\"Email\">\r\n                        <input type=\"password\" formControlName=\"password\" class=\"form-control separate-top-input align-center\" placeholder=\"Contraseña\">\r\n\t\t\t\t\t\t<input type=\"password\" formControlName=\"repPassword\" class=\"form-control separate-top-input align-center\" placeholder=\"Repita la contraseña\">\r\n\t\t\t\t\t\t<div class=\"row mar-top-2\">\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t\t<div class=\"col-8 align-center\">\r\n\t\t\t\t\t\t\t\t<ngx-recaptcha2  formControlName=\"captcha\" #captchaElem [siteKey]=\"'6LdyPcgUAAAAABC2X0t5JiKItsjuBIXC8_rQAy7r'\" [useGlobalDomain]=\"false\"></ngx-recaptcha2>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<button *ngIf=\"!loading\" [disabled]=\"!registerForm.valid\" type=\"submit\" class=\"btn btn-success full-width separate-top-input\">Registrarse</button>\r\n\t\t\t\t\t\t<div class=\"mar-top-2\" *ngIf=\"loading\">\r\n\t\t\t\t\t\t\t<app-spinner></app-spinner>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</form>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<button routerLink=\"/app/login\" class=\"btn btn-secondary full-width\">¿Ya tenés una cuenta?</button>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"col-3\"></div>\r\n\t</div>\r\n</div>\r\n\r\n<app-footer></app-footer>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n\t<div class=\"row top-row\">\r\n\t\t<div class=\"col-3\"></div>\r\n\t\t<div class=\"col-6\">\r\n\t\t\t<div class=\"card\">\r\n\t\t\t\t<div class=\"card-body align-center\">\r\n\t\t\t\t\t<h4 class=\"form-title\">Registrarse</h4>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<form [formGroup]=\"registerForm\" (ngSubmit)=\"onSubmit()\">\r\n                        <input type=\"text\" formControlName=\"name\" class=\"form-control separate-top-input align-center\" placeholder=\"Nombre\" autofocus>\r\n                        <input type=\"text\" formControlName=\"lastname\" class=\"form-control separate-top-input align-center\" placeholder=\"Apellido\">\r\n\t\t\t\t\t\t<input type=\"text\" formControlName=\"email\" class=\"form-control separate-top-input align-center\" placeholder=\"Email\">\r\n                        <input type=\"password\" formControlName=\"password\" class=\"form-control separate-top-input align-center\" placeholder=\"Contraseña\">\r\n\t\t\t\t\t\t<input type=\"password\" formControlName=\"repPassword\" class=\"form-control separate-top-input align-center\" placeholder=\"Repita la contraseña\">\r\n\t\t\t\t\t\t<div class=\"row mar-top-2\">\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t\t<div class=\"col-8 align-center\">\r\n\t\t\t\t\t\t\t\t<!-- <ngx-recaptcha2  formControlName=\"captcha\" #captchaElem [siteKey]=\"'6LdyPcgUAAAAABC2X0t5JiKItsjuBIXC8_rQAy7r'\" [useGlobalDomain]=\"false\"></ngx-recaptcha2> -->\r\n\t\t\t\t\t\t\t\t<ngx-recaptcha2 formControlName=\"captcha\" #captchaElem [siteKey]=\"'6Lef0cgUAAAAAO0_mOu5t8UWgk1jVhJQjkgCSmG_'\" [useGlobalDomain]=\"false\"></ngx-recaptcha2>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"col-2\"></div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<button *ngIf=\"!loading\" [disabled]=\"!registerForm.valid\" type=\"submit\" class=\"btn btn-success full-width separate-top-input\">Registrarse</button>\r\n\t\t\t\t\t\t<div class=\"mar-top-2\" *ngIf=\"loading\">\r\n\t\t\t\t\t\t\t<app-spinner></app-spinner>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</form>\r\n\t\t\t\t\t<hr>\r\n\t\t\t\t\t<button routerLink=\"/app/login\" class=\"btn btn-secondary full-width\">¿Ya tenés una cuenta?</button>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"col-3\"></div>\r\n\t</div>\r\n</div>\r\n\r\n<app-footer></app-footer>");
 
 /***/ }),
 
@@ -231,6 +244,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.html":
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.html ***!
+  \*****************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <div class=\"row top-row\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\">\n            \n        </div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n        <app-product-management></app-product-management>\n    <hr>\n</div>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/cervecero/views/home-cervecero/home-cervecero.component.html":
 /*!*******************************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/cervecero/views/home-cervecero/home-cervecero.component.html ***!
@@ -257,6 +283,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.html":
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.html ***!
+  \*****************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <div class=\"row top-row\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\">\n            \n        </div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n        <app-product-management></app-product-management>\n    <hr>\n</div>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/cliente/views/home-cliente/home-cliente.component.html":
 /*!*************************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/cliente/views/home-cliente/home-cliente.component.html ***!
@@ -266,7 +305,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n    <div class=\"row top-row page-title\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\"></div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <hr>\r\n    <div class=\"row\">\r\n        <div class=\"col-3 align-center\">\r\n            <div class=\"btn-group full-width\" *ngIf=\"order\">\r\n                <button class=\"btn btn-info\" disabled>${{order.totalPrice}}</button>\r\n                <!-- <button class=\"btn btn-info\" disabled>{{order.tableID | table}}</button> -->\r\n            </div>\r\n            <app-spinner *ngIf=\"!order\"></app-spinner>\r\n        </div>\r\n        <div class=\"col-6\">\r\n            <button class=\"btn btn-success full-width\" data-toggle=\"modal\" data-target=\"#orderModal\">Ver pedido</button>\r\n        </div>\r\n        <div class=\"col-3\">\r\n            <div class=\"btn-group full-width\">\r\n                <button title=\"Todo\" class=\"btn btn-outline-success\" (click)=\"ClearFilters()\"><i class=\"fas fa-asterisk\"></i></button>\r\n                <button title=\"Comida\" class=\"btn btn-outline-success\" (click)=\"Filter('comida')\"><i class=\"fas fa-utensils\"></i></button>\r\n                <button title=\"Bebidas\" class=\"btn btn-outline-success\" (click)=\"Filter('bebida')\"><i class=\"fas fa-wine-glass-alt\"></i></button>\r\n                <button title=\"Postres\" class=\"btn btn-outline-success\" (click)=\"Filter('postre')\"><i class=\"fas fa-ice-cream\"></i></button>\r\n                <button title=\"Alcohol\" class=\"btn btn-outline-success\" (click)=\"Filter('alcohol')\"><i class=\"fas fa-beer\"></i></button>\r\n                <button title=\"Sin TACC\" class=\"btn btn-outline-success\" (click)=\"Filter('celiaco')\"><i class=\"fas fa-seedling\"></i></button>\r\n                <button title=\"Vegana\" class=\"btn btn-outline-success\" (click)=\"Filter('vegano')\"><i class=\"fas fa-carrot\"></i></button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"ordered align-center\" *ngIf=\"hasOrder\" style=\"color:#FFFFFF\">\r\n        <hr>\r\n        Tu código de pedido es <b>{{order.codeID}}</b> y tu mozo es <b>{{order.waiter.name}} {{order.waiter.lastname}}</b>.\r\n    </div>\r\n    <hr>\r\n    <div class=\"row card-group\">\r\n        <div class=\"col-3 mar-top-2\"  *ngFor=\"let prod of showingProducts\">\r\n            <app-food-card (added)=\"AddToOrder($event)\" [resetEvent]=\"onReset\" [product]=\"prod\"></app-food-card>\r\n        </div>\r\n    </div>\r\n    <hr>\r\n\r\n    \r\n</div>\r\n\r\n<!-- Order modal -->\r\n<div class=\"modal fade\" id=\"orderModal\">\r\n  <div class=\"modal-dialog\">\r\n    <div class=\"modal-content\">\r\n        <div class=\"modal-body\">\r\n            <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-2\"></div>\r\n                    <div class=\"col-8\">\r\n                        <h3 class=\"align-center\">Pedido</h3>\r\n                    </div>\r\n                    <div class=\"col-2\"></div>\r\n                </div>\r\n                <hr class=\"mar-top-1\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-1\"></div>\r\n                    <div class=\"col-10\">\r\n                        <div *ngIf=\"somethingOrdered\" class=\"resume\">\r\n                            <ul>\r\n                                <li *ngFor=\"let item of order.items\">\r\n                                        {{item.name}} - \r\n                                    <span class=\"price\">\r\n                                        ${{item.price}}\r\n                                    </span>\r\n                                </li>\r\n                            </ul>\r\n                            <div class=\"align-center\">\r\n                                <span style=\"font-weight: bold;\">Precio total: </span>\r\n                                <span class=\"price\" style=\"font-weight: bold;\">${{order.totalPrice}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div *ngIf=\"!somethingOrdered\" class=\"align-center\">\r\n                            <span>Todavía no hay nada pedido</span>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-1\"></div>\r\n                </div>\r\n                <hr class=\"mar-top-1\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-2\"></div>\r\n                    <div class=\"col-8\">\r\n                        <div class=\"btn-group full-width\">\r\n                            <button class=\"btn btn-outline-danger\" title=\"Borrar pedido\" (click)=\"CancelOrder()\" data-dismiss=\"modal\"><i class=\"fas fa-times\"></i></button>\r\n                            <button class=\"btn btn-outline-success\" title=\"Confirmar pedido\" (click)=\"MakeOrder()\"><i class=\"fas fa-check\"></i></button>\r\n                            <button class=\"btn btn-outline-secondary\" title=\"Seguir pidiendo\" data-dismiss=\"modal\"><i class=\"fas fa-long-arrow-alt-left\"></i></button>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-2\"></div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n  </div>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n    <div class=\"row top-row page-title\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\"></div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <hr>\r\n    <div class=\"row\">\r\n        <div class=\"col-3 align-center\">\r\n            <div class=\"btn-group full-width\" *ngIf=\"order\">\r\n                <button class=\"btn btn-info\" disabled>${{order.totalPrice}}</button>\r\n                <!-- <button class=\"btn btn-info\" disabled>{{order.tableID | table}}</button> -->\r\n            </div>\r\n            <app-spinner *ngIf=\"!order\"></app-spinner>\r\n        </div>\r\n        <div class=\"col-6\">\r\n            <button class=\"btn btn-success full-width\" data-toggle=\"modal\" data-target=\"#orderModal\">Ver pedido</button>\r\n        </div>\r\n        <div class=\"col-3\">\r\n            <div class=\"btn-group full-width\">\r\n                <button title=\"Todo\" class=\"btn btn-outline-success\" (click)=\"ClearFilters()\"><i class=\"fas fa-asterisk\"></i></button>\r\n                <button title=\"Comida\" class=\"btn btn-outline-success\" (click)=\"Filter('comida')\"><i class=\"fas fa-utensils\"></i></button>\r\n                <button title=\"Bebidas\" class=\"btn btn-outline-success\" (click)=\"Filter('bebida')\"><i class=\"fas fa-wine-glass-alt\"></i></button>\r\n                <button title=\"Postres\" class=\"btn btn-outline-success\" (click)=\"Filter('postre')\"><i class=\"fas fa-ice-cream\"></i></button>\r\n                <button title=\"Alcohol\" class=\"btn btn-outline-success\" (click)=\"Filter('alcohol')\"><i class=\"fas fa-beer\"></i></button>\r\n                <button title=\"Sin TACC\" class=\"btn btn-outline-success\" (click)=\"Filter('celiaco')\"><i class=\"fas fa-seedling\"></i></button>\r\n                <button title=\"Vegana\" class=\"btn btn-outline-success\" (click)=\"Filter('vegano')\"><i class=\"fas fa-carrot\"></i></button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"ordered align-center\" *ngIf=\"hasOrder\" style=\"color:#FFFFFF\">\r\n        <hr>\r\n        Tu código de pedido es <b>{{order.codeID}}</b> y tu mozo es <b>{{order.waiter.name}} {{order.waiter.lastname}}</b>.\r\n    </div>\r\n    <div>\r\n        \r\n    </div>\r\n    <hr>\r\n    <div class=\"row card-group\">\r\n        <div class=\"col-3 mar-top-2\"  *ngFor=\"let prod of showingProducts | async\">\r\n            <app-food-card (added)=\"AddToOrder($event)\" [resetEvent]=\"onReset\" [product]=\"prod\"></app-food-card>\r\n        </div>\r\n    </div>\r\n    <hr>\r\n\r\n    \r\n</div>\r\n\r\n<!-- Order modal -->\r\n<div class=\"modal fade\" id=\"orderModal\">\r\n  <div class=\"modal-dialog\">\r\n    <div class=\"modal-content\">\r\n        <div class=\"modal-body\">\r\n            <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-2\"></div>\r\n                    <div class=\"col-8\">\r\n                        <h3 class=\"align-center\">Pedido</h3>\r\n                    </div>\r\n                    <div class=\"col-2\"></div>\r\n                </div>\r\n                <hr class=\"mar-top-1\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-1\"></div>\r\n                    <div class=\"col-10\">\r\n                        <div *ngIf=\"somethingOrdered\" class=\"resume\">\r\n                            <ul>\r\n                                <li *ngFor=\"let item of order.items\">\r\n                                        {{item.name}} - \r\n                                    <span class=\"price\">\r\n                                        ${{item.price}}\r\n                                    </span>\r\n                                </li>\r\n                            </ul>\r\n                            <div class=\"align-center\">\r\n                                <span style=\"font-weight: bold;\">Precio total: </span>\r\n                                <span class=\"price\" style=\"font-weight: bold;\">${{order.totalPrice}}</span>\r\n                            </div>\r\n                        </div>\r\n                        <div *ngIf=\"!somethingOrdered\" class=\"align-center\">\r\n                            <span>Todavía no hay nada pedido</span>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-1\"></div>\r\n                </div>\r\n                <hr class=\"mar-top-1\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-2\"></div>\r\n                    <div class=\"col-8\">\r\n                        <div class=\"btn-group full-width\">\r\n                            <button class=\"btn btn-outline-danger\" title=\"Borrar pedido\" (click)=\"CancelOrder()\" data-dismiss=\"modal\"><i class=\"fas fa-times\"></i></button>\r\n                            <button class=\"btn btn-outline-success\" title=\"Confirmar pedido\" (click)=\"MakeOrder()\" data-dismiss=\"modal\"><i class=\"fas fa-check\"></i></button>\r\n                            <button class=\"btn btn-outline-secondary\" title=\"Seguir pidiendo\" data-dismiss=\"modal\"><i class=\"fas fa-long-arrow-alt-left\"></i></button>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-2\"></div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n  </div>\r\n</div>");
 
 /***/ }),
 
@@ -292,7 +331,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n    <div class=\"row top-row\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <!-- <h1 class=\"page-title\">- Buscar un pedido -</h1> -->\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <hr>\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <!-- <input [(ngModel)]=\"orderID\" class=\"form-control full-width\" type=\"text\"\r\n                placeholder=\"Ingrese el código de su pedido\"> -->\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <div class=\"row mar-top-1\">\r\n        <div class=\"col-3\"></div>\r\n        <!-- <div class=\"col-6\">\r\n            <button [disabled]=\"!orderID\" class=\"btn btn-outline-primary full-width\"\r\n                (click)=\"FindOrder()\">Buscar</button>\r\n        </div> -->\r\n        <!-- <div class=\"col-3\">\r\n            <button class=\"btn btn-outline-primary full-width\"\r\n                (click)=\"FindPending()\">Buscar</button>\r\n            <select class=\"form-control\" [ngModel]=\"selectedItem\" (ngModelChange)=\"SelectItem($event)\">\r\n                <option *ngFor=\"let order of orders\">{{order.orderID}}</option>\r\n            </select>\r\n        </div> -->\r\n        <div class=\"col-6\">\r\n            <app-order-list role=\"cliente\" (orderSelected)=\"SelectOrder($event)\"></app-order-list>\r\n        </div>\r\n        \r\n    </div>\r\n    <div class=\"row mar-top-1\" *ngIf=\"alreadyPaid\">\r\n    <!-- <div class=\"row mar-top-1\"> -->\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <button [disabled]=\"surveyDone\" class=\"btn btn-info full-width\" data-toggle=\"modal\"\r\n                data-target=\"#questionsModal\">Hacer encuesta</button>\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n\r\n    <div class=\"row middle-row\" *ngIf=\"waitingOrder\">\r\n        <div class=\"col-4\"></div>\r\n        <div class=\"col-4 align-center\">\r\n            <app-spinner></app-spinner>\r\n        </div>\r\n        <div class=\"col-4\"></div>\r\n    </div>\r\n\r\n    <div class=\"row middle-row\" *ngIf=\"order\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <div class=\"card outside-shadow\">\r\n                <div class=\"card-body align-center\">\r\n                    <h5 class=\"card-title\">Pedido</h5>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Código: </b>{{order.codeID}}\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Mozo: </b>{{order.waiter.name}} {{order.waiter.lastname}}\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <div class=\"row\" *ngIf=\"!IsServed()\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Tiempo estimado: </b>{{remainingTime | timeleft}}\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Comida</b>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <ul>\r\n                                <li *ngFor=\"let i of order.items\">{{i.name}} - ${{i.price}}</li>\r\n                            </ul>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Precio total: </b> <span class=\"price\">${{order.totalPrice}}</span>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12\">\r\n                            <button [disabled]=\"!CanPayNow()\" (click)=\"Pay()\"\r\n                                class=\"btn btn-success full-width\">Pagar</button>\r\n                        </div>\r\n                    </div>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"modal fade\" id=\"questionsModal\">\r\n    <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-body\">\r\n                <div class=\"container-fluid\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <h3 class=\"align-center\">Encuesta</h3>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr class=\"mar-top-1\">\r\n                    <form [formGroup]=\"surveyForm\" (ngSubmit)=\"SendAnswers()\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"tableScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 a la mesa.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"waiterScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 al mozo.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"restaurantScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 al restaurante.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"cookScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 al cocinero.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <textarea class=\"form-control\" cols=\"30\" rows=\"3\" maxlength=\"66\" formControlName=\"comment\"\r\n                                    placeholder=\"Escribe un breve comentario (máximo de 66 caracteres).\"></textarea>\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row mar-top-1\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-4 align-center\">\r\n                                <div class=\"form-check form-check-inline\">\r\n                                    <input class=\"form-check-input\" type=\"radio\" formControlName=\"commentType\" name=\"commentType\"\r\n                                        id=\"negative\" value=\"false\">\r\n                                    <label class=\"form-check-label negative\" for=\"negative\">Malo</label>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-4 align-center\">\r\n                                <div class=\"form-check form-check-inline\">\r\n                                    <input class=\"form-check-input\" type=\"radio\" formControlName=\"commentType\" name=\"commentType\"\r\n                                        id=\"positive\" value=\"true\">\r\n                                    <label class=\"form-check-label positive\" for=\"positive\">Bueno</label>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <button [disabled]=\"!surveyForm.valid\" class=\"btn btn-success full-width\"\r\n                                    data-dismiss=\"modal\" (click)=\"SendAnswers()\">Enviar encuesta</button>\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <!-- <h1 class=\"page-title\">- Buscar un pedido -</h1> -->\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <hr>\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <!-- <input [(ngModel)]=\"orderID\" class=\"form-control full-width\" type=\"text\"\r\n                placeholder=\"Ingrese el código de su pedido\"> -->\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <div class=\"row mar-top-1\">\r\n        <div class=\"col-3\"></div>\r\n        <!-- <div class=\"col-6\">\r\n            <button [disabled]=\"!orderID\" class=\"btn btn-outline-primary full-width\"\r\n                (click)=\"FindOrder()\">Buscar</button>\r\n        </div> -->\r\n        <!-- <div class=\"col-3\">\r\n            <button class=\"btn btn-outline-primary full-width\"\r\n                (click)=\"FindPending()\">Buscar</button>\r\n            <select class=\"form-control\" [ngModel]=\"selectedItem\" (ngModelChange)=\"SelectItem($event)\">\r\n                <option *ngFor=\"let order of orders\">{{order.orderID}}</option>\r\n            </select>\r\n        </div> -->\r\n        <div class=\"col-6\">\r\n            <app-order-list role=\"cliente\" (orderSelected)=\"SelectOrder($event)\"></app-order-list>\r\n        </div>\r\n        \r\n    </div>\r\n    <div class=\"row mar-top-1\" *ngIf=\"alreadyPaid\">\r\n    <!-- <div class=\"row mar-top-1\"> -->\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <button [disabled]=\"surveyDone\" class=\"btn btn-info full-width\" data-toggle=\"modal\"\r\n                data-target=\"#questionsModal\">Hacer encuesta</button>\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n\r\n    <div class=\"row middle-row\" *ngIf=\"waitingOrder\">\r\n        <div class=\"col-4\"></div>\r\n        <div class=\"col-4 align-center\">\r\n            <app-spinner></app-spinner>\r\n        </div>\r\n        <div class=\"col-4\"></div>\r\n    </div>\r\n\r\n    <div class=\"row middle-row\" *ngIf=\"order\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            <div class=\"card outside-shadow\">\r\n                <div class=\"card-body align-center\">\r\n                    <h5 class=\"card-title\">Pedido</h5>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Código: </b>{{order.codeID}}\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Mozo: </b>{{order.waiter.name}} {{order.waiter.lastname}}\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <div class=\"row\" *ngIf=\"!IsServed()\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Tiempo estimado: </b>{{remainingTime | timeleft}}\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Comida</b>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <ul>\r\n                                <li *ngFor=\"let i of order.items\">{{i.name}} - ${{i.price}}</li>\r\n                            </ul>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <b>Precio total: </b> <span class=\"price\">${{order.totalPrice}}</span>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row align-center\">\r\n                        <div class=\"btn btn-primary btn-sm align-center\">\r\n                            <input type=\"file\" (change)=\"onFileChanged($event)\" [(ngModel)]=\"imagen\"\r\n                                >\r\n                        </div>\r\n                        <div class=\"col-12\">\r\n                            <button [disabled]=\"this.file == null\" (click)=\"cambiarImagen()\" *ngIf=\"!notCancelled()\"\r\n                                class=\"btn btn-info full-width\">Cambiar Foto</button>\r\n                        </div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12\">\r\n                            <button [disabled]=\"CanPayNow()\" (click)=\"Cancel()\" *ngIf=\"!notCancelled()\"\r\n                                class=\"btn btn-danger full-width\">Cancelar Pedido</button>\r\n                        </div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12\">\r\n                            <button [disabled]=\"!CanPayNow()\" (click)=\"ticketPDF()\"\r\n                                class=\"btn btn-warning full-width\">Descargar Ticket</button>\r\n                        </div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12\">\r\n                            <button [disabled]=\"!CanPayNow()\" (click)=\"Pay()\"\r\n                                class=\"btn btn-success full-width\">Pagar</button>\r\n                        </div>\r\n                    </div>\r\n                    \r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"modal fade\" id=\"questionsModal\">\r\n    <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-body\">\r\n                <div class=\"container-fluid\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <h3 class=\"align-center\">Encuesta</h3>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr class=\"mar-top-1\">\r\n                    <form [formGroup]=\"surveyForm\" (ngSubmit)=\"SendAnswers()\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"tableScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 a la mesa.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"waiterScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 al mozo.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"restaurantScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 al restaurante.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <input formControlName=\"cookScore\" class=\"form-control full-width align-center\"\r\n                                    type=\"number\" placeholder=\"Puntée del 1 al 10 al cocinero.\">\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <textarea class=\"form-control\" cols=\"30\" rows=\"3\" maxlength=\"66\" formControlName=\"comment\"\r\n                                    placeholder=\"Escribe un breve comentario (máximo de 66 caracteres).\"></textarea>\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row mar-top-1\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-4 align-center\">\r\n                                <div class=\"form-check form-check-inline\">\r\n                                    <input class=\"form-check-input\" type=\"radio\" formControlName=\"commentType\" name=\"commentType\"\r\n                                        id=\"negative\" value=\"false\">\r\n                                    <label class=\"form-check-label negative\" for=\"negative\">Malo</label>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-4 align-center\">\r\n                                <div class=\"form-check form-check-inline\">\r\n                                    <input class=\"form-check-input\" type=\"radio\" formControlName=\"commentType\" name=\"commentType\"\r\n                                        id=\"positive\" value=\"true\">\r\n                                    <label class=\"form-check-label positive\" for=\"positive\">Bueno</label>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                        <div class=\"row middle-row\">\r\n                            <div class=\"col-2\"></div>\r\n                            <div class=\"col-8\">\r\n                                <button [disabled]=\"!surveyForm.valid\" class=\"btn btn-success full-width\"\r\n                                    data-dismiss=\"modal\" (click)=\"SendAnswers()\">Enviar encuesta</button>\r\n                            </div>\r\n                            <div class=\"col-2\"></div>\r\n                        </div>\r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
 
 /***/ }),
 
@@ -318,7 +357,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"bottom-shadow\">\r\n    <div class=\"row main-bar \">\r\n        <div class=\"col-6\">\r\n        </div>\r\n        <div class=\"col-6 profile\">\r\n            <img *ngIf=\"user\" src=\"{{user.image}}\" class=\"profile-pic\" [ngClass]=\"open ? 'active': ''\" (click)=\"toggleSidebar()\">\r\n        </div>\r\n    </div>\r\n</nav>\r\n\r\n<div class=\"sidebar\" [ngClass]=\"open ? '' : 'collapsed'\">\r\n    <div class=\"top-row\"><br><br>\r\n        <app-sidebar-option name=\"Perfil\" link=\"/cocinero/profile\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de pedidos\" link=\"/cocinero\"></app-sidebar-option>\r\n        <app-sidebar-option logOut=true></app-sidebar-option>\r\n    </div>\r\n</div>\r\n<div class=\"content\">\r\n    <router-outlet></router-outlet>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"bottom-shadow\">\r\n    <div class=\"row main-bar \">\r\n        <div class=\"col-6\">\r\n        </div>\r\n        <div class=\"col-6 profile\">\r\n            <img *ngIf=\"user\" src=\"{{user.image}}\" class=\"profile-pic\" [ngClass]=\"open ? 'active': ''\" (click)=\"toggleSidebar()\">\r\n        </div>\r\n    </div>\r\n</nav>\r\n\r\n<div class=\"sidebar\" [ngClass]=\"open ? '' : 'collapsed'\">\r\n    <div class=\"top-row\"><br><br>\r\n        <app-sidebar-option name=\"Perfil\" link=\"/cocinero/profile\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de pedidos\" link=\"/cocinero\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de productos\" link=\"/cocinero/products\"></app-sidebar-option>\r\n        <app-sidebar-option logOut=true></app-sidebar-option>\r\n    </div>\r\n</div>\r\n<div class=\"content\">\r\n    <router-outlet></router-outlet>\r\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.html":
+/*!**************************************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.html ***!
+  \**************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <div class=\"row top-row\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\">\n            \n        </div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n        <app-product-management></app-product-management>\n    <hr>\n</div>\n");
 
 /***/ }),
 
@@ -331,7 +383,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card outside-shadow\">\r\n    <div class=\"card-body align-center\">\r\n        <h5 class=\"card-title\">Pedido</h5>\r\n        <hr>\r\n        <div *ngIf=\"order\" class=\"order-body align-center\">\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Código:</b> {{order.codeID}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Cliente:</b> {{order.client.name}} {{order.client.lastname}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Mesa:</b> {{order.tableID}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Precio total:</b> ${{order.totalPrice}}\r\n                </div>\r\n            </div>\r\n            <hr>\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Está:</b> {{order.state}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Mozo:</b> {{order.waiter.name}} {{order.waiter.lastname}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Tiempo restante:</b> {{remainingTime | timeleft}}\r\n                </div>\r\n            </div>\r\n            <hr>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <select class=\"form-control\" [ngModel]=\"selectedItem\" (ngModelChange)=\"SelectItem($event)\">\r\n                        <option [ngValue]=\"it\" *ngFor=\"let it of order.items\">{{it.name}}</option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"row mar-top-1\" *ngIf=\"!selectedItem\">\r\n                <div class=\"col-12\">\r\n                    <label>No se seleccionó nada.</label>\r\n                </div>\r\n            </div>\r\n            <div class=\"item mar-top-1\" *ngIf=\"selectedItem\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-12\">\r\n                        <b>Estado:</b> {{selectedItem.state}}\r\n                    </div>\r\n                </div>\r\n                <div class=\"row\">\r\n                    <div class=\"col-12\">\r\n                        <b>Lo tiene:</b> \r\n                        <span *ngIf=\"selectedItem.worker\">\r\n                        {{selectedItem.worker.name}} {{selectedItem.worker.lastname}} \r\n                        </span>\r\n                        <span *ngIf=\"!selectedItem.worker\">\r\n                            Nadie por ahora.\r\n                        </span>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <hr>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <button [disabled]=\"!CanBeServed()\" (click)=\"CompleteOrder()\" class=\"btn btn-success full-width\">Pasar a servido</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row\" *ngIf=\"!order\">\r\n            <div class=\"col-12\">\r\n                <label>Seleccione un pedido.</label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card outside-shadow\">\r\n    <div class=\"card-body align-center\">\r\n        <h5 class=\"card-title\">Pedido</h5>\r\n        <hr>\r\n        <div *ngIf=\"order\" class=\"order-body align-center\">\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Código:</b> {{order.codeID}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Cliente:</b> {{order.client.name}} {{order.client.lastname}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Mesa:</b> {{order.tableID}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Precio total:</b> ${{order.totalPrice}}\r\n                </div>\r\n            </div>\r\n            <hr>\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Está:</b> {{order.state}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Mozo:</b> {{order.waiter.name}} {{order.waiter.lastname}}\r\n                </div>\r\n            </div>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <b>Tiempo restante:</b> {{remainingTime | timeleft}}\r\n                </div>\r\n            </div>\r\n            <hr>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <button (click)=\"comandaPDF()\" class=\"btn btn-info full-width\">Descargar comanda</button>\r\n                </div>\r\n            </div>\r\n            <hr>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <select class=\"form-control\" [ngModel]=\"selectedItem\" (ngModelChange)=\"SelectItem($event)\">\r\n                        <option [ngValue]=\"it\" *ngFor=\"let it of order.items\">{{it.name}}</option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n            <div class=\"row mar-top-1\" *ngIf=\"!selectedItem\">\r\n                <div class=\"col-12\">\r\n                    <label>No se seleccionó nada.</label>\r\n                </div>\r\n            </div>\r\n            <div class=\"item mar-top-1\" *ngIf=\"selectedItem\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-12\">\r\n                        <b>Estado:</b> {{selectedItem.state}}\r\n                    </div>\r\n                </div>\r\n                <div class=\"row\">\r\n                    <div class=\"col-12\">\r\n                        <b>Lo tiene:</b> \r\n                        <span *ngIf=\"selectedItem.worker\">\r\n                        {{selectedItem.worker.name}} {{selectedItem.worker.lastname}} \r\n                        </span>\r\n                        <span *ngIf=\"!selectedItem.worker\">\r\n                            Nadie por ahora.\r\n                        </span>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <hr>\r\n            <div class=\"row\">\r\n                <div class=\"col-12\">\r\n                    <button [disabled]=\"!CanBeServed()\" (click)=\"CompleteOrder()\" class=\"btn btn-success full-width\">Pasar a servido</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"row\" *ngIf=\"!order\">\r\n            <div class=\"col-12\">\r\n                <label>Seleccione un pedido.</label>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
 
 /***/ }),
 
@@ -383,7 +435,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<br><br>\r\n<div class=\"container\">\r\n    <div class=\"row align-center\">\r\n        <div class=\"card align-center col-3\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">Control de roles</h5>\r\n                <p class=\"card-text\">Desde esta opción podés administrar los roles de los usuarios registrados en la\r\n                    aplicación.</p>\r\n                <hr>\r\n                <div class=\"role-panel\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12\">\r\n                            <input [(ngModel)]=\"changeRoleEmail\" type=\"text\"\r\n                                class=\"form-control input-titanic role-input\" placeholder=\"Email del usuario\">\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <select [(ngModel)]=\"changeRoleNewRole\" class=\"form-control input-titanic role-input\">\r\n                                <option value=\"socio\">Socio</option>\r\n                                <option value=\"mozo\">Mozo</option>\r\n                                <option value=\"cocinero\">Cocinero</option>\r\n                                <option value=\"cervecero\">Cervecero</option>\r\n                                <option value=\"bartender\">Bartender</option>\r\n                                <option value=\"cliente\">Cliente</option>\r\n                            </select>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <button class=\"btn btn-primary full-width\" (click)=\"ChangeRole()\">Cambiar rol</button>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n        <div class=\"card align-center col-3\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">Lista de usuarios</h5>\r\n                <p class=\"card-text\">Desde acá podés ver un listado completo de los usuarios registrados en la aplicación</p>\r\n                \r\n                \r\n                <hr>\r\n                <div class=\"btn-group full-width\">\r\n                    <button class=\"btn btn-danger full-width\" (click)=\"GeneratePDF()\">Generar PDF</button>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n        <div class=\"card align-center col-3\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">Facturación</h5>\r\n                <p>Desde acá podés ver todo lo que se facturó en detalle.</p>\r\n            <hr>\r\n            <div class=\"btn-group full-width\">\r\n                <button class=\"btn btn-success full-width\" (click)=\"GenerateCSV()\">Generar CSV</button>\r\n            </div>\r\n\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    \r\n    \r\n\r\n\r\n\r\n\r\n\r\n\r\n        <!-- <div class=\"col-4 align-center\">\r\n            <h3>Control de roles</h3>\r\n            <hr>\r\n            <p>Desde esta opción podés administrar los roles de los usuarios registrados en la aplicación.</p>\r\n            <hr>\r\n            <div class=\"role-panel\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-12\">\r\n                        <input [(ngModel)]=\"changeRoleEmail\" type=\"text\" class=\"form-control input-titanic role-input\"\r\n                            placeholder=\"Email del usuario\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"row middle-row\">\r\n                    <div class=\"col-12\">\r\n                        <select [(ngModel)]=\"changeRoleNewRole\" class=\"form-control input-titanic role-input\">\r\n                            <option value=\"socio\">Socio</option>\r\n                            <option value=\"mozo\">Mozo</option>\r\n                            <option value=\"cocinero\">Cocinero</option>\r\n                            <option value=\"cervecero\">Cervecero</option>\r\n                            <option value=\"bartender\">Bartender</option>\r\n                            <option value=\"cliente\">Cliente</option>\r\n                        </select>\r\n                    </div>\r\n                </div>\r\n                <div class=\"row middle-row\">\r\n                    <div class=\"col-12\">\r\n                        <button class=\"btn btn-primary full-width\" (click)=\"ChangeRole()\">Cambiar rol</button>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n        </div> -->\r\n        <!-- <div class=\"col-4 align-center\">\r\n            <h3>Lista de usuarios</h3>\r\n            <hr>\r\n            <p>Desde acá podés ver un listado completo de los usuarios registrados en la aplicación</p>\r\n            <hr>\r\n            <div class=\"btn-group full-width\">\r\n                <button class=\"btn btn-danger full-width\" (click)=\"GeneratePDF()\">Generar PDF</button>\r\n            </div>\r\n        </div> -->\r\n        <!-- <div class=\"col-4 align-center\">\r\n            <h3>Facturación</h3>\r\n            <hr>\r\n            <p>Desde acá podés ver todo lo que se facturó en detalle.</p>\r\n            <hr>\r\n            <div class=\"btn-group full-width\">\r\n                <button class=\"btn btn-success full-width\" (click)=\"GenerateCSV()\">Generar CSV</button>\r\n            </div>\r\n        </div> -->\r\n    </div>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<br><br>\r\n<div class=\"container\">\r\n    <div class=\"row align-center\">\r\n        <!-- <div class=\"card align-center col-3\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">Control de roles</h5>\r\n                <p class=\"card-text\">Desde esta opción podés administrar los roles de los usuarios registrados en la\r\n                    aplicación.</p>\r\n                <hr>\r\n                <div class=\"role-panel\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12\">\r\n                            <input [(ngModel)]=\"changeRoleEmail\" type=\"text\"\r\n                                class=\"form-control input-titanic role-input\" placeholder=\"Email del usuario\">\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <select [(ngModel)]=\"changeRoleNewRole\" class=\"form-control input-titanic role-input\">\r\n                                <option value=\"socio\">Socio</option>\r\n                                <option value=\"mozo\">Mozo</option>\r\n                                <option value=\"cocinero\">Cocinero</option>\r\n                                <option value=\"cervecero\">Cervecero</option>\r\n                                <option value=\"bartender\">Bartender</option>\r\n                                <option value=\"cliente\">Cliente</option>\r\n                            </select>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12\">\r\n                            <button class=\"btn btn-primary full-width\" (click)=\"ChangeRole()\">Cambiar rol</button>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n        </div> -->\r\n        <div class=\"card align-center col-3\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">Lista de usuarios</h5>\r\n                <p class=\"card-text\">Desde acá podés ver un listado completo de los usuarios registrados en la aplicación</p>\r\n                \r\n                \r\n                <hr>\r\n                <div class=\"btn-group full-width\">\r\n                    <button class=\"btn btn-danger full-width\" (click)=\"GeneratePDF()\">Generar PDF</button>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n        <div class=\"card align-center col-3\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">Facturación</h5>\r\n                <p>Desde acá podés ver todo lo que se facturó en detalle.</p>\r\n            <hr>\r\n            <div class=\"btn-group full-width\">\r\n                <button class=\"btn btn-success full-width\" (click)=\"GenerateCSV()\">Generar CSV</button>\r\n            </div>\r\n\r\n            </div>\r\n        </div>        \r\n    </div>\r\n\r\n    \r\n    \r\n\r\n\r\n\r\n\r\n\r\n\r\n        <!-- <div class=\"col-4 align-center\">\r\n            <h3>Control de roles</h3>\r\n            <hr>\r\n            <p>Desde esta opción podés administrar los roles de los usuarios registrados en la aplicación.</p>\r\n            <hr>\r\n            <div class=\"role-panel\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-12\">\r\n                        <input [(ngModel)]=\"changeRoleEmail\" type=\"text\" class=\"form-control input-titanic role-input\"\r\n                            placeholder=\"Email del usuario\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"row middle-row\">\r\n                    <div class=\"col-12\">\r\n                        <select [(ngModel)]=\"changeRoleNewRole\" class=\"form-control input-titanic role-input\">\r\n                            <option value=\"socio\">Socio</option>\r\n                            <option value=\"mozo\">Mozo</option>\r\n                            <option value=\"cocinero\">Cocinero</option>\r\n                            <option value=\"cervecero\">Cervecero</option>\r\n                            <option value=\"bartender\">Bartender</option>\r\n                            <option value=\"cliente\">Cliente</option>\r\n                        </select>\r\n                    </div>\r\n                </div>\r\n                <div class=\"row middle-row\">\r\n                    <div class=\"col-12\">\r\n                        <button class=\"btn btn-primary full-width\" (click)=\"ChangeRole()\">Cambiar rol</button>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n        </div> -->\r\n        <!-- <div class=\"col-4 align-center\">\r\n            <h3>Lista de usuarios</h3>\r\n            <hr>\r\n            <p>Desde acá podés ver un listado completo de los usuarios registrados en la aplicación</p>\r\n            <hr>\r\n            <div class=\"btn-group full-width\">\r\n                <button class=\"btn btn-danger full-width\" (click)=\"GeneratePDF()\">Generar PDF</button>\r\n            </div>\r\n        </div> -->\r\n        <!-- <div class=\"col-4 align-center\">\r\n            <h3>Facturación</h3>\r\n            <hr>\r\n            <p>Desde acá podés ver todo lo que se facturó en detalle.</p>\r\n            <hr>\r\n            <div class=\"btn-group full-width\">\r\n                <button class=\"btn btn-success full-width\" (click)=\"GenerateCSV()\">Generar CSV</button>\r\n            </div>\r\n        </div> -->\r\n    </div>\r\n");
 
 /***/ }),
 
@@ -396,7 +448,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"bottom-shadow\">\r\n    <div class=\"row main-bar\">\r\n        <div class=\"col-6\">\r\n        </div>\r\n        <div class=\"col-6 profile\">\r\n            <img *ngIf=\"user\" src=\"{{user.image}}\" class=\"profile-pic\" [ngClass]=\"open ? 'active': ''\" (click)=\"toggleSidebar()\">\r\n        </div>\r\n    </div>\r\n</nav>\r\n\r\n<div class=\"sidebar\" [ngClass]=\"open ? '' : 'collapsed'\">\r\n    <div class=\"top-row\">\r\n        <br><br>\r\n        <app-sidebar-option name=\"Perfil\" link=\"/socio/profile\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Panel de control\" link=\"/socio\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de mesas\" link=\"/socio/tables\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de pedidos\" link=\"/socio/orders\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Ver encuestas\" link=\"/socio/surveys\"></app-sidebar-option>\r\n        <app-sidebar-option logOut=true></app-sidebar-option>\r\n    </div>\r\n</div>\r\n<div class=\"content\">\r\n    <router-outlet></router-outlet>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"bottom-shadow\">\r\n    <div class=\"row main-bar\">\r\n        <div class=\"col-6\">\r\n        </div>\r\n        <div class=\"col-6 profile\">\r\n            <img *ngIf=\"user\" src=\"{{user.image}}\" class=\"profile-pic\" [ngClass]=\"open ? 'active': ''\" (click)=\"toggleSidebar()\">\r\n            \r\n        </div>\r\n    </div>\r\n</nav>\r\n\r\n<div class=\"sidebar\" [ngClass]=\"open ? '' : 'collapsed'\">\r\n    <div class=\"top-row\">\r\n        <br><br>\r\n        <app-sidebar-option name=\"Perfil\" link=\"/socio/profile\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Panel de control\" link=\"/socio\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de mesas\" link=\"/socio/tables\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de pedidos\" link=\"/socio/orders\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de productos\" link=\"/socio/products\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Gestión de usuarios\" link=\"/socio/users\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Ver logs\" link=\"/socio/logs\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Ver encuestas\" link=\"/socio/surveys\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Estadisticas de pedidos\" link=\"/socio/orderStats\"></app-sidebar-option>\r\n        <app-sidebar-option name=\"Estadisticas de mesas\" link=\"/socio/tableStats\"></app-sidebar-option>\r\n        <app-sidebar-option logOut=true></app-sidebar-option>\r\n    </div>\r\n</div>\r\n<div class=\"content\">\r\n    <router-outlet></router-outlet>\r\n</div>");
 
 /***/ }),
 
@@ -413,6 +465,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.html":
+/*!*****************************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.html ***!
+  \*****************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <div class=\"row top-row\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\">\n            \n        </div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n        <app-product-management></app-product-management>\n    <hr>\n</div>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-tables-admin/manage-tables-admin.component.html":
 /*!*************************************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-tables-admin/manage-tables-admin.component.html ***!
@@ -426,6 +491,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-users/manage-users.component.html":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-users/manage-users.component.html ***!
+  \***********************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n    <div class=\"row top-row page-title\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\"></div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n    <div class=\"row\">\n        <div class=\"col-3 align-center\">\n\n        </div>\n        <div class=\"col-6\">\n            <button class=\"btn btn-success full-width\" data-toggle=\"modal\" data-target=\"#userModal\">Agregar\n                Usuario</button>\n        </div>\n        <div class=\"col-3\">\n            <div class=\"btn-group full-width\">\n\n                <button title=\"Todos\" class=\"btn btn-outline-success\" (click)=\"ClearFilters()\"><i\n                        class=\"fas fa-asterisk\"></i></button>\n                <button title=\"Socios\" class=\"btn btn-outline-success\" (click)=\"Filter('socio')\"><i\n                        class=\"fas fa-user-secret\"></i></button>\n                <button title=\"Bartenders\" class=\"btn btn-outline-success\" (click)=\"Filter('bartender')\"><i\n                        class=\"fas fa-wine-glass-alt\"></i></button>\n                <button title=\"Cerveceros\" class=\"btn btn-outline-success\" (click)=\"Filter('cervecero')\"><i\n                        class=\"fas fa-beer\"></i></button>\n                <button title=\"Cocineros\" class=\"btn btn-outline-success\" (click)=\"Filter('cocinero')\"><i\n                        class=\"fas fa-fire\"></i></button>\n                        <button title=\"Mozos\" class=\"btn btn-outline-success\" (click)=\"Filter('mozo')\"><i\n                            class=\"fas fa-book\"></i></button>\n                <button title=\"Suspendidos\" class=\"btn btn-outline-success\" (click)=\"Filter('suspendidos')\"><i\n                        class=\"fas fa-ban\"></i></button>\n                <button title=\"Habilitados\" class=\"btn btn-outline-success\" (click)=\"Filter('habilitados')\"><i\n                        class=\"fas fa-check\"></i></button>\n\n            </div>\n        </div>\n    </div>\n\n    <hr>\n\n    <div class=\"row\">\n        <div class=\"col-3 align-center\">\n\n        </div>\n        <div class=\"form-group col-6 align-center full-width\">\n            <input class=\"form-control\" type=\"text\" [(ngModel)]=\"busqueda\" (input)=\"search()\" placeholder=\"Ingrese aqui su busqueda...\">\n        </div>\n        <div class=\"col-3 align-center\">\n\n        </div>\n        \n        \n    </div>\n\n    <hr>\n    <div class=\"table-responsive\">\n        <table class=\"table table-hover\">\n            <thead>\n                <tr>\n                    <th scope=\"col\">Foto</th>\n                    <th scope=\"col\">Nombre</th>\n                    <th scope=\"col\">Apellido</th>\n                    <th scope=\"col\">Usuario</th>\n                    <th scope=\"col\">Rol</th>\n                    <th scope=\"col\">Suspender</th>\n                    <th scope=\"col\">Borrar</th>\n                    <th scope=\"col\">Editar</th>\n                </tr>\n            </thead>\n            <tbody *ngIf=\"users\">\n                <tr class=\"user\" *ngFor=\"let user of showingUsers | async | sortPipe:'email'\">\n                    <td><img [src]=\"user.image\" width=\"30px\" height=\"30px\">\n                    </td>\n                    <td>{{user.name}}</td>\n                    <td>{{user.lastname}}</td>\n                    <td>{{user.email}}</td>\n                    <td>{{user.role}}</td>\n                    <td><button class=\"btn btn-outline-danger\" *ngIf=\"user.state != 'deshabilitado'\"\n                            (click)=\"changeState(user.id, user.state)\">Suspender</button>\n                        <button class=\"btn btn-outline-success\" *ngIf=\"user.state == 'deshabilitado'\"\n                            (click)=\"changeState(user.id, user.state)\">Reincorporar</button>\n                    </td>\n                    <td><button class=\"btn btn-outline-danger\" (click)=\"deleteUser(user.id)\">Borrar</button>\n                    </td>\n                    <td>\n                        <button class=\"btn btn-outline-primary\" data-toggle=\"modal\" data-target=\"#userModal\"\n                            (click)=\"editarUsuario(user)\">Editar</button>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n    <hr>\n</div>\n\n<!-- Product modal -->\n<div class=\"modal fade\" id=\"userModal\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-body\">\n                <div class=\"container-fluid\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\" *ngIf=\"!this.haySeleccionado\">\n                            <h3 class=\"align-center\">Agregar Usuario</h3>\n                        </div>\n                        <div class=\"col-8\" *ngIf=\"this.haySeleccionado\">\n                            <h3 class=\"align-center\">Editar Usuario</h3>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n\n                    <hr class=\"mar-top-1\">\n                    <form [formGroup]=\"userForm\" (ngSubmit)=\"SendUser()\">\n\n                        <div class=\"row\" *ngIf=\"this.haySeleccionado\">\n                            <div class=\"col-5\"></div>\n                            <div class=\"col-2\">\n                                <img [src]=\"this.usuarioSeleccionado.image\" width=\"60px\" height=\"60px\">\n                            </div>\n                            <div class=\"col-5\"></div>\n                        </div>\n\n                        <div class=\"row\">\n                            <div class=\"col-1\"></div>\n                            <div class=\"col-10\">\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Nombre:</label>\n                                    </div>\n                                    <div class=\"col-12\">\n                                        <input formControlName=\"userName\" class=\"form-control full-width align-center\"\n                                            type=\"text\" placeholder=\"Nombre del usuario\" required>\n                                    </div>\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Apellido:</label>\n                                    </div>\n                                    <div class=\"col-12\">\n                                        <input formControlName=\"userLastname\"\n                                            class=\"form-control full-width align-center\" type=\"text\"\n                                            placeholder=\"Apellido del usuario\" required>\n                                    </div>\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Email:</label>\n                                    </div>\n                                    <div class=\"col-12\">\n                                        <input formControlName=\"userMail\" class=\"form-control full-width align-center\"\n                                            type=\"email\" placeholder=\"Email del usuario\" required [readonly]=\"this.haySeleccionado\">\n                                    </div>\n                                </div>\n\n                                <div class=\"row middle-row\">\n\n                                    <div class=\"col-12\">\n                                        <label>Rol:</label>\n                                    </div>\n\n                                    <div class=\"col-12\">\n                                        <select class=\"custom-select mr-sm-2\" id=\"inlineFormCustomSelect\"\n                                            formControlName=\"userRole\">\n                                            <option value=\"bartender\">Bartender</option>\n                                            <option value=\"cocinero\">Cocinero</option>\n                                            <option value=\"cervecero\">Cervecero</option>\n                                            <option value=\"mozo\">Mozo</option>\n                                            <option value=\"socio\">Socio</option>\n                                            <option value=\"mozo\">Mozo</option>\n                                            <option value=\"cliente\">Cliente</option>\n                                        </select>\n                                    </div>\n\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Foto de perfil:</label>\n                                    </div>\n\n                                    <div class=\"col-12\">\n                                        <div class=\"btn btn-primary btn-sm float-left\">\n                                            <input type=\"file\" (change)=\"onFileChanged($event)\"\n                                                formControlName=\"userImage\" name=\"userImage\">\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"col-1\"></div>\n                        </div>\n                    </form>\n\n                    <hr class=\"mar-top-1\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\">\n                            <div class=\"btn-group full-width\">\n                                <button type=\"reset\" class=\"btn btn-outline-danger\" title=\"Cancelar\" (click)=\"Cancel()\"\n                                    data-dismiss=\"modal\"><i class=\"fas fa-times\"></i></button>\n\n                                <button class=\"btn btn-outline-success\" *ngIf=\"!this.haySeleccionado\"\n                                    title=\"Agregar usuario\" (click)=\"addUser()\" data-dismiss=\"modal\"><i\n                                        class=\"fas fa-check\"></i></button>\n\n                                <button class=\"btn btn-outline-success\" *ngIf=\"this.haySeleccionado\"\n                                    title=\"Actualizar usuario\" (click)=\"updateUser()\" data-dismiss=\"modal\"><i\n                                        class=\"fas fa-check\"></i></button>\n                            </div>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/survey-table/survey-table.component.html":
 /*!***********************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/survey-table/survey-table.component.html ***!
@@ -435,7 +513,46 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n    <div class=\"row top-row\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n            \r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-1\"></div>\r\n        <div class=\"col-10\">\r\n            <label >\r\n            <p >Cada encuesta está coloreada según el promedio de puntaje realizado sobre las cuatro categorías: el color es <span class=\"red\">rojo</span> si el promedio está por debajo del 4, el color es <span class=\"yellow\">amarillo</span> si es mayor o igual que 4 pero menor a 7 y por último <span class=\"green\">verde</span>, si el promedio es mayor a 7. Haga click en una encuesta para ver más detalles.</p>\r\n        </label>\r\n        </div>\r\n        <div class=\"col-1\"></div>\r\n    </div>\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-12\">\r\n\r\n            <div class=\"table-responsive\">\r\n                <table class=\"table table-hover\">\r\n                    <thead class=\"align-center\">\r\n                        <tr>\r\n                            <th scope=\"col\">Pedido</th>\r\n                            <th scope=\"col\">Cliente</th>\r\n                            <th scope=\"col\">Mesa</th>\r\n                            <th scope=\"col\">Mozo</th>\r\n                            <th scope=\"col\">Punt. mesa</th>\r\n                            <th scope=\"col\">Punt. mozo</th>\r\n                            <th scope=\"col\">Punt. restaurante</th>\r\n                            <th scope=\"col\">Punt. cocinero</th>\r\n                            <th scope=\"col\">Fecha</th>\r\n                        </tr>\r\n                    </thead>\r\n                    <tbody>\r\n                        <tr [surveyAverage]=\"sur\" *ngFor=\"let sur of surveys | async\" class=\"survey align-center\" data-toggle=\"modal\" data-target=\"#surveyModal\" (click)=\"SelectSurvey(sur)\">\r\n                            <td>{{sur.order.codeID}}</td>\r\n                            <td>{{sur.order.client.name}} {{sur.order.client.lastname}}</td>\r\n                            <td>{{sur.order.tableID}}</td>\r\n                            <td>{{sur.order.waiter.name}} {{sur.order.waiter.lastname}}</td>\r\n                            <td>{{sur.tableScore}}</td>\r\n                            <td>{{sur.waiterScore}}</td>\r\n                            <td>{{sur.restaurantScore}}</td>\r\n                            <td>{{sur.cookScore}}</td>\r\n                            <td>{{sur.order.timeLeft | neatDate}}</td>\r\n                        </tr>\r\n                    </tbody>\r\n                </table>\r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"modal fade\" id=\"surveyModal\">\r\n  <div class=\"modal-dialog\">\r\n    <div class=\"modal-content\">\r\n        <div class=\"modal-body\">\r\n            <div class=\"container-fluid\" *ngIf=\"survey\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-2\"></div>\r\n                    <div class=\"col-8\">\r\n                        <h3 class=\"align-center\">Pedido {{survey.order.codeID}}</h3>\r\n                    </div>\r\n                    <div class=\"col-2\"></div>\r\n                </div>\r\n                <hr class=\"mar-top-1\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-12 align-center\">\r\n                        <b>Promedio de los puntajes: </b> <span [surveyAverage]=\"survey\" returnAverage=\"true\"></span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"row middle-row\">\r\n                    <div class=\"col-12 align-center\" [surveyComment]='survey.commentType'></div>\r\n                </div>\r\n                <hr>\r\n                <div class=\"row\">\r\n                    <div class=\"col-12\">\r\n                        <span [surveyComment]=\"survey.commentType\" isIcon=\"true\"></span> - {{survey.comment}}\r\n                    </div>\r\n                </div>\r\n                <div class=\"row mar-top-1\">\r\n                    <div class=\"col-1\"></div>\r\n                    <div class=\"col-10 align-right\">\r\n                        {{survey.order.client.name}} {{survey.order.client.lastname}}\r\n                    </div>\r\n                    <div class=\"col-1\"></div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n  </div>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n    <div class=\"row top-row\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\">\r\n\r\n        </div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-1\"></div>\r\n        <div class=\"col-10\">\r\n            <label>\r\n                <p>Cada encuesta está coloreada según el promedio de puntaje realizado sobre las cuatro categorías: el\r\n                    color es <span class=\"red\">rojo</span> si el promedio está por debajo del 4, el color es <span\r\n                        class=\"yellow\">amarillo</span> si es mayor o igual que 4 pero menor a 7 y por último <span\r\n                        class=\"green\">verde</span>, si el promedio es mayor a 7. Haga click en una encuesta para ver más\r\n                    detalles.</p>\r\n            </label>\r\n        </div>\r\n        <div class=\"col-1\"></div>\r\n    </div>\r\n    <div class=\"row middle-row\">\r\n        <div class=\"col-12\">\r\n\r\n            <div class=\"table-responsive\">\r\n                <table class=\"table table-hover\">\r\n                    <thead class=\"align-center\">\r\n                        <tr>\r\n                            <th scope=\"col\">Pedido</th>\r\n                            <th scope=\"col\">Cliente</th>\r\n                            <th scope=\"col\">Mesa</th>\r\n                            <th scope=\"col\">Mozo</th>\r\n                            <th scope=\"col\">Punt. mesa</th>\r\n                            <th scope=\"col\">Punt. mozo</th>\r\n                            <th scope=\"col\">Punt. restaurante</th>\r\n                            <th scope=\"col\">Punt. cocinero</th>\r\n                            <th scope=\"col\">Fecha</th>\r\n                        </tr>\r\n                    </thead>\r\n                    <tbody>\r\n                        <tr [surveyAverage]=\"sur\" *ngFor=\"let sur of surveys | async\" class=\"survey align-center\"\r\n                            data-toggle=\"modal\" data-target=\"#surveyModal\" (click)=\"SelectSurvey(sur)\">\r\n                            <td>{{sur.order.codeID}}</td>\r\n                            <td>{{sur.order.client.name}} {{sur.order.client.lastname}}</td>\r\n                            <td>{{sur.order.tableID}}</td>\r\n                            <td>{{sur.order.waiter.name}} {{sur.order.waiter.lastname}}</td>\r\n                            <td>{{sur.tableScore}}</td>\r\n                            <td>{{sur.waiterScore}}</td>\r\n                            <td>{{sur.restaurantScore}}</td>\r\n                            <td>{{sur.cookScore}}</td>\r\n                            <td>{{sur.order.timeLeft | neatDate}}</td>\r\n                        </tr>\r\n                    </tbody>\r\n                </table>\r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"modal fade\" id=\"surveyModal\">\r\n    <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-body\">\r\n                <div class=\"container-fluid\" *ngIf=\"survey\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <h3 class=\"align-center\">Pedido {{survey.order.codeID}}</h3>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                    <hr class=\"mar-top-1\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12 align-center\">\r\n                            <b>Promedio de los puntajes: </b> <span [surveyAverage]=\"survey\"\r\n                                returnAverage=\"true\"></span>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row middle-row\">\r\n                        <div class=\"col-12 align-center\" [surveyComment]='survey.commentType'></div>\r\n                    </div>\r\n                    <hr>\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12\">\r\n                            <span [surveyComment]=\"survey.commentType\" isIcon=\"true\"></span> - {{survey.comment}}\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"row mar-top-1\">\r\n                        <div class=\"col-1\"></div>\r\n                        <div class=\"col-10 align-right\">\r\n                            {{survey.order.client.name}} {{survey.order.client.lastname}}\r\n                        </div>\r\n                        <div class=\"col-1\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-logs/view-logs.component.html":
+/*!*****************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-logs/view-logs.component.html ***!
+  \*****************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"align-center mar-top-1\" *ngIf=\"showingLogs == null\">\n    <div class=\"row top-row page-title\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\"></div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n    <div class=\"row\">\n        <div class=\"col-3 align-center\">\n\n        </div>\n        <div class=\"col-6\">\n\n        </div>\n        <div class=\"col-3\">\n\n        </div>\n    </div>\n\n    <hr>\n    <app-spinner></app-spinner>\n</div>\n<div class=\"container\">\n    <div class=\"row top-row page-title\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\"></div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n    <div class=\"row\">\n        <div class=\"col-3 align-center\">\n\n        </div>\n        <div class=\"col-6\">\n            <button class=\"btn btn-success full-width\" data-toggle=\"modal\" data-target=\"#logModal\">Personalizar <i\n                    class=\"fas fa-cogs\"></i></button>\n        </div>\n        <div class=\"col-3\">\n            <button type=\"button\" class=\"btn btn-info full-width\" (click)=\"exportCSV()\">Exportar a CSV<i\n                class=\"fas fa-angle-double-down\" ></i></button>\n        </div>\n    </div>\n\n    <hr>\n\n    <div class=\"row\">\n        <div class=\"col-3 align-center\">\n\n        </div>\n        <div class=\"form-group col-6 align-center full-width\">\n            <input class=\"form-control\" type=\"text\" [(ngModel)]=\"busqueda\" (input)=\"search()\"\n                placeholder=\"Ingrese aqui su busqueda...\">\n            <label *ngIf=\"busqueda || !this.todos\">\n                <h4>Cantidad de coincidencias: {{this.coincidencias}}</h4>\n            </label>\n        </div>\n        <div class=\"col-3 align-center\">\n\n\n\n        </div>\n\n\n    </div>\n\n    <hr>\n    <div class=\"table-responsive\">\n        <!-- <table class=\"table table-hover\"> -->\n        <table class=\"table table-hover\">\n            <thead>\n                <tr>\n                    <th scope=\"col\">Usuario</th>\n                    <th scope=\"col\">Fecha</th>\n                    <th scope=\"col\">Detalle</th>\n                </tr>\n            </thead>\n            <tbody *ngIf=\"logs\">\n                <tr class=\"log\" *ngFor=\"let log of showingLogs | async | sortPipe:'fecha'\">\n                    <td>{{log.usuario}}</td>\n                    <td>{{log.fecha | date: 'hh:mm dd-MM-yyyy'}}</td>\n                    <td>{{log.observacion}}</td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n    <hr>\n</div>\n\n<!-- Logs modal -->\n<div class=\"modal fade\" id=\"logModal\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-body\">\n                <div class=\"container-fluid\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\">\n                            <h3 class=\"align-center\">Personalizar Busqueda</h3>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n\n                    <hr class=\"mar-top-1\">\n                    <form [formGroup]=\"logForm\" (ngSubmit)=\"SendSettings()\">\n\n                        <div class=\"row\">\n                            <div class=\"col-1\"></div>\n                            <div class=\"col-10\">\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-12\">\n                                        <label>Seleccione los sectores de los cuales desea ver el log:</label>\n                                    </div>\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"input-group mb-3 col-12\">\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeTodos\"\n                                                formControlName=\"typeTodos\" [(ngModel)]=\"todos\"\n                                                (change)=\"enableDisable()\">\n                                            <label class=\"custom-control-label\" for=\"typeTodos\">Todos</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeCocinero\"\n                                                formControlName=\"typeCocinero\">\n                                            <label class=\"custom-control-label\" for=\"typeCocinero\">Cocinero</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeMozo\"\n                                                formControlName=\"typeMozo\">\n                                            <label class=\"custom-control-label\" for=\"typeMozo\">Mozo</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeSocio\"\n                                                formControlName=\"typeSocio\">\n                                            <label class=\"custom-control-label\" for=\"typeSocio\">Socio</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeCervecero\"\n                                                formControlName=\"typeCervecero\">\n                                            <label class=\"custom-control-label\" for=\"typeCervecero\">Cervecero</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeBartender\"\n                                                formControlName=\"typeBartender\">\n                                            <label class=\"custom-control-label\" for=\"typeBartender\">Bartender</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeDelivery\"\n                                                formControlName=\"typeDelivery\">\n                                            <label class=\"custom-control-label\" for=\"typeDelivery\">Delivery</label>\n                                        </div>\n                                        <div class=\"custom-control custom-checkbox col-4\">\n                                            <input type=\"checkbox\" class=\"custom-control-input\" id=\"typeCliente\"\n                                                formControlName=\"typeCliente\">\n                                            <label class=\"custom-control-label\" for=\"typeCliente\">Cliente</label>\n                                        </div>\n                                    </div>\n                                </div>\n\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-6\">\n                                        <div class=\"col-12\">\n                                            <label>Desde fecha:</label>\n                                        </div>\n                                        <div>\n                                            <input type=\"date\" name=\"fechaInicio\" formControlName=\"fechaInicio\">\n                                        </div>\n                                    </div>\n                                    <div class=\"col-6\">\n                                        <div class=\"col-12\">\n                                            <label>Hasta fecha:</label>\n                                        </div>\n                                        <div>\n                                            <input type=\"date\" name=\"fechaFin\" formControlName=\"fechaFin\">\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"col-1\"></div>\n                        </div>\n                    </form>\n\n                    <hr class=\"mar-top-1\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\">\n                            <div class=\"btn-group full-width\">\n                                <button class=\"btn btn-outline-danger\" title=\"Cancelar\" (click)=\"Cancel()\"\n                                    data-dismiss=\"modal\"><i class=\"fas fa-times\"></i></button>\n\n                                <button class=\"btn btn-outline-success\" title=\"Filtrar tabla\" (click)=\"search()\"\n                                    data-dismiss=\"modal\"><i class=\"fas fa-check\"></i></button>\n\n                            </div>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.html":
+/*!*********************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.html ***!
+  \*********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"align-center mar-top-1\" *ngIf=\"this.topBest == null && this.topWorst == null\">\r\n    <div class=\"row top-row page-title\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\"></div>\r\n        <div class=\"col-3\"></div>\r\n    </div>\r\n    <hr>\r\n    <div class=\"row\">\r\n        <div class=\"col-3 align-center\">\r\n\r\n        </div>\r\n        <div class=\"col-6\">\r\n\r\n        </div>\r\n        <div class=\"col-3\">\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <hr>\r\n    <app-spinner></app-spinner>\r\n</div>\r\n<div class=\"container\" *ngIf=\"this.cancelledOrders != null\">\r\n    <div class=\"row\" *ngIf=\"this.topBest != null && this.topWorst != null\">\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\"></div>\r\n        <div class=\"col-3\"></div>\r\n        <hr>\r\n        <div class=\"col-3\"></div>\r\n        <div class=\"col-6\"></div>\r\n        <div class=\"col-3\"></div>\r\n        <hr>\r\n        <div class=\"col-3\">\r\n        </div>\r\n        <div class=\"col-6\">\r\n            <button class=\"btn btn-success full-width\" data-toggle=\"modal\" data-target=\"#settingsModal\">Personalizar<i\r\n                    class=\"fas fa-cogs\"></i></button>\r\n        </div>\r\n        <div class=\"col-3\">\r\n            <button type=\"button\" class=\"btn btn-info full-width\" (click)=\"exportCSV()\">Exportar a CSV<i\r\n                class=\"fas fa-angle-double-down\" ></i></button>\r\n        </div>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col-3 align-center\">\r\n            </div>\r\n            <div class=\"col-6 align-center\">\r\n            </div>\r\n            <div class=\"col-3 align-center\">\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <hr>\r\n    <div class=\"row\" *ngIf=\"this.topBest\">\r\n        <div class=\"col-3 align-center\">\r\n        </div>\r\n        <div class=\"col-6 align-center\">\r\n            <h2>Top 3 mas vendidos</h2>\r\n        </div>\r\n        <div class=\"col-3 align-center\">\r\n        </div>\r\n\r\n        <div class=\"card col-3 align-center\" *ngIf=\"this.topBest[0] != null\">\r\n            <img src=\"../../../../../assets/img/primero-trofeo.png\" class=\"card-img-top\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">{{this.topBest[0][0]}}</h5>\r\n                <p class=\"card-text\">El articulo {{this.topBest[0][0]}} fue el mas solicitado con {{this.topBest[0][1]}}\r\n                    ventas </p>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"card col-3 align-center\" *ngIf=\"this.topBest[1] != null\">\r\n            <img src=\"../../../../../assets/img/segundo-trofeo.png\" class=\"card-img-top\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">{{this.topBest[1][0]}}</h5>\r\n                <p class=\"card-text\">En segundo lugar se encuentra {{this.topBest[1][0]}} con {{this.topBest[1][1]}}\r\n                    ventas</p>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"card col-3 align-center\" *ngIf=\"this.topBest[2] != null\">\r\n            <img src=\"../../../../../assets/img/tercero-trofeo.png\" class=\"card-img-top\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">{{this.topBest[2][0]}}</h5>\r\n                <p class=\"card-text\">El tercer puesto es para {{this.topBest[2][0]}} con {{this.topBest[2][1]}} ventas\r\n                </p>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    <div class=\"row\" *ngIf=\"this.topWorst\">\r\n        <div class=\"col-3 align-center\">\r\n        </div>\r\n        <div class=\"col-6 align-center\">\r\n            <h2>Top 3 menos vendidos</h2>\r\n        </div>\r\n        <div class=\"col-3 align-center\">\r\n        </div>\r\n        <div class=\"card col-3 align-center\" *ngIf=\"this.topWorst[0] != null\">\r\n            <img src=\"../../../../../assets/img/mal amarillo.png\" class=\"card-img-top\">\r\n            <div class=\"card-body\">\r\n                <div class=\"card-body\">\r\n                    <h5 class=\"card-title\">{{this.topWorst[0][0]}}</h5>\r\n                    <p class=\"card-text\">El articulo {{this.topWorst[0][0]}} no se vendió tanto, tuvo\r\n                        {{this.topWorst[0][1]}} ventas </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"card col-3 align-center\" *ngIf=\"this.topWorst[1] != null\">\r\n            <img src=\"../../../../../assets/img/mal naranja.png\" class=\"card-img-top\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">{{this.topWorst[1][0]}}</h5>\r\n                <p class=\"card-text\">El articulo {{this.topWorst[1][0]}} fue un poco menos solicitado que el anterior\r\n                    con\r\n                    {{this.topWorst[1][1]}} ventas </p>\r\n            </div>\r\n        </div>\r\n        <div class=\"card col-3 align-center\" *ngIf=\"this.topWorst[2] != null\">\r\n            <img src=\"../../../../../assets/img/mal rojo.png\" class=\"card-img-top\">\r\n            <div class=\"card-body\">\r\n                <h5 class=\"card-title\">{{this.topWorst[2][0]}}</h5>\r\n                <p class=\"card-text\">El articulo {{this.topWorst[2][0]}} fue lo menos solicitado con\r\n                    {{this.topWorst[2][1]}} ventas </p>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"col-3 align-center\">\r\n\r\n        </div>\r\n        <div class=\"col-6 align-center\">\r\n            <h2>Pedidos Cancelados</h2>\r\n        </div>\r\n        <div class=\"col-3 align-center\">\r\n\r\n        </div>\r\n\r\n\r\n        <div class=\"table-responsive\">\r\n            <table class=\"table table-hover\">\r\n                <thead>\r\n                    <tr>\r\n                        <th scope=\"col\">Codigo de pedido</th>\r\n                        <th scope=\"col\">Fecha</th>\r\n                        <th scope=\"col\">Estado</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr class=\"order\" *ngFor=\"let order of cancelledOrders | async\">\r\n                        <td><label>{{order.codeID}}</label></td>\r\n                        <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>\r\n                        <td>{{order.state}}</td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <hr>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"col-3 align-center\">\r\n        </div>\r\n        <div class=\"col-6 align-center\">\r\n            <h2>Pedidos no entregados en tiempo estipulado</h2>\r\n        </div>\r\n        <div class=\"col-3 align-center\">\r\n        </div>\r\n\r\n\r\n        <div class=\"table-responsive\">\r\n            <table class=\"table table-hover\">\r\n                <thead>\r\n                    <tr>\r\n                        <th scope=\"col\">Codigo de pedido</th>\r\n                        <th scope=\"col\">Fecha</th>\r\n                        <th scope=\"col\">Demora</th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <tr class=\"order\" *ngFor=\"let order of delayedOrders | async\">\r\n                        <td><label>{{order.codeID}}</label></td>\r\n                        <td>{{order.timestamp | date:'hh:mm dd/MM/yyyy'}}</td>\r\n                        <td>{{order.delayed | timeleft}}</td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <hr>\r\n</div>\r\n\r\n\r\n<!-- Settings modal -->\r\n<div class=\"modal fade\" id=\"settingsModal\">\r\n    <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-body\">\r\n                <div class=\"container-fluid\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <h3 class=\"align-center\">Personalizar Busqueda</h3>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n\r\n                    <hr class=\"mar-top-1\">\r\n                    <form [formGroup]=\"settingsForm\" (ngSubmit)=\"SendSettings()\">\r\n\r\n                        <div class=\"row\">\r\n                            <div class=\"col-1\"></div>\r\n                            <div class=\"col-10\">\r\n                                <div class=\"row middle-row\">\r\n                                    <div class=\"col-6\">\r\n                                        <div class=\"col-12\">\r\n                                            <label>Desde fecha:</label>\r\n                                        </div>\r\n                                        <div>\r\n                                            <input type=\"date\" name=\"fechaInicio\" formControlName=\"fechaInicio\"\r\n                                                (change)=\"setDate()\">\r\n                                        </div>\r\n                                    </div>\r\n                                    <div class=\"col-6\">\r\n                                        <div class=\"col-12\">\r\n                                            <label>Hasta fecha:</label>\r\n                                        </div>\r\n                                        <div>\r\n                                            <input type=\"date\" name=\"fechaFin\" formControlName=\"fechaFin\"\r\n                                                (change)=\"setDate(false)\">\r\n                                        </div>\r\n                                    </div>\r\n\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"col-1\"></div>\r\n                        </div>\r\n                    </form>\r\n\r\n                    <hr class=\"mar-top-1\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-2\"></div>\r\n                        <div class=\"col-8\">\r\n                            <div class=\"btn-group full-width\">\r\n                                <button class=\"btn btn-outline-danger\" title=\"Cancelar\" (click)=\"Cancel()\"\r\n                                    data-dismiss=\"modal\"><i class=\"fas fa-times\"></i></button>\r\n\r\n                                <button class=\"btn btn-outline-success\" title=\"Filtrar tabla\" (click)=\"search()\"\r\n                                    data-dismiss=\"modal\"><i class=\"fas fa-check\"></i></button>\r\n\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"col-2\"></div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.html":
+/*!*********************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.html ***!
+  \*********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"align-center mar-top-1\" *ngIf=\"this.mesaMasUsada == null && this.mesaMenosUsada == null\">\n    <div class=\"row top-row page-title\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\"></div>\n        <div class=\"col-3\"></div>\n    </div>\n    <hr>\n    <div class=\"row\">\n        <div class=\"col-3 align-center\">\n\n        </div>\n        <div class=\"col-6\">\n\n        </div>\n        <div class=\"col-3\">\n\n        </div>\n    </div>\n\n    <hr>\n    <app-spinner></app-spinner>\n</div>\n<div class=\"container\">\n    <div class=\"row\">\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\"></div>\n        <div class=\"col-3\"></div>\n        <hr>\n        <div class=\"col-3\"></div>\n        <div class=\"col-6\"></div>\n        <div class=\"col-3\"></div>\n        <hr>\n        <div class=\"col-3\">\n        </div>\n        <div class=\"col-6\" *ngIf=\"this.mesaMasUsada\">\n            <button class=\"btn btn-success full-width\" data-toggle=\"modal\" data-target=\"#settingsModal\">Personalizar<i\n                    class=\"fas fa-cogs\"></i></button>\n        </div>\n        <div class=\"col-3\" *ngIf=\"this.mesaMasUsada\">\n            <button type=\"button\" class=\"btn btn-info full-width\" (click)=\"exportCSV()\">Exportar a CSV<i\n                class=\"fas fa-angle-double-down\" ></i></button>\n        </div>\n\n        <div class=\"row\">\n            <div class=\"col-3 align-center\">\n            </div>\n            <div class=\"col-6 align-center\">\n            </div>\n            <div class=\"col-3 align-center\">\n            </div>\n        </div>\n    </div>\n    <hr>\n    <div class=\"row\">\n        <div class=\"card col-5 align-center\" *ngIf=\"mesaMasUsada\">\n            <img src=\"../../../../../assets/img/mesaConGente.png\" class=\"card-img-top\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">Mesa más usada</h5>\n                <p class=\"card-text\">La mesa {{ this.mesaMasUsada[0] }} fue utilizada {{ this.mesaMasUsada[1] }} veces\n                </p>\n            </div>\n        </div>\n        <div class=\"card col-5 align-center\" *ngIf=\"mesaMenosUsada\">\n            <img src=\"../../../../../assets/img/mesaSinGente.png\" class=\"card-img-top\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">Mesa menos usada</h5>\n                <p class=\"card-text\">La mesa {{ this.mesaMenosUsada[0] }} fue utilizada {{ this.mesaMenosUsada[1] }}\n                    veces </p>\n            </div>\n        </div>\n\n        <div class=\"card col-5 align-center\" *ngIf=\"mesaMayorFacturacion\">\n            <img src=\"../../../../../assets/img/mayorFacturacion.png\" class=\"card-img-top\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">Mesa con mayor recaudación</h5>\n                <p class=\"card-text\">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMayorFacturacion) }} recaudó\n                    {{ this.mesaMayorFacturacion }} pesos </p>\n            </div>\n        </div>\n        <div class=\"card col-5 align-center\" *ngIf=\"mesaMenorFacturacion\">\n            <img src=\"../../../../../assets/img/menorFacturacion.png\" class=\"card-img-top\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">Mesa con menor recaudación</h5>\n                <p class=\"card-text\">La mesa {{ this.arrayAcumulador.indexOf(this.mesaMenorFacturacion) }} recaudó\n                    {{ this.mesaMenorFacturacion }} pesos </p>\n            </div>\n        </div>\n\n        <div class=\"card col-5 align-center\" *ngIf=\"mesaMenorFacturacion\">\n            <img src=\"../../../../../assets/img/facturaLarga.png\" class=\"card-img-top\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">Mesa con mayor importe de factura</h5>\n                <p class=\"card-text\">La mesa {{ facturaMayorImporte.tableID }} tuvo una factura por\n                    {{ facturaMayorImporte.totalPrice }} pesos </p>\n            </div>\n        </div>\n        <div class=\"card col-5 align-center\" *ngIf=\"mesaMenorFacturacion\">\n            <img src=\"../../../../../assets/img/facturaCorta.png\" class=\"card-img-top\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">Mesa con menor importe de factura</h5>\n                <p class=\"card-text\">La mesa {{ facturaMenorImporte.tableID }} tuvo una factura por\n                    {{ facturaMenorImporte.totalPrice }} pesos </p>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row middle-row\" *ngIf=\"mesaMenorFacturacion\">\n        <div class=\"col-1\"></div>\n        <div class=\"col-10\">\n            <h3 class=\"align-center\">Mejores Comentarios</h3>\n\n        </div>\n        <div class=\"col-1\"></div>\n    </div>\n    <div class=\"row middle-row\" *ngIf=\"mesaMenorFacturacion\">\n        <div class=\"col-12\">\n\n            <div class=\"table-responsive\">\n                <table class=\"table table-hover\">\n                    <thead class=\"align-center\">\n                        <tr>\n                            <th scope=\"col\">Pedido</th>\n                            <th scope=\"col\">Cliente</th>\n                            <th scope=\"col\">Mesa</th>\n                            <th scope=\"col\">Mozo</th>\n                            <th scope=\"col\">Comentario</th>\n\n                            <!-- <th scope=\"col\">Punt. mesa</th>\n                            <th scope=\"col\">Punt. mozo</th>\n                            <th scope=\"col\">Punt. restaurante</th>\n                            <th scope=\"col\">Punt. cocinero</th> -->\n                            <!-- <th scope=\"col\">Fecha</th> -->\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr [surveyAverage]=\"sur\" *ngFor=\"let sur of surveysGood | async\" class=\"survey align-center\"\n                            data-toggle=\"modal\" data-target=\"#surveyModal\" (click)=\"SelectSurvey(sur)\">\n                            \n                            <td>{{sur.order.codeID}}</td>\n                            <td>{{sur.order.client.name}} {{sur.order.client.lastname}}</td>\n                            <td>{{sur.order.tableID}}</td>\n                            <td>{{sur.order.waiter.name}} {{sur.order.waiter.lastname}}</td>\n                            <td>{{sur.comment}}</td>\n\n                            <!-- <td>{{sur.tableScore}}</td>\n                            <td>{{sur.waiterScore}}</td>\n                            <td>{{sur.restaurantScore}}</td>\n                            <td>{{sur.cookScore}}</td> -->\n                            <!-- <td>{{sur.order.timeLeft | neatDate}}</td> -->\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n        </div>\n    </div>\n\n    <div class=\"row middle-row\" *ngIf=\"mesaMenorFacturacion\">\n        <div class=\"col-1\"></div>\n        <div class=\"col-10\">\n            <h3 class=\"align-center\">Peores Comentarios</h3>\n\n        </div>\n        <div class=\"col-1\"></div>\n    </div>\n    <div class=\"row middle-row\" *ngIf=\"mesaMenorFacturacion\">\n        <div class=\"col-12\">\n\n            <div class=\"table-responsive\">\n                <table class=\"table table-hover\">\n                    <thead class=\"align-center\">\n                        <tr>\n                            <th scope=\"col\">Pedido</th>\n                            <th scope=\"col\">Cliente</th>\n                            <th scope=\"col\">Mesa</th>\n                            <th scope=\"col\">Mozo</th>\n                            <th scope=\"col\">Comentario</th>\n\n                            <!-- <th scope=\"col\">Punt. mesa</th>\n                            <th scope=\"col\">Punt. mozo</th>\n                            <th scope=\"col\">Punt. restaurante</th>\n                            <th scope=\"col\">Punt. cocinero</th> -->\n                            <!-- <th scope=\"col\">Fecha</th> -->\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr [surveyAverage]=\"sur\" *ngFor=\"let sur of surveysBad | async\" class=\"survey align-center\"\n                            data-toggle=\"modal\" data-target=\"#surveyModal\" (click)=\"SelectSurvey(sur)\">\n                            \n                            <td>{{sur.order.codeID}}</td>\n                            <td>{{sur.order.client.name}} {{sur.order.client.lastname}}</td>\n                            <td>{{sur.order.tableID}}</td>\n                            <td>{{sur.order.waiter.name}} {{sur.order.waiter.lastname}}</td>\n                            <td>{{sur.comment}}</td>\n\n                            <!-- <td>{{sur.tableScore}}</td>\n                            <td>{{sur.waiterScore}}</td>\n                            <td>{{sur.restaurantScore}}</td>\n                            <td>{{sur.cookScore}}</td> -->\n                            <!-- <td>{{sur.order.timeLeft | neatDate}}</td> -->\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n        </div>\n    </div>\n</div>\n\n<!-- Settings modal -->\n<div class=\"modal fade\" id=\"settingsModal\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-body\">\n                <div class=\"container-fluid\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\">\n                            <h3 class=\"align-center\">Personalizar Busqueda</h3>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n\n                    <hr class=\"mar-top-1\">\n                    <form [formGroup]=\"settingsForm\" (ngSubmit)=\"SendSettings()\">\n\n                        <div class=\"row\">\n                            <div class=\"col-1\"></div>\n                            <div class=\"col-10\">\n                                <div class=\"row middle-row\">\n                                    <div class=\"col-6\">\n                                        <div class=\"col-12\">\n                                            <label>Desde fecha:</label>\n                                        </div>\n                                        <div>\n                                            <input type=\"date\" name=\"fechaInicio\" formControlName=\"fechaInicio\"\n                                                (change)=\"setDate()\">\n                                        </div>\n                                    </div>\n                                    <div class=\"col-6\">\n                                        <div class=\"col-12\">\n                                            <label>Hasta fecha:</label>\n                                        </div>\n                                        <div>\n                                            <input type=\"date\" name=\"fechaFin\" formControlName=\"fechaFin\"\n                                                (change)=\"setDate(false)\">\n                                        </div>\n                                    </div>\n\n                                </div>\n                            </div>\n                            <div class=\"col-1\"></div>\n                        </div>\n                    </form>\n\n                    <hr class=\"mar-top-1\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\">\n                            <div class=\"btn-group full-width\">\n                                <button class=\"btn btn-outline-danger\" title=\"Cancelar\" (click)=\"Cancel()\"\n                                    data-dismiss=\"modal\"><i class=\"fas fa-times\"></i></button>\n\n                                <button class=\"btn btn-outline-success\" title=\"Filtrar tabla\" (click)=\"search()\"\n                                    data-dismiss=\"modal\"><i class=\"fas fa-check\"></i></button>\n\n                            </div>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n<!-- Survey modal -->\n<div class=\"modal fade\" id=\"surveyModal\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-body\">\n                <div class=\"container-fluid\" *ngIf=\"survey\">\n                    <div class=\"row\">\n                        <div class=\"col-2\"></div>\n                        <div class=\"col-8\">\n                            <h3 class=\"align-center\">Pedido {{survey.order.codeID}}</h3>\n                        </div>\n                        <div class=\"col-2\"></div>\n                    </div>\n                    <hr class=\"mar-top-1\">\n                    <div class=\"row\">\n                        <div class=\"col-12 align-center\">\n                            <b>Promedio de los puntajes: </b> <span [surveyAverage]=\"survey\"\n                                returnAverage=\"true\"></span>\n                        </div>\n                    </div>\n                    <div class=\"row middle-row\">\n                        <div class=\"col-12 align-center\" [surveyComment]='survey.commentType'></div>\n                    </div>\n                    <hr>\n                    <div class=\"row\">\n                        <div class=\"col-12\">\n                            <span [surveyComment]=\"survey.commentType\" isIcon=\"true\"></span> - {{survey.comment}}\n                        </div>\n                    </div>\n                    <div class=\"row mar-top-1\">\n                        <div class=\"col-1\"></div>\n                        <div class=\"col-10 align-right\">\n                            {{survey.order.client.name}} {{survey.order.client.lastname}}\n                        </div>\n                        <div class=\"col-1\"></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -705,6 +822,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_socio_views_manage_tables_admin_manage_tables_admin_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/socio/views/manage-tables-admin/manage-tables-admin.component */ "./src/app/components/socio/views/manage-tables-admin/manage-tables-admin.component.ts");
 /* harmony import */ var _components_all_views_profile_profile_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/all/views/profile/profile.component */ "./src/app/components/all/views/profile/profile.component.ts");
 /* harmony import */ var _components_socio_views_survey_table_survey_table_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/socio/views/survey-table/survey-table.component */ "./src/app/components/socio/views/survey-table/survey-table.component.ts");
+/* harmony import */ var _components_socio_views_manage_products_admin_manage_products_admin_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/socio/views/manage-products-admin/manage-products-admin.component */ "./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.ts");
+/* harmony import */ var _components_cervecero_views_manage_products_cervecero_manage_products_cervecero_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component */ "./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.ts");
+/* harmony import */ var _components_cocinero_views_manage_products_cocinero_manage_products_cocinero_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component */ "./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.ts");
+/* harmony import */ var _components_bartender_views_manage_products_bartender_manage_products_bartender_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/bartender/views/manage-products-bartender/manage-products-bartender.component */ "./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.ts");
+/* harmony import */ var _components_socio_views_manage_users_manage_users_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/socio/views/manage-users/manage-users.component */ "./src/app/components/socio/views/manage-users/manage-users.component.ts");
+/* harmony import */ var _components_socio_views_view_logs_view_logs_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/socio/views/view-logs/view-logs.component */ "./src/app/components/socio/views/view-logs/view-logs.component.ts");
+/* harmony import */ var _components_socio_views_view_orders_stats_view_orders_stats_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./components/socio/views/view-orders-stats/view-orders-stats.component */ "./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.ts");
+/* harmony import */ var _components_socio_views_view_tables_stats_view_tables_stats_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./components/socio/views/view-tables-stats/view-tables-stats.component */ "./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.ts");
+
+
+
+
+
+
+
+
 
 
 
@@ -746,6 +879,11 @@ const routes = [
             { path: 'orders', component: _components_socio_views_manage_orders_admin_manage_orders_admin_component__WEBPACK_IMPORTED_MODULE_23__["ManageOrdersAdminComponent"] },
             { path: 'profile', component: _components_all_views_profile_profile_component__WEBPACK_IMPORTED_MODULE_25__["ProfileComponent"] },
             { path: 'surveys', component: _components_socio_views_survey_table_survey_table_component__WEBPACK_IMPORTED_MODULE_26__["SurveyTableComponent"] },
+            { path: 'products', component: _components_socio_views_manage_products_admin_manage_products_admin_component__WEBPACK_IMPORTED_MODULE_27__["ManageProductsAdminComponent"] },
+            { path: 'users', component: _components_socio_views_manage_users_manage_users_component__WEBPACK_IMPORTED_MODULE_31__["ManageUsersComponent"] },
+            { path: 'logs', component: _components_socio_views_view_logs_view_logs_component__WEBPACK_IMPORTED_MODULE_32__["ViewLogsComponent"] },
+            { path: 'orderStats', component: _components_socio_views_view_orders_stats_view_orders_stats_component__WEBPACK_IMPORTED_MODULE_33__["ViewOrdersStatsComponent"] },
+            { path: 'tableStats', component: _components_socio_views_view_tables_stats_view_tables_stats_component__WEBPACK_IMPORTED_MODULE_34__["ViewTablesStatsComponent"] },
         ],
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_13__["AuthGuard"]] },
     { path: 'mozo', component: _components_mozo_views_main_mozo_main_mozo_component__WEBPACK_IMPORTED_MODULE_5__["MainMozoComponent"],
@@ -759,18 +897,21 @@ const routes = [
         children: [
             { path: '', component: _components_cervecero_views_home_cervecero_home_cervecero_component__WEBPACK_IMPORTED_MODULE_16__["HomeCerveceroComponent"] },
             { path: 'profile', component: _components_all_views_profile_profile_component__WEBPACK_IMPORTED_MODULE_25__["ProfileComponent"] },
+            { path: 'products', component: _components_cervecero_views_manage_products_cervecero_manage_products_cervecero_component__WEBPACK_IMPORTED_MODULE_28__["ManageProductsCerveceroComponent"] }
         ],
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_13__["AuthGuard"]] },
     { path: 'cocinero', component: _components_cocinero_views_main_cocinero_main_cocinero_component__WEBPACK_IMPORTED_MODULE_17__["MainCocineroComponent"],
         children: [
             { path: '', component: _components_cocinero_views_home_cocinero_home_cocinero_component__WEBPACK_IMPORTED_MODULE_18__["HomeCocineroComponent"] },
             { path: 'profile', component: _components_all_views_profile_profile_component__WEBPACK_IMPORTED_MODULE_25__["ProfileComponent"] },
+            { path: 'products', component: _components_cocinero_views_manage_products_cocinero_manage_products_cocinero_component__WEBPACK_IMPORTED_MODULE_29__["ManageProductsCocineroComponent"] }
         ],
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_13__["AuthGuard"]] },
     { path: 'bartender', component: _components_bartender_views_main_bartender_main_bartender_component__WEBPACK_IMPORTED_MODULE_19__["MainBartenderComponent"],
         children: [
             { path: '', component: _components_bartender_views_home_bartender_home_bartender_component__WEBPACK_IMPORTED_MODULE_20__["HomeBartenderComponent"] },
             { path: 'profile', component: _components_all_views_profile_profile_component__WEBPACK_IMPORTED_MODULE_25__["ProfileComponent"] },
+            { path: 'products', component: _components_bartender_views_manage_products_bartender_manage_products_bartender_component__WEBPACK_IMPORTED_MODULE_30__["ManageProductsBartenderComponent"] }
         ],
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_13__["AuthGuard"]] },
     { path: 'cliente', component: _components_cliente_views_main_cliente_main_cliente_component__WEBPACK_IMPORTED_MODULE_11__["MainClienteComponent"],
@@ -903,6 +1044,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pipes_neat_date_pipe__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./pipes/neat-date.pipe */ "./src/app/pipes/neat-date.pipe.ts");
 /* harmony import */ var _directives_is_prod_directive__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./directives/is-prod.directive */ "./src/app/directives/is-prod.directive.ts");
 /* harmony import */ var ngx_captcha__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ngx-captcha */ "./node_modules/ngx-captcha/fesm2015/ngx-captcha.js");
+/* harmony import */ var _components_socio_views_manage_products_admin_manage_products_admin_component__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./components/socio/views/manage-products-admin/manage-products-admin.component */ "./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.ts");
+/* harmony import */ var _components_all_main_product_management_product_management_component__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./components/all/main/product-management/product-management.component */ "./src/app/components/all/main/product-management/product-management.component.ts");
+/* harmony import */ var _components_cocinero_views_manage_products_cocinero_manage_products_cocinero_component__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ./components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component */ "./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.ts");
+/* harmony import */ var _components_bartender_views_manage_products_bartender_manage_products_bartender_component__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./components/bartender/views/manage-products-bartender/manage-products-bartender.component */ "./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.ts");
+/* harmony import */ var _components_cervecero_views_manage_products_cervecero_manage_products_cervecero_component__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ./components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component */ "./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.ts");
+/* harmony import */ var _components_socio_views_manage_users_manage_users_component__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ./components/socio/views/manage-users/manage-users.component */ "./src/app/components/socio/views/manage-users/manage-users.component.ts");
+/* harmony import */ var _components_socio_views_view_logs_view_logs_component__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ./components/socio/views/view-logs/view-logs.component */ "./src/app/components/socio/views/view-logs/view-logs.component.ts");
+/* harmony import */ var _pipes_sort_pipe_pipe__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./pipes/sort-pipe.pipe */ "./src/app/pipes/sort-pipe.pipe.ts");
+/* harmony import */ var _components_socio_views_view_orders_stats_view_orders_stats_component__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./components/socio/views/view-orders-stats/view-orders-stats.component */ "./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.ts");
+/* harmony import */ var _components_socio_views_view_tables_stats_view_tables_stats_component__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./components/socio/views/view-tables-stats/view-tables-stats.component */ "./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -997,10 +1160,21 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _directives_survey_average_directive__WEBPACK_IMPORTED_MODULE_47__["SurveyAverageDirective"],
             _directives_survey_comment_directive__WEBPACK_IMPORTED_MODULE_48__["SurveyCommentDirective"],
             _pipes_neat_date_pipe__WEBPACK_IMPORTED_MODULE_49__["NeatDatePipe"],
-            _directives_is_prod_directive__WEBPACK_IMPORTED_MODULE_50__["IsProdDirective"]
+            _directives_is_prod_directive__WEBPACK_IMPORTED_MODULE_50__["IsProdDirective"],
+            _components_socio_views_manage_products_admin_manage_products_admin_component__WEBPACK_IMPORTED_MODULE_52__["ManageProductsAdminComponent"],
+            _components_all_main_product_management_product_management_component__WEBPACK_IMPORTED_MODULE_53__["ProductManagementComponent"],
+            _components_cocinero_views_manage_products_cocinero_manage_products_cocinero_component__WEBPACK_IMPORTED_MODULE_54__["ManageProductsCocineroComponent"],
+            _components_bartender_views_manage_products_bartender_manage_products_bartender_component__WEBPACK_IMPORTED_MODULE_55__["ManageProductsBartenderComponent"],
+            _components_cervecero_views_manage_products_cervecero_manage_products_cervecero_component__WEBPACK_IMPORTED_MODULE_56__["ManageProductsCerveceroComponent"],
+            _components_socio_views_manage_users_manage_users_component__WEBPACK_IMPORTED_MODULE_57__["ManageUsersComponent"],
+            _components_socio_views_view_logs_view_logs_component__WEBPACK_IMPORTED_MODULE_58__["ViewLogsComponent"],
+            _pipes_sort_pipe_pipe__WEBPACK_IMPORTED_MODULE_59__["SortPipePipe"],
+            _components_socio_views_view_orders_stats_view_orders_stats_component__WEBPACK_IMPORTED_MODULE_60__["ViewOrdersStatsComponent"],
+            _components_socio_views_view_tables_stats_view_tables_stats_component__WEBPACK_IMPORTED_MODULE_61__["ViewTablesStatsComponent"]
         ],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_62__["CommonModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_10__["AppRoutingModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_18__["FormsModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_18__["ReactiveFormsModule"],
@@ -1180,7 +1354,7 @@ FooterComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".order {\n  cursor: pointer;\n}\n\ntable {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\n\ntable th {\n  border: none;\n  text-align: center;\n}\n\ntable tr {\n  text-align: center;\n}\n\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9hbGwvbWFpbi9vcmRlci1saXN0L0M6XFxVc2Vyc1xcdGZlcm5hbmRlel9tZWNvblxcRGVza3RvcFxcR2l0SHViXFxjb21hbmRhTGFiNC9zcmNcXGFwcFxcY29tcG9uZW50c1xcYWxsXFxtYWluXFxvcmRlci1saXN0XFxvcmRlci1saXN0LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL2FsbC9tYWluL29yZGVyLWxpc3Qvb3JkZXItbGlzdC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGVBQUE7QUNDSjs7QURFQTtFQUNJLDRDQUFBO0VBQ0EsbUJBQUE7QUNDSjs7QURDSTtFQUNJLFlBQUE7RUFDQSxrQkFBQTtBQ0NSOztBRENJO0VBQ0ksa0JBQUE7QUNDUjs7QURHQTtFQUNJLHlDQUFBO0VBQ0EsZ0JBQUE7RUFDQSxpQkFBQTtBQ0FKIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9hbGwvbWFpbi9vcmRlci1saXN0L29yZGVyLWxpc3QuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIub3JkZXIge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG50YWJsZSB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcblxyXG4gICAgdGgge1xyXG4gICAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICB9XHJcbiAgICB0ciB7XHJcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgfVxyXG59XHJcblxyXG4uYXJpYWwge1xyXG4gICAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgICBmb250LXNpemU6IC45ZW07XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufSIsIi5vcmRlciB7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn1cblxudGFibGUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcbiAgYm9yZGVyLXJhZGl1czogMjBweDtcbn1cbnRhYmxlIHRoIHtcbiAgYm9yZGVyOiBub25lO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG50YWJsZSB0ciB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLmFyaWFsIHtcbiAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGZvbnQtc2l6ZTogMC45ZW07XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".order {\n  cursor: pointer;\n}\n\ntable {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\n\ntable th {\n  border: none;\n  text-align: center;\n}\n\ntable tr {\n  text-align: center;\n}\n\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n\nlabel {\n  color: rgba(255, 254, 254, 0.877);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9hbGwvbWFpbi9vcmRlci1saXN0L0M6XFxVc2Vyc1xcdGZlcm5hbmRlel9tZWNvblxcRGVza3RvcFxcR2l0SHViXFxjb21hbmRhTGFiNC9zcmNcXGFwcFxcY29tcG9uZW50c1xcYWxsXFxtYWluXFxvcmRlci1saXN0XFxvcmRlci1saXN0LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL2FsbC9tYWluL29yZGVyLWxpc3Qvb3JkZXItbGlzdC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGVBQUE7QUNDSjs7QURFQTtFQUNJLDRDQUFBO0VBQ0EsbUJBQUE7QUNDSjs7QURDSTtFQUNJLFlBQUE7RUFDQSxrQkFBQTtBQ0NSOztBRENJO0VBQ0ksa0JBQUE7QUNDUjs7QURHQTtFQUNJLHlDQUFBO0VBQ0EsZ0JBQUE7RUFDQSxpQkFBQTtBQ0FKOztBREdBO0VBQ0ksaUNBQUE7QUNBSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvYWxsL21haW4vb3JkZXItbGlzdC9vcmRlci1saXN0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm9yZGVyIHtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxudGFibGUge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NCwgMjU0LCAwLjg3Nyk7XHJcbiAgICBib3JkZXItcmFkaXVzOiAyMHB4O1xyXG5cclxuICAgIHRoIHtcclxuICAgICAgICBib3JkZXI6IG5vbmU7XHJcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgfVxyXG4gICAgdHIge1xyXG4gICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIH1cclxufVxyXG5cclxuLmFyaWFsIHtcclxuICAgIGZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xyXG4gICAgZm9udC1zaXplOiAuOWVtO1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuXHJcbmxhYmVse1xyXG4gICAgY29sb3I6IHJnYmEoMjU1LCAyNTQsIDI1NCwgMC44NzcpOyAgICBcclxufSIsIi5vcmRlciB7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn1cblxudGFibGUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcbiAgYm9yZGVyLXJhZGl1czogMjBweDtcbn1cbnRhYmxlIHRoIHtcbiAgYm9yZGVyOiBub25lO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG50YWJsZSB0ciB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLmFyaWFsIHtcbiAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGZvbnQtc2l6ZTogMC45ZW07XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG5sYWJlbCB7XG4gIGNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcbn0iXX0= */");
 
 /***/ }),
 
@@ -1213,35 +1387,55 @@ let OrderListComponent = class OrderListComponent {
         this.orderService = orderService;
         this.authService = authService;
         this.orderSelected = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.showingOrders = true;
     }
     ngOnInit() {
+        const cancelado = 'Cancelado';
+        const pagado = 'Pagado';
         switch (this.role) {
             case src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["Role"].mozo:
                 this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
-                    this.orders = this.orderService.GetAllByWaiterOrderByTime(this.me.email).valueChanges();
+                    this.orders = this.orderService.GetAllByWaiterOrderByTime(this.me.email).valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(orders => {
+                        return orders.filter(order => {
+                            order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_2__["Order"](), order);
+                            if (order['state'] != cancelado) {
+                                this.showingOrders = false;
+                                return order;
+                            }
+                        });
+                    }));
+                    ;
                 });
                 break;
             case src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["Role"].cervecero:
             case src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["Role"].bartender:
             case src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["Role"].cocinero:
                 const cook = this.role;
-                this.orders = this.orderService.GetAllByCook(cook);
+                console.log(cook);
+                this.orders = this.orderService.GetAllByCook(cook).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(orders => {
+                    return orders.filter(order => {
+                        order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_2__["Order"](), order);
+                        console.log(order['state']);
+                        if (order['state'] != cancelado) {
+                            this.showingOrders = false;
+                            return order;
+                        }
+                    });
+                }));
                 break;
             case src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["Role"].socio:
                 this.orders = this.orderService.GetAllOrderByTime().valueChanges();
                 break;
             case src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["Role"].cliente:
-                const terminado = 'Terminado';
                 this.authService.GetCurrentUser().then(user => this.me = user).then(() => {
                     this.orders = this.orderService.GetAllByWaiterOrderByTime2(this.me.email).valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(orders => {
                         return orders.filter(order => {
                             order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_2__["Order"](), order);
                             var hasRole = false;
-                            order['items'].forEach(el => {
-                                console.log(el.state);
-                                if (el.state != terminado)
-                                    hasRole = true;
-                            });
+                            if (order['state'] != pagado && order['state'] != cancelado) {
+                                hasRole = true;
+                                this.showingOrders = false;
+                            }
                             if (hasRole)
                                 return order;
                         });
@@ -1251,8 +1445,6 @@ let OrderListComponent = class OrderListComponent {
     }
     SelectOrder(order) {
         this.orderSelected.emit(order);
-    }
-    filtro() {
     }
 };
 OrderListComponent.ctorParameters = () => [
@@ -1272,6 +1464,290 @@ OrderListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./order-list.component.scss */ "./src/app/components/all/main/order-list/order-list.component.scss")).default]
     })
 ], OrderListComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/all/main/product-management/product-management.component.scss":
+/*!******************************************************************************************!*\
+  !*** ./src/app/components/all/main/product-management/product-management.component.scss ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("table {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\ntable th {\n  border: none;\n  text-align: center;\n}\ntable tr {\n  text-align: center;\n}\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9hbGwvbWFpbi9wcm9kdWN0LW1hbmFnZW1lbnQvQzpcXFVzZXJzXFx0ZmVybmFuZGV6X21lY29uXFxEZXNrdG9wXFxHaXRIdWJcXGNvbWFuZGFMYWI0L3NyY1xcYXBwXFxjb21wb25lbnRzXFxhbGxcXG1haW5cXHByb2R1Y3QtbWFuYWdlbWVudFxccHJvZHVjdC1tYW5hZ2VtZW50LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL2FsbC9tYWluL3Byb2R1Y3QtbWFuYWdlbWVudC9wcm9kdWN0LW1hbmFnZW1lbnQuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUE7RUFDSSw0Q0FBQTtFQUNBLG1CQUFBO0FDSEo7QURLSTtFQUNJLFlBQUE7RUFDQSxrQkFBQTtBQ0hSO0FES0k7RUFDSSxrQkFBQTtBQ0hSO0FET0E7RUFDSSx5Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsaUJBQUE7QUNKSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvYWxsL21haW4vcHJvZHVjdC1tYW5hZ2VtZW50L3Byb2R1Y3QtbWFuYWdlbWVudC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5wcm9kdWN0IHtcclxuICAgIC8vY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG50YWJsZSB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcblxyXG4gICAgdGgge1xyXG4gICAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICB9XHJcbiAgICB0ciB7XHJcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgfVxyXG59XHJcblxyXG4uYXJpYWwge1xyXG4gICAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgICBmb250LXNpemU6IC45ZW07XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufSIsInRhYmxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NCwgMjU0LCAwLjg3Nyk7XG4gIGJvcmRlci1yYWRpdXM6IDIwcHg7XG59XG50YWJsZSB0aCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxudGFibGUgdHIge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5hcmlhbCB7XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xuICBmb250LXNpemU6IDAuOWVtO1xuICBmb250LXdlaWdodDogYm9sZDtcbn0iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/components/all/main/product-management/product-management.component.ts":
+/*!****************************************************************************************!*\
+  !*** ./src/app/components/all/main/product-management/product-management.component.ts ***!
+  \****************************************************************************************/
+/*! exports provided: ProductManagementComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductManagementComponent", function() { return ProductManagementComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_models_product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/models/product */ "./src/app/models/product.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var src_app_services_firebase_product_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/firebase/product.service */ "./src/app/services/firebase/product.service.ts");
+/* harmony import */ var src_app_services_firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/firestorage/file.service */ "./src/app/services/firestorage/file.service.ts");
+/* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+/* harmony import */ var src_app_models_user__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/models/user */ "./src/app/models/user.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
+
+
+
+
+
+
+
+
+
+
+let ProductManagementComponent = class ProductManagementComponent {
+    constructor(productService, fileService, authService, movimientoService) {
+        this.productService = productService;
+        this.fileService = fileService;
+        this.authService = authService;
+        this.movimientoService = movimientoService;
+        this.onReset = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+    }
+    ngOnInit() {
+        this.productForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
+            productName: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]),
+            productPrice: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]),
+            productDescription: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]),
+            productImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]),
+            typeComida: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null),
+            typeBebida: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null),
+            typeAlcohol: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null),
+            typePostre: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null),
+            typeCeliaco: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null),
+            typeVegano: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null),
+            productCook: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null)
+        });
+        this.products = new Array();
+        this.products = this.productService.listado;
+        //this.showingProducts = this.products;
+        this.ClearFilters();
+        this.haySeleccionado = false;
+        this.productoSeleccionado = null;
+    }
+    laFuncion() {
+        this.products = new Array();
+        this.products = this.productService.listado;
+        this.ClearFilters();
+    }
+    showProd() {
+        if (this.role == "socio") {
+            this.showingProducts = this.products;
+            console.log("showingProducts");
+        }
+    }
+    // private CreateTestProducts(): Product[] {
+    //   return [
+    //     Product.Create('B-CER-QUIL', 'Cerveza Quilmes', 'assets/img/B-CER-QUIL.jpg', 50, [FoodType.bebida, FoodType.alcohol], Cook.cervecero, "Bebida con alcohol, no recomendada si vas a conducir"),
+    //     Product.Create('C-COM-MCFR', 'Milanesa con fritas', 'assets/img/C-COM-MCFR.jpg', 300, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de papas fritas"),
+    //     Product.Create('C-COM-MACF', 'Milanesa a caballo con fritas', 'assets/img/C-COM-MACF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de huevo frito y papas fritas"),
+    //     Product.Create('C-COM-MNAF', 'Milanesa napo con fritas', 'assets/img/C-COM-MNAF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa con salsa de tomate, jamón y muzzarella acompañada de papas fritas"),
+    //     Product.Create('B-GAS-COCA', 'Coca-Cola', 'assets/img/B-GAS-COCA.jpg', 60, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol gasificada de extractos naturales"),
+    //     Product.Create('B-AGU-BONA', 'Bon Aqua', 'assets/img/B-AGU-BONA.jpg', 45, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol y sin gas de origenes naturales"),
+    //     Product.Create('B-TRA-DDFR', 'Daikiri de frutilla', 'assets/img/B-TRA-DDFR.jpg', 70, [FoodType.bebida, FoodType.alcohol, FoodType.postre], Cook.bartender, "Bebida con alcohol, no recomendada si vas a manejar"),
+    //     Product.Create('C-COM-ENCE', 'Ensalada el Cesar', 'assets/img/C-COM-ENCE.jpg', 150, [FoodType.comida, FoodType.vegano], Cook.cocinero, " Ensalada de lechuga romana y croûtons con jugo de limón, aceite de oliva, huevo, salsa Worcestershire, anchoas, ajo, mostaza de Dijon, queso parmesano y pimienta negra"),
+    //     Product.Create('C-COM-EMPA', 'Empanada', 'assets/img/C-COM-EMPA.jpg', 50, [FoodType.comida], Cook.cocinero, " Empanada de pollo"),
+    //     Product.Create('B-VIN-VINO', 'Vino', 'assets/img/B-VIN-VINO.jpg', 550, [FoodType.bebida, FoodType.alcohol], Cook.bartender, "Bebida con alcohol, no recomendada si vas a conducir"),
+    //   ];
+    // }
+    addProduct() {
+        let product;
+        let array;
+        array = this.traerFoodTypes();
+        this.traerCook();
+        product = src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('', this.productForm.value.productName, '', Number.parseFloat(this.productForm.value.productPrice), array, this.productForm.value.productCook, this.productForm.value.productDescription);
+        this.productService.persistirProducto(product, this.file).then((value) => {
+            if (value) {
+                this.Cancel();
+            }
+            this.authService.GetCurrentUser().then(user => {
+                let mensaje = `El usuario ${user.email} dió de alta el producto ${product.name}`;
+                this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].producto, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].alta, mensaje);
+            });
+        });
+        ;
+    }
+    onFileChanged(event) {
+        this.file = event.target.files[0];
+    }
+    traerFoodTypes() {
+        let retorno = new Array();
+        if (this.productForm.value.typeComida) {
+            retorno.push(src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].comida);
+        }
+        if (this.productForm.value.typeBebida) {
+            retorno.push(src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].bebida);
+        }
+        if (this.productForm.value.typePostre) {
+            retorno.push(src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].postre);
+        }
+        if (this.productForm.value.typeAlcohol) {
+            retorno.push(src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].alcohol);
+        }
+        if (this.productForm.value.typeCeliaco) {
+            retorno.push(src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].celiaco);
+        }
+        if (this.productForm.value.typeVegano) {
+            retorno.push(src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].vegano);
+        }
+        return retorno;
+    }
+    traerCook() {
+        if (this.role == null) {
+            this.authService.GetCurrentUser().then(user => {
+                this.role = user.role;
+                if (this.role != 'socio') {
+                    this.productForm.controls['productCook'].setValue(this.role);
+                }
+            });
+        }
+        else {
+            if (this.role != 'socio') {
+                this.productForm.controls['productCook'].setValue(this.role);
+            }
+        }
+    }
+    changeState(uid, state) {
+        this.productService.GetProductByID(uid).then(prod => {
+            if (state == "Pendiente") {
+                this.productService.updateState(uid, "Deshabilitado");
+                this.authService.GetCurrentUser().then(user => {
+                    let mensaje = `El usuario ${user.email} deshabilitó el producto ${prod.name}`;
+                    this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].producto, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].deshabilitacion, mensaje);
+                });
+                this.laFuncion();
+            }
+            if (state == "Deshabilitado") {
+                this.productService.updateState(uid, "Pendiente");
+                this.authService.GetCurrentUser().then(user => {
+                    let mensaje = `El usuario ${user.email} habilitó el producto ${prod.name}`;
+                    this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].producto, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].habilitacion, mensaje);
+                });
+            }
+        });
+    }
+    editarProducto(producto) {
+        this.productoSeleccionado = producto;
+        this.haySeleccionado = true;
+        this.productForm.controls['productName'].setValue(producto.name);
+        this.productForm.controls['productPrice'].setValue(producto.price);
+        this.productForm.controls['productCook'].setValue(producto.cook);
+        this.productForm.controls['productDescription'].setValue(producto.description);
+        this.traerTipos(producto.foodTypes);
+    }
+    updateProduct() {
+        let producto;
+        let array;
+        array = this.traerFoodTypes();
+        this.productoSeleccionado.name = this.productForm.value.productName;
+        this.productoSeleccionado.price = this.productForm.value.productPrice;
+        this.productoSeleccionado.foodTypes = array;
+        this.productoSeleccionado.cook = this.productForm.value.productCook;
+        this.productoSeleccionado.description = this.productForm.value.productDescription;
+        this.productService.updateProd(this.productoSeleccionado, this.file).then(() => {
+            this.productoSeleccionado = null;
+            this.haySeleccionado = false;
+            this.file = null;
+            this.authService.GetCurrentUser().then(user => {
+                let mensaje = `El usuario ${user.email} modificó el producto ${this.productoSeleccionado.name}`;
+                this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].producto, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].modificacion, mensaje);
+            });
+        });
+    }
+    traerTipos(tipos) {
+        tipos.forEach(tipo => {
+            switch (tipo) {
+                case 'comida':
+                    this.productForm.controls['typeComida'].setValue(true);
+                    break;
+                case 'bebida':
+                    this.productForm.controls['typeBebida'].setValue(true);
+                    break;
+                case 'alcohol':
+                    this.productForm.controls['typeAlcohol'].setValue(true);
+                    break;
+                case 'postre':
+                    this.productForm.controls['typePostre'].setValue(true);
+                    break;
+                case 'celiaco':
+                    this.productForm.controls['typeCeliaco'].setValue(true);
+                    break;
+                case 'vegano':
+                    this.productForm.controls['typeVegano'].setValue(true);
+                    break;
+            }
+        });
+    }
+    // public getRole(){
+    //   this.authService.GetCurrentUser().then(user =>{
+    //     this.role = user.role;
+    //   });
+    //}
+    // ##### FILTER FUNCTIONS #####
+    Filter(type) {
+        this.showingProducts = this.products.filter((element) => {
+            if (element.cook == this.role || this.role == src_app_models_user__WEBPACK_IMPORTED_MODULE_10__["Role"].socio)
+                if (element.IsFoodType(type))
+                    return element;
+        });
+    }
+    ClearFilters() {
+        //this.showingProducts = this.products;
+        this.authService.GetCurrentUser().then(user => {
+            this.role = user.role;
+            this.showingProducts = this.productService.GetAll2().valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(products => {
+                return products.filter(product => {
+                    product = Object.assign(new src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"](), product);
+                    //if (product['timestamp'] > this.fechaInicio && order['timestamp'] < this.fechaFin) {
+                    if (product['cook'] == this.role || this.role == src_app_models_user__WEBPACK_IMPORTED_MODULE_10__["Role"].socio)
+                        return product;
+                    //}
+                });
+            }));
+            this.productoSeleccionado = null;
+            this.haySeleccionado = false;
+            this.file = null;
+        });
+    }
+    Cancel() {
+        this.productForm.reset();
+        this.onReset.next();
+        this.laFuncion();
+    }
+};
+ProductManagementComponent.ctorParameters = () => [
+    { type: src_app_services_firebase_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"] },
+    { type: src_app_services_firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__["FileService"] },
+    { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"] },
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_8__["LogService"] }
+];
+ProductManagementComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-product-management',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./product-management.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/all/main/product-management/product-management.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./product-management.component.scss */ "./src/app/components/all/main/product-management/product-management.component.scss")).default]
+    })
+], ProductManagementComponent);
 
 
 
@@ -1420,15 +1896,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_models_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/models/table */ "./src/app/models/table.ts");
 /* harmony import */ var src_app_services_firebase_table_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/firebase/table.service */ "./src/app/services/firebase/table.service.ts");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+
+
+
 
 
 
 
 
 let TableCardComponent = class TableCardComponent {
-    constructor(tableService, toastr) {
+    constructor(tableService, toastr, authService, movimientoService) {
         this.tableService = tableService;
         this.toastr = toastr;
+        this.authService = authService;
+        this.movimientoService = movimientoService;
     }
     ngOnInit() {
     }
@@ -1454,7 +1938,12 @@ let TableCardComponent = class TableCardComponent {
                 status = src_app_models_table__WEBPACK_IMPORTED_MODULE_2__["TableState"].available;
                 break;
         }
-        this.tableService.UpdateStatus(this.table.tableID, status)
+        this.tableService.UpdateStatus(this.table.tableID, status).then(() => {
+            this.authService.GetCurrentUser().then(user => {
+                let mensaje = `El usuario ${user.email} cambió el estado de la mesa ${this.table.tableID} a ${status}`;
+                this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_7__["TargetMovimiento"].mesa, src_app_models_log__WEBPACK_IMPORTED_MODULE_7__["TipoMovimiento"].modificacion, mensaje);
+            });
+        })
             .then(() => {
             this.toastr.success('Se cambió el estado de la mesa.');
         })
@@ -1465,7 +1954,9 @@ let TableCardComponent = class TableCardComponent {
 };
 TableCardComponent.ctorParameters = () => [
     { type: src_app_services_firebase_table_service__WEBPACK_IMPORTED_MODULE_3__["TableService"] },
-    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] }
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] },
+    { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"] },
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_6__["LogService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -1515,6 +2006,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
 /* harmony import */ var src_app_services_firebase_order_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/firebase/order.service */ "./src/app/services/firebase/order.service.ts");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+
+
 
 
 
@@ -1523,10 +2018,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let WorkOrderComponent = class WorkOrderComponent {
-    constructor(authService, orderService, toastr) {
+    constructor(authService, orderService, toastr, logService) {
         this.authService = authService;
         this.orderService = orderService;
         this.toastr = toastr;
+        this.logService = logService;
     }
     ngOnInit() {
         this.authService.GetCurrentUser().then(user => this.me = user);
@@ -1534,6 +2030,10 @@ let WorkOrderComponent = class WorkOrderComponent {
             if (this.order) {
                 let now = new Date();
                 this.remainingTime = new Date(this.order.timeLeft).getTime() - now.getTime();
+                // if (this.remainingTime < 0) {
+                // 	this.order.delayed = now.getTime() - new Date(this.order.timeLeft).getTime();
+                // 	this.orderService.Update(this.order);
+                // }
             }
         }, 10);
     }
@@ -1573,6 +2073,8 @@ let WorkOrderComponent = class WorkOrderComponent {
         this.AssignToMe();
         this.selectedItem.state = src_app_models_product__WEBPACK_IMPORTED_MODULE_3__["FoodState"].preparing;
         this.order.UpdateOrderState();
+        let mensaje = `El usuario ${this.me.email} (${this.me.role}) comenzó a preparar ${this.selectedItem.name} del pedido ${this.order.codeID}`;
+        this.logService.persistirMovimiento(this.me, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TargetMovimiento"].pedido, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TipoMovimiento"].preparacion, mensaje);
         this.orderService.Update(this.order)
             .then(() => {
             this.toastr.success('El pedido se actualizó con éxito', 'Hecho!');
@@ -1585,6 +2087,8 @@ let WorkOrderComponent = class WorkOrderComponent {
         this.selectedItem.state = src_app_models_product__WEBPACK_IMPORTED_MODULE_3__["FoodState"].finished;
         this.order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_2__["Order"](), this.order);
         this.order.UpdateOrderState();
+        let mensaje = `El usuario ${this.me.email} (${this.me.role})  terminó ${this.selectedItem.name} del pedido ${this.order.codeID}`;
+        this.logService.persistirMovimiento(this.me, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TargetMovimiento"].pedido, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TipoMovimiento"].finalizacion, mensaje);
         this.orderService.Update(this.order)
             .then(() => {
             this.toastr.success('El pedido se actualizó con éxito', 'Hecho!');
@@ -1605,7 +2109,8 @@ let WorkOrderComponent = class WorkOrderComponent {
 WorkOrderComponent.ctorParameters = () => [
     { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"] },
     { type: src_app_services_firebase_order_service__WEBPACK_IMPORTED_MODULE_5__["OrderService"] },
-    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] }
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] },
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_7__["LogService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -1701,15 +2206,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/firebase/user.service */ "./src/app/services/firebase/user.service.ts");
+
 
 
 
 
 
 let LoginComponent = class LoginComponent {
-    constructor(authService, toastr) {
+    constructor(authService, toastr, userService) {
         this.authService = authService;
         this.toastr = toastr;
+        this.userService = userService;
         this.userOption = 'none';
         this.loading = false;
     }
@@ -1717,18 +2225,78 @@ let LoginComponent = class LoginComponent {
         this.loginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
             'email': new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
             'password': new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
+            'chkHorario': new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](false, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
+            'chkLunes': new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](false, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
             'captcha': new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required])
         });
     }
     onSubmit() {
         this.loading = true;
-        this.authService.LoginWithEmail(this.loginForm.get('email').value, this.loginForm.get('password').value)
-            .then(() => {
-            this.toastr.success('¡Bienvenido!');
+        const usr = this.loginForm.get('email').value;
+        const pass = this.loginForm.get('password').value;
+        let restriccion = this.restriccionHoraria(this.loginForm.get('chkHorario').value);
+        this.userService.GetUserByEmail(usr)
+            .then(usuario => {
+            console.log("esta en la base");
+            if (!usuario.deleted && usuario.state == 'habilitado') {
+                if (usuario.role == "cliente" && !restriccion) {
+                    this.toastr.info('El horario de atencion es de Miercoles a Domingo de 18:00 a 2:00');
+                    setTimeout(() => {
+                        this.loading = false;
+                        this.loginForm.get('email').setValue('');
+                        this.loginForm.get('password').setValue('');
+                        this.loginForm.get('email').enable();
+                        this.loginForm.get('password').enable();
+                    }, 2000);
+                }
+                else {
+                    this.authService.LoginWithEmail(usr, pass)
+                        .then(() => {
+                        this.toastr.success('¡Bienvenido!');
+                    })
+                        .catch(() => {
+                        console.log("no estaba auth asi que lo creo");
+                        this.authService.RegisterWithEmailAdmin(usr);
+                    });
+                }
+            }
+            else {
+                this.toastr.error('Usuario deshabilitado o inexistente');
+            }
         })
-            .catch(() => {
-            this.toastr.error('Usuario y/o contraseña incorrecto.');
+            .catch(() => this.toastr.error('Usuario y/o contraseña incorrecto.')).finally(() => {
+            //this.loading = false;
+            //console.log("lo corto");
+            this.userOption = 'none';
+            this.loginForm.get('email').disable();
+            this.loginForm.get('password').disable();
+            //this.loginForm.get('email').setValue('');
+            // this.loginForm.get('password').setValue('');			
         });
+    }
+    restriccionHoraria(chk) {
+        let retorno = true;
+        const date = new Date();
+        let day = date.getDay();
+        const hour = date.getHours();
+        const min = date.getMinutes();
+        if (this.loginForm.get('chkLunes').value) {
+            day = 1;
+        }
+        console.log("dia: " + day);
+        console.log("hora: " + hour);
+        console.log("minuto: " + min);
+        if (!chk || chk == null || this.loginForm.get('chkLunes').value) {
+            if (day == 1 || day == 2) {
+                retorno = false;
+            }
+            else if (hour >= 2 && hour <= 17) {
+                retorno = false;
+            }
+        }
+        console.log(this.loginForm.get('chkLunes').value);
+        console.log(retorno);
+        return retorno;
     }
     BindUser(usuario) {
         this.userOption = usuario;
@@ -1776,7 +2344,8 @@ let LoginComponent = class LoginComponent {
 };
 LoginComponent.ctorParameters = () => [
     { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
-    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] }
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] },
+    { type: src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_5__["UserService"] }
 ];
 LoginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1843,7 +2412,7 @@ MainGeneralComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("img {\n  height: 150px;\n  width: 150px;\n  border-radius: 100%;\n  border: 1px solid #333;\n}\n\nh1 {\n  margin: 0 auto;\n  position: absolute;\n  top: 30%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9hbGwvdmlld3MvcHJvZmlsZS9DOlxcVXNlcnNcXHRmZXJuYW5kZXpfbWVjb25cXERlc2t0b3BcXEdpdEh1YlxcY29tYW5kYUxhYjQvc3JjXFxhcHBcXGNvbXBvbmVudHNcXGFsbFxcdmlld3NcXHByb2ZpbGVcXHByb2ZpbGUuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL2NvbXBvbmVudHMvYWxsL3ZpZXdzL3Byb2ZpbGUvcHJvZmlsZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQUE7RUFDQSxZQUFBO0VBQ0EsbUJBQUE7RUFDQSxzQkFBQTtBQ0NKOztBREVBO0VBQ0ksY0FBQTtFQUNBLGtCQUFBO0VBQ0EsUUFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9hbGwvdmlld3MvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcclxuICAgIGhlaWdodDogMTUwcHg7XHJcbiAgICB3aWR0aDogMTUwcHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiAxMDAlO1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgIzMzMztcclxufVxyXG5cclxuaDEge1xyXG4gICAgbWFyZ2luOiAwIGF1dG87XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB0b3A6IDMwJTtcclxufSIsImltZyB7XG4gIGhlaWdodDogMTUwcHg7XG4gIHdpZHRoOiAxNTBweDtcbiAgYm9yZGVyLXJhZGl1czogMTAwJTtcbiAgYm9yZGVyOiAxcHggc29saWQgIzMzMztcbn1cblxuaDEge1xuICBtYXJnaW46IDAgYXV0bztcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDMwJTtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("img {\n  height: 150px;\n  width: 150px;\n  border-radius: 100%;\n  border: 1px solid #333;\n}\n\nh1 {\n  margin: 0 auto;\n  position: absolute;\n  top: 30%;\n}\n\n.container {\n  background-color: rgba(255, 254, 254, 0.877);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9hbGwvdmlld3MvcHJvZmlsZS9DOlxcVXNlcnNcXHRmZXJuYW5kZXpfbWVjb25cXERlc2t0b3BcXEdpdEh1YlxcY29tYW5kYUxhYjQvc3JjXFxhcHBcXGNvbXBvbmVudHNcXGFsbFxcdmlld3NcXHByb2ZpbGVcXHByb2ZpbGUuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL2NvbXBvbmVudHMvYWxsL3ZpZXdzL3Byb2ZpbGUvcHJvZmlsZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQUE7RUFDQSxZQUFBO0VBQ0EsbUJBQUE7RUFDQSxzQkFBQTtBQ0NKOztBREVBO0VBQ0ksY0FBQTtFQUNBLGtCQUFBO0VBQ0EsUUFBQTtBQ0NKOztBREVBO0VBQ0ksNENBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvYWxsL3ZpZXdzL3Byb2ZpbGUvcHJvZmlsZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImltZyB7XHJcbiAgICBoZWlnaHQ6IDE1MHB4O1xyXG4gICAgd2lkdGg6IDE1MHB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogMTAwJTtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICMzMzM7XHJcbn1cclxuXHJcbmgxIHtcclxuICAgIG1hcmdpbjogMCBhdXRvO1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiAzMCU7XHJcbn1cclxuXHJcbi5jb250YWluZXJ7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTsgXHJcbn1cclxuXHJcbiIsImltZyB7XG4gIGhlaWdodDogMTUwcHg7XG4gIHdpZHRoOiAxNTBweDtcbiAgYm9yZGVyLXJhZGl1czogMTAwJTtcbiAgYm9yZGVyOiAxcHggc29saWQgIzMzMztcbn1cblxuaDEge1xuICBtYXJnaW46IDAgYXV0bztcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDMwJTtcbn1cblxuLmNvbnRhaW5lciB7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTQsIDI1NCwgMC44NzcpO1xufSJdfQ== */");
 
 /***/ }),
 
@@ -1861,9 +2430,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var src_app_services_firestorage_file_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/firestorage/file.service */ "./src/app/services/firestorage/file.service.ts");
 /* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
-/* harmony import */ var src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/classes/helpers/common-helper */ "./src/app/classes/helpers/common-helper.ts");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
-/* harmony import */ var src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/firebase/user.service */ "./src/app/services/firebase/user.service.ts");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/firebase/user.service */ "./src/app/services/firebase/user.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+
+
 
 
 
@@ -1872,52 +2445,91 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ProfileComponent = class ProfileComponent {
-    constructor(userService, fileService, authService, toastr) {
+    constructor(userService, fileService, authService, movimientoService, toastr) {
         this.userService = userService;
         this.fileService = fileService;
         this.authService = authService;
+        this.movimientoService = movimientoService;
         this.toastr = toastr;
         this.isLoaded = false;
         this.selectedFile = null;
+        this.habilitado = false;
     }
     ngOnInit() {
+        this.userForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            userName: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required]),
+            userLastname: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required]),
+            userMail: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required]),
+            userRole: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](null),
+            userImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required])
+        });
         this.authService.GetCurrentUser().then(usr => {
             this.user = usr;
+            this.userForm.controls['userName'].setValue(this.user.name);
+            this.userForm.controls['userLastname'].setValue(this.user.lastname);
+            this.userForm.controls['userMail'].setValue(this.user.email);
         });
     }
-    OnFileSelected(event) {
-        this.selectedFile = event.target.files[0];
-        this.isLoaded = true;
-        this.toastr.success('Seleccionaste el archivo ' + this.selectedFile.name);
+    onFileChanged(event) {
+        this.file = event.target.files[0];
+        this.habilitado = true;
     }
-    Upload() {
-        let name = src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_4__["CommonHelper"].GenerateProfileImageName(this.user);
-        console.log(name);
-        this.fileService.Upload(name, this.selectedFile)
-            .then(() => {
-            setTimeout(() => {
-                this.ChangeProfilePic(name);
-            }, 1000);
-        })
-            .catch(() => this.toastr.error('Se ha producido un error al cargar la imagen.'));
+    cambio() {
+        // if(this.user.name != this.userForm.value.userName || this.user.lastname != this.userForm.value.userLastname){
+        // 	this.habilitado = true;
+        // }else{
+        // 	this.habilitado = false;
+        // }
+        // console.log(this.habilitado);
+        // console.log(this.user.name);
+        // console.log(this.user.lastname);
+        console.log(this.userForm.controls['userName'].untouched);
+        console.log(this.userForm.controls['userName'].value);
+        console.log(this.user.name);
+        console.log(this.userForm.controls['userLastname'].untouched);
+        console.log(this.userForm.controls['userLastname'].value);
+        console.log(this.user.lastname);
     }
-    ChangeProfilePic(imgName) {
-        this.fileService.GetImageURL(imgName).then(img => {
-            this.userService.ModifyProfileImage(this.user.email, img).then(() => {
-                this.toastr.success('Imagen cargada con éxito.');
-                setTimeout(() => {
-                    location.reload();
-                    //location.assign('https://github.com/fernandeztrevor/comandaLab4');
-                }, 1000);
+    updateUser() {
+        if ((this.user.name != this.userForm.value.userName) || (this.user.lastname != this.userForm.value.userLastname) || (this.file != null)) {
+            this.userService.updateUser(this.user, this.file).then((value) => {
+                this.user.name = this.userForm.value.userName;
+                this.user.lastname = this.userForm.value.userLastname;
+                //console.log(value);
+                //if (value) {
+                this.toastr.success(`El usuario ${this.user.email} fue modificado con exito`);
+                //}
+                this.authService.GetCurrentUser().then(usr => {
+                    let mensaje = `El usuario ${this.user.email} dió de modificó el usuario ${this.user.email}`;
+                    this.movimientoService.persistirMovimiento(usr, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TipoMovimiento"].alta, mensaje);
+                });
+                this.resetForm();
+            }).catch(() => {
+                this.toastr.error(`Ha ocurrido un error`);
+                this.resetForm();
             });
+        }
+        else {
+            this.toastr.show("No hay nada para modificar");
+        }
+    }
+    resetForm() {
+        this.authService.GetCurrentUser().then(usr => {
+            this.user = usr;
+            this.userForm.controls['userName'].setValue(this.user.name);
+            this.userForm.controls['userLastname'].setValue(this.user.lastname);
+            this.userForm.controls['userMail'].setValue(this.user.email);
+            this.userForm.controls['userImage'].setValue(null);
+            this.habilitado = false;
         });
     }
 };
 ProfileComponent.ctorParameters = () => [
-    { type: src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"] },
+    { type: src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_5__["UserService"] },
     { type: src_app_services_firestorage_file_service__WEBPACK_IMPORTED_MODULE_2__["FileService"] },
     { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
-    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"] }
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_7__["LogService"] },
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] }
 ];
 ProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -2043,6 +2655,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+
+
 
 
 
@@ -2051,10 +2667,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let RegisterComponent = class RegisterComponent {
-    constructor(authService, router, toastr) {
+    constructor(authService, router, toastr, logService) {
         this.authService = authService;
         this.router = router;
         this.toastr = toastr;
+        this.logService = logService;
         this.loading = false;
     }
     ngOnInit() {
@@ -2072,6 +2689,8 @@ let RegisterComponent = class RegisterComponent {
         let user = src_app_models_user__WEBPACK_IMPORTED_MODULE_3__["User"].CreateUserWithParams(this.registerForm.get('name').value, this.registerForm.get('lastname').value, this.registerForm.get('email').value, this.registerForm.get('password').value, src_app_models_user__WEBPACK_IMPORTED_MODULE_3__["Role"].cliente);
         this.authService.RegisterWithEmail(user)
             .then(() => {
+            let mensaje = `El usuario ${user.email} se dió de alta`;
+            this.logService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_8__["TipoMovimiento"].alta, mensaje);
             this.toastr.success('Te has registrado con éxito.');
             this.router.navigate(['app/login']);
         })
@@ -2083,7 +2702,8 @@ let RegisterComponent = class RegisterComponent {
 RegisterComponent.ctorParameters = () => [
     { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
-    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] }
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] },
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_7__["LogService"] }
 ];
 RegisterComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -2200,6 +2820,50 @@ MainBartenderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.scss":
+/*!***************************************************************************************************************!*\
+  !*** ./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.scss ***!
+  \***************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvYmFydGVuZGVyL3ZpZXdzL21hbmFnZS1wcm9kdWN0cy1iYXJ0ZW5kZXIvbWFuYWdlLXByb2R1Y3RzLWJhcnRlbmRlci5jb21wb25lbnQuc2NzcyJ9 */");
+
+/***/ }),
+
+/***/ "./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.ts":
+/*!*************************************************************************************************************!*\
+  !*** ./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.ts ***!
+  \*************************************************************************************************************/
+/*! exports provided: ManageProductsBartenderComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManageProductsBartenderComponent", function() { return ManageProductsBartenderComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let ManageProductsBartenderComponent = class ManageProductsBartenderComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+ManageProductsBartenderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-manage-products-bartender',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./manage-products-bartender.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./manage-products-bartender.component.scss */ "./src/app/components/bartender/views/manage-products-bartender/manage-products-bartender.component.scss")).default]
+    })
+], ManageProductsBartenderComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/cervecero/views/home-cervecero/home-cervecero.component.scss":
 /*!*****************************************************************************************!*\
   !*** ./src/app/components/cervecero/views/home-cervecero/home-cervecero.component.scss ***!
@@ -2303,6 +2967,50 @@ MainCerveceroComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.scss":
+/*!***************************************************************************************************************!*\
+  !*** ./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.scss ***!
+  \***************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvY2VydmVjZXJvL3ZpZXdzL21hbmFnZS1wcm9kdWN0cy1jZXJ2ZWNlcm8vbWFuYWdlLXByb2R1Y3RzLWNlcnZlY2Vyby5jb21wb25lbnQuc2NzcyJ9 */");
+
+/***/ }),
+
+/***/ "./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.ts":
+/*!*************************************************************************************************************!*\
+  !*** ./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.ts ***!
+  \*************************************************************************************************************/
+/*! exports provided: ManageProductsCerveceroComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManageProductsCerveceroComponent", function() { return ManageProductsCerveceroComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let ManageProductsCerveceroComponent = class ManageProductsCerveceroComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+ManageProductsCerveceroComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-manage-products-cervecero',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./manage-products-cervecero.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./manage-products-cervecero.component.scss */ "./src/app/components/cervecero/views/manage-products-cervecero/manage-products-cervecero.component.scss")).default]
+    })
+], ManageProductsCerveceroComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/cliente/views/home-cliente/home-cliente.component.scss":
 /*!***********************************************************************************!*\
   !*** ./src/app/components/cliente/views/home-cliente/home-cliente.component.scss ***!
@@ -2337,6 +3045,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_firebase_table_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/firebase/table.service */ "./src/app/services/firebase/table.service.ts");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
 /* harmony import */ var src_app_models_table__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/models/table */ "./src/app/models/table.ts");
+/* harmony import */ var src_app_services_firebase_product_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/app/services/firebase/product.service */ "./src/app/services/firebase/product.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
 
 
 
@@ -2350,22 +3062,28 @@ __webpack_require__.r(__webpack_exports__);
 
 let HomeClienteComponent = class HomeClienteComponent {
     //public waitingOrder: boolean = false;
-    constructor(orderService, userService, authService, tableService, toastr) {
+    constructor(orderService, userService, authService, tableService, toastr, productService) {
         this.orderService = orderService;
         this.userService = userService;
         this.authService = authService;
         this.tableService = tableService;
         this.toastr = toastr;
+        this.productService = productService;
         this.order = null;
         this.onReset = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         this.hasOrder = false;
     }
     ngOnInit() {
         this.InitializeOrder();
-        this.products = this.CreateTestProducts();
-        this.showingProducts = this.products;
+        //this.products = this.CreateTestProducts();
+        //this.products = this.productService.listado;
+        this.products = this.productService.GetAll2();
+        //this.products = new Array<Product>();
+        //this.products = this.productService.listado;
+        //this.showingProducts = this.products;
         this.authService.GetCurrentUser().then(userLogged => this.currentUser = userLogged);
         this.SelectRandomWaiter().then(waiter => this.currentWorker = waiter);
+        this.ClearFilters();
     }
     // ##### CORE FUNCTIONS #####
     AddToOrder(prod) {
@@ -2393,8 +3111,9 @@ let HomeClienteComponent = class HomeClienteComponent {
                     if (!value) {
                         this.orderService.Add(this.order);
                     }
+                }).then(() => {
+                    this.orderService.UpdateImageURL(this.order, this.currentUser.image);
                 });
-                ;
                 this.toastr.success("El pedido se ha realizado correctamente! Este es tu número de pedido: " + this.order.codeID);
                 this.hasOrder = true;
             }
@@ -2404,13 +3123,21 @@ let HomeClienteComponent = class HomeClienteComponent {
     }
     // ##### FILTER FUNCTIONS #####
     Filter(type) {
-        this.showingProducts = this.products.filter((element) => {
-            if (element.IsFoodType(type))
-                return element;
-        });
+        this.showingProducts = this.products.valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_12__["map"])(productos => {
+            return productos.filter(res => {
+                res = Object.assign(new src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"](), res);
+                if (res.IsFoodType(type))
+                    return res;
+            });
+        }));
     }
     ClearFilters() {
-        this.showingProducts = this.products;
+        this.showingProducts = this.products.valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_12__["map"])(productos => {
+            return productos.filter(res => {
+                res = Object.assign(new src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"](), res);
+                return res;
+            });
+        }));
     }
     // ###### PRIVATE FUNCTIONS #####
     InitializeOrder() {
@@ -2440,23 +3167,13 @@ let HomeClienteComponent = class HomeClienteComponent {
     // }
     SelectRandomWaiter() {
         return this.userService.GetAllWaiters().then(waiters => {
+            // let random;
+            // do{
+            // 	random = Math.floor(Math.random() * waiters.length);
+            // }while(!waiters[random].deleted && waiters[random].state != 'deshabilitado')
             let random = Math.floor(Math.random() * waiters.length);
             return waiters[random];
         });
-    }
-    CreateTestProducts() {
-        return [
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('B-CER-QUIL', 'Cerveza Quilmes', 'assets/img/B-CER-QUIL.jpg', 50, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].bebida, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].alcohol], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].cervecero, "Bebida con alcohol, no recomendada si vas a conducir"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('C-COM-MCFR', 'Milanesa con fritas', 'assets/img/C-COM-MCFR.jpg', 300, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].comida], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].cocinero, "Milanesa de ternera acompañada de papas fritas"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('C-COM-MACF', 'Milanesa a caballo con fritas', 'assets/img/C-COM-MACF.jpg', 350, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].comida], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].cocinero, "Milanesa de ternera acompañada de huevo frito y papas fritas"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('C-COM-MNAF', 'Milanesa napo con fritas', 'assets/img/C-COM-MNAF.jpg', 350, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].comida], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].cocinero, "Milanesa con salsa de tomate, jamón y muzzarella acompañada de papas fritas"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('B-GAS-COCA', 'Coca-Cola', 'assets/img/B-GAS-COCA.jpg', 60, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].bebida, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].vegano, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].celiaco], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].bartender, "Bebida sin alcohol gasificada de extractos naturales"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('B-AGU-BONA', 'Bon Aqua', 'assets/img/B-AGU-BONA.jpg', 45, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].bebida, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].vegano, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].celiaco], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].bartender, "Bebida sin alcohol y sin gas de origenes naturales"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('B-TRA-DDFR', 'Daikiri de frutilla', 'assets/img/B-TRA-DDFR.jpg', 70, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].bebida, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].alcohol, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].postre], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].bartender, "Bebida con alcohol, no recomendada si vas a manejar"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('C-COM-ENCE', 'Ensalada el Cesar', 'assets/img/C-COM-ENCE.jpg', 150, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].comida, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].vegano], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].cocinero, " Ensalada de lechuga romana y croûtons con jugo de limón, aceite de oliva, huevo, salsa Worcestershire, anchoas, ajo, mostaza de Dijon, queso parmesano y pimienta negra"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('C-COM-EMPA', 'Empanada', 'assets/img/C-COM-EMPA.jpg', 50, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].comida], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].cocinero, " Empanada de pollo"),
-            src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Product"].Create('B-VIN-VINO', 'Vino', 'assets/img/B-VIN-VINO.jpg', 550, [src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].bebida, src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["FoodType"].alcohol], src_app_models_product__WEBPACK_IMPORTED_MODULE_2__["Cook"].bartender, "Bebida con alcohol, no recomendada si vas a conducir"),
-        ];
     }
 };
 HomeClienteComponent.ctorParameters = () => [
@@ -2464,7 +3181,8 @@ HomeClienteComponent.ctorParameters = () => [
     { type: src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_7__["UserService"] },
     { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_6__["AuthService"] },
     { type: src_app_services_firebase_table_service__WEBPACK_IMPORTED_MODULE_8__["TableService"] },
-    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_9__["ToastrService"] }
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_9__["ToastrService"] },
+    { type: src_app_services_firebase_product_service__WEBPACK_IMPORTED_MODULE_11__["ProductService"] }
 ];
 HomeClienteComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -2568,6 +3286,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var src_app_models_survey__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/models/survey */ "./src/app/models/survey.ts");
 /* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.min.js");
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(jspdf__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+
+
 
 
 
@@ -2590,6 +3313,7 @@ let SearchOrderComponent = class SearchOrderComponent {
         this.alreadyPaid = false;
         this.waitingOrder = false;
         this.surveyDone = false;
+        this.file = null;
     }
     ngOnInit() {
         this.surveyForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormGroup"]({
@@ -2620,6 +3344,17 @@ let SearchOrderComponent = class SearchOrderComponent {
             this.toastr.error('Se ha producido un error.');
         });
     }
+    Cancel() {
+        this.order.state = src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["OrderState"].cancelled;
+        this.order.completed = true;
+        this.orderService.ChangeStatus(src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["OrderState"].cancelled, this.order.codeID);
+    }
+    onFileChanged(event) {
+        this.file = event.target.files[0];
+    }
+    cambiarImagen() {
+        this.orderService.setOrderImage(this.order.codeID, this.file);
+    }
     IsServed() {
         let served = false;
         if (this.order.state == src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["OrderState"].served || this.order.state == src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["OrderState"].paidOut)
@@ -2648,12 +3383,53 @@ let SearchOrderComponent = class SearchOrderComponent {
         }
         return can;
     }
+    notCancelled() {
+        let can = false;
+        if (this.order) {
+            if (this.order.state == src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["OrderState"].cancelled || this.order.state == src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["OrderState"].paidOut)
+                can = true;
+        }
+        return can;
+    }
     SendAnswers() {
         let survey = src_app_models_survey__WEBPACK_IMPORTED_MODULE_9__["Survey"].Create(this.order, this.surveyForm.get('tableScore').value, this.surveyForm.get('waiterScore').value, this.surveyForm.get('restaurantScore').value, this.surveyForm.get('cookScore').value, this.surveyForm.get('comment').value, this.surveyForm.get('commentType').value);
         this.surveyService.Add(survey)
             .then(() => this.toastr.success('Encuesta enviada correctamente!'))
             .catch(() => this.toastr.error('Se ha producido un error al enviar la encuesta.'))
             .finally(() => this.surveyDone = true);
+    }
+    ticketPDF() {
+        let items = this.order.items;
+        let start;
+        let usersHtml = '';
+        let end = '</ul></div>';
+        let nombreArchivo;
+        let liSt = '<li>';
+        let liEnd = '</li>';
+        var img = new Image();
+        img.src = '../../../../../assets/img/logo.jpg';
+        this.order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["Order"](), this.order);
+        this.toastr.info('Generando archivo PDF...');
+        start = '<div style="text-align: center"><h1>Pedido: ' + this.order.codeID + '</h1>';
+        usersHtml += liSt + 'Mozo: ' + this.order.waiter.email + liEnd;
+        usersHtml += liSt + 'Mesa N°: ' + this.order.tableID + liEnd;
+        usersHtml += liSt + 'Pedido: ' + this.order.codeID + liEnd;
+        const datePipe = new _angular_common__WEBPACK_IMPORTED_MODULE_12__["DatePipe"]('en-US');
+        const myFormattedDate = datePipe.transform(this.order.timestamp, 'hh:mm dd/MM/yyyy');
+        usersHtml += liSt + 'Fecha del pedido: ' + myFormattedDate + liEnd;
+        items.forEach(unItem => {
+            let item = ' Producto: ' + unItem.name + ' Precio: $ ' + unItem.price;
+            let fullLine = liSt + item + liEnd;
+            usersHtml += fullLine;
+        });
+        usersHtml += liSt + 'Total: $' + this.order.totalPrice + liEnd;
+        let html = start + usersHtml + end;
+        console.log(html);
+        let pdf = new jspdf__WEBPACK_IMPORTED_MODULE_11__();
+        pdf.addImage(img, 'jpg', 20, 0, 100, 100);
+        pdf.fromHTML(html, 20, 80);
+        nombreArchivo = this.order.codeID + '.pdf';
+        pdf.save(nombreArchivo);
     }
     ///////////////////////////
     //public currentOrder: Order;
@@ -2783,6 +3559,50 @@ MainCocineroComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.scss":
+/*!************************************************************************************************************!*\
+  !*** ./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.scss ***!
+  \************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvY29jaW5lcm8vdmlld3MvbWFuYWdlLXByb2R1Y3RzLWNvY2luZXJvL21hbmFnZS1wcm9kdWN0cy1jb2NpbmVyby5jb21wb25lbnQuc2NzcyJ9 */");
+
+/***/ }),
+
+/***/ "./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.ts":
+/*!**********************************************************************************************************!*\
+  !*** ./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.ts ***!
+  \**********************************************************************************************************/
+/*! exports provided: ManageProductsCocineroComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManageProductsCocineroComponent", function() { return ManageProductsCocineroComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let ManageProductsCocineroComponent = class ManageProductsCocineroComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+};
+ManageProductsCocineroComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-manage-products-cocinero',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./manage-products-cocinero.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./manage-products-cocinero.component.scss */ "./src/app/components/cocinero/views/manage-products-cocinero/manage-products-cocinero.component.scss")).default]
+    })
+], ManageProductsCocineroComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/mozo/main/select-order/select-order.component.scss":
 /*!*******************************************************************************!*\
   !*** ./src/app/components/mozo/main/select-order/select-order.component.scss ***!
@@ -2813,6 +3633,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
 /* harmony import */ var src_app_services_firebase_table_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/firebase/table.service */ "./src/app/services/firebase/table.service.ts");
 /* harmony import */ var src_app_models_table__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/models/table */ "./src/app/models/table.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+/* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.min.js");
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jspdf__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+
+
+
+
+
 
 
 
@@ -2821,10 +3652,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SelectOrderComponent = class SelectOrderComponent {
-    constructor(orderService, toastr, tableService) {
+    constructor(orderService, toastr, tableService, authService, movimientoService) {
         this.orderService = orderService;
         this.toastr = toastr;
         this.tableService = tableService;
+        this.authService = authService;
+        this.movimientoService = movimientoService;
     }
     ngOnInit() {
         setInterval(() => {
@@ -2847,7 +3680,12 @@ let SelectOrderComponent = class SelectOrderComponent {
         this.order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_2__["Order"](), this.order);
         this.tableService.UpdateStatus(this.order.tableID, src_app_models_table__WEBPACK_IMPORTED_MODULE_6__["TableState"].eating);
         this.order.CompleteOrder();
-        this.orderService.Update(this.order)
+        this.orderService.Update(this.order).then(() => {
+            this.authService.GetCurrentUser().then(user => {
+                let mensaje = `El usuario ${user.email} entregó un pedido ${this.order.codeID}`;
+                this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_7__["TargetMovimiento"].pedido, src_app_models_log__WEBPACK_IMPORTED_MODULE_7__["TipoMovimiento"].entrega, mensaje);
+            });
+        })
             .then(() => {
             this.toastr.success('Orden servida.');
         })
@@ -2855,11 +3693,41 @@ let SelectOrderComponent = class SelectOrderComponent {
             this.toastr.error('Hubo un error al servir la orden.', 'Error');
         });
     }
+    comandaPDF() {
+        let items = this.order.items;
+        let start;
+        let usersHtml = '';
+        let end = '</ul></div>';
+        let nombreArchivo;
+        let liSt = '<li>';
+        let liEnd = '</li>';
+        this.order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_2__["Order"](), this.order);
+        this.toastr.info('Generando archivo PDF...');
+        start = '<div style="text-align: center"><h1>Pedido: ' + this.order.codeID + '</h1><hr><ul>';
+        usersHtml += liSt + 'Mozo: ' + this.order.waiter.email + liEnd;
+        usersHtml += liSt + 'Mesa N°: ' + this.order.tableID + liEnd;
+        usersHtml += liSt + 'Pedido: ' + this.order.codeID + liEnd;
+        const datePipe = new _angular_common__WEBPACK_IMPORTED_MODULE_11__["DatePipe"]('en-US');
+        const myFormattedDate = datePipe.transform(this.order.timestamp, 'hh:mm dd/MM/yyyy');
+        usersHtml += liSt + 'Fecha del pedido: ' + myFormattedDate + liEnd;
+        items.forEach(unItem => {
+            let item = ' Producto: ' + unItem.name + ' Area: ' + unItem.cook;
+            let fullLine = liSt + item + liEnd;
+            usersHtml += fullLine;
+        });
+        let html = start + usersHtml + end;
+        let pdf = new jspdf__WEBPACK_IMPORTED_MODULE_10__();
+        pdf.fromHTML(html, 20, 20);
+        nombreArchivo = this.order.codeID + '.pdf';
+        pdf.save(nombreArchivo);
+    }
 };
 SelectOrderComponent.ctorParameters = () => [
     { type: src_app_services_firebase_order_service__WEBPACK_IMPORTED_MODULE_3__["OrderService"] },
     { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] },
-    { type: src_app_services_firebase_table_service__WEBPACK_IMPORTED_MODULE_5__["TableService"] }
+    { type: src_app_services_firebase_table_service__WEBPACK_IMPORTED_MODULE_5__["TableService"] },
+    { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"] },
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_9__["LogService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -3246,6 +4114,85 @@ ManageOrdersAdminComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.scss":
+/*!***************************************************************************************************!*\
+  !*** ./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.scss ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("table {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\ntable th {\n  border: none;\n  text-align: center;\n}\ntable tr {\n  text-align: center;\n}\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9zb2Npby92aWV3cy9tYW5hZ2UtcHJvZHVjdHMtYWRtaW4vQzpcXFVzZXJzXFx0ZmVybmFuZGV6X21lY29uXFxEZXNrdG9wXFxHaXRIdWJcXGNvbWFuZGFMYWI0L3NyY1xcYXBwXFxjb21wb25lbnRzXFxzb2Npb1xcdmlld3NcXG1hbmFnZS1wcm9kdWN0cy1hZG1pblxcbWFuYWdlLXByb2R1Y3RzLWFkbWluLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL3NvY2lvL3ZpZXdzL21hbmFnZS1wcm9kdWN0cy1hZG1pbi9tYW5hZ2UtcHJvZHVjdHMtYWRtaW4uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUE7RUFDSSw0Q0FBQTtFQUNBLG1CQUFBO0FDSEo7QURLSTtFQUNJLFlBQUE7RUFDQSxrQkFBQTtBQ0hSO0FES0k7RUFDSSxrQkFBQTtBQ0hSO0FET0E7RUFDSSx5Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsaUJBQUE7QUNKSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvc29jaW8vdmlld3MvbWFuYWdlLXByb2R1Y3RzLWFkbWluL21hbmFnZS1wcm9kdWN0cy1hZG1pbi5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5wcm9kdWN0IHtcclxuICAgIC8vY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG50YWJsZSB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcblxyXG4gICAgdGgge1xyXG4gICAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICB9XHJcbiAgICB0ciB7XHJcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgfVxyXG59XHJcblxyXG4uYXJpYWwge1xyXG4gICAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgICBmb250LXNpemU6IC45ZW07XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufSIsInRhYmxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NCwgMjU0LCAwLjg3Nyk7XG4gIGJvcmRlci1yYWRpdXM6IDIwcHg7XG59XG50YWJsZSB0aCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxudGFibGUgdHIge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5hcmlhbCB7XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xuICBmb250LXNpemU6IDAuOWVtO1xuICBmb250LXdlaWdodDogYm9sZDtcbn0iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.ts":
+/*!*************************************************************************************************!*\
+  !*** ./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.ts ***!
+  \*************************************************************************************************/
+/*! exports provided: ManageProductsAdminComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManageProductsAdminComponent", function() { return ManageProductsAdminComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
+
+
+
+let ManageProductsAdminComponent = class ManageProductsAdminComponent {
+    // constructor(private productService: ProductService, private fileService: FileService, private authService: AuthService, private movimientoService: LogService) { }
+    constructor(authService) {
+        this.authService = authService;
+    }
+    ngOnInit() {
+        this.authService.GetCurrentUser().then(user => {
+            this.role = user.role;
+        });
+        //this.products = this.productService.GetAll().valueChanges();
+        // this.productForm = new FormGroup({
+        //   productName: new FormControl(null, [Validators.required]),
+        //   productPrice: new FormControl(null, [Validators.required]),
+        //   productDescription: new FormControl(null, [Validators.required]),
+        //   productImage: new FormControl('', [Validators.required]),
+        //   typeComida: new FormControl(null),
+        //   typeBebida: new FormControl(null),
+        //   typeAlcohol: new FormControl(null),
+        //   typePostre: new FormControl(null),
+        //   typeCeliaco: new FormControl(null),
+        //   typeVegano: new FormControl(null),
+        //   productCook: new FormControl(null)
+        // })
+        // this.getRole();
+        // let date = new Date;
+        // console.log(date);
+        // this.products = new Array<Product>();
+        // this.products = this.productService.listado;
+        // //this.products = this.CreateTestProducts();
+        // this.showingProducts = this.products;
+        // console.log("showingProducts");
+        // this.haySeleccionado = false;
+        // this.productoSeleccionado = null;
+    }
+};
+ManageProductsAdminComponent.ctorParameters = () => [
+    { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] }
+];
+ManageProductsAdminComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-manage-products-admin',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./manage-products-admin.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./manage-products-admin.component.scss */ "./src/app/components/socio/views/manage-products-admin/manage-products-admin.component.scss")).default]
+    })
+], ManageProductsAdminComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/socio/views/manage-tables-admin/manage-tables-admin.component.scss":
 /*!***********************************************************************************************!*\
   !*** ./src/app/components/socio/views/manage-tables-admin/manage-tables-admin.component.scss ***!
@@ -3293,6 +4240,228 @@ ManageTablesAdminComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./manage-tables-admin.component.scss */ "./src/app/components/socio/views/manage-tables-admin/manage-tables-admin.component.scss")).default]
     })
 ], ManageTablesAdminComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/manage-users/manage-users.component.scss":
+/*!*********************************************************************************!*\
+  !*** ./src/app/components/socio/views/manage-users/manage-users.component.scss ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("table {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\ntable th {\n  border: none;\n  text-align: center;\n}\ntable tr {\n  text-align: center;\n}\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9zb2Npby92aWV3cy9tYW5hZ2UtdXNlcnMvQzpcXFVzZXJzXFx0ZmVybmFuZGV6X21lY29uXFxEZXNrdG9wXFxHaXRIdWJcXGNvbWFuZGFMYWI0L3NyY1xcYXBwXFxjb21wb25lbnRzXFxzb2Npb1xcdmlld3NcXG1hbmFnZS11c2Vyc1xcbWFuYWdlLXVzZXJzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL3NvY2lvL3ZpZXdzL21hbmFnZS11c2Vycy9tYW5hZ2UtdXNlcnMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUE7RUFDSSw0Q0FBQTtFQUNBLG1CQUFBO0FDSEo7QURLSTtFQUNJLFlBQUE7RUFDQSxrQkFBQTtBQ0hSO0FES0k7RUFDSSxrQkFBQTtBQ0hSO0FET0E7RUFDSSx5Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsaUJBQUE7QUNKSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvc29jaW8vdmlld3MvbWFuYWdlLXVzZXJzL21hbmFnZS11c2Vycy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi51c2VyIHtcclxuICAgIC8vY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG50YWJsZSB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcblxyXG4gICAgdGgge1xyXG4gICAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICB9XHJcbiAgICB0ciB7XHJcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgfVxyXG59XHJcblxyXG4uYXJpYWwge1xyXG4gICAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgICBmb250LXNpemU6IC45ZW07XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufSIsInRhYmxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NCwgMjU0LCAwLjg3Nyk7XG4gIGJvcmRlci1yYWRpdXM6IDIwcHg7XG59XG50YWJsZSB0aCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxudGFibGUgdHIge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5hcmlhbCB7XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xuICBmb250LXNpemU6IDAuOWVtO1xuICBmb250LXdlaWdodDogYm9sZDtcbn0iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/manage-users/manage-users.component.ts":
+/*!*******************************************************************************!*\
+  !*** ./src/app/components/socio/views/manage-users/manage-users.component.ts ***!
+  \*******************************************************************************/
+/*! exports provided: ManageUsersComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManageUsersComponent", function() { return ManageUsersComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_models_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/models/user */ "./src/app/models/user.ts");
+/* harmony import */ var src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/firebase/user.service */ "./src/app/services/firebase/user.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var src_app_services_firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/firestorage/file.service */ "./src/app/services/firestorage/file.service.ts");
+/* harmony import */ var src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/authentication/auth.service */ "./src/app/services/authentication/auth.service.ts");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+
+
+
+
+
+
+
+
+
+
+
+
+let ManageUsersComponent = class ManageUsersComponent {
+    constructor(userService, fileService, authService, movimientoService, toastr) {
+        this.userService = userService;
+        this.fileService = fileService;
+        this.authService = authService;
+        this.movimientoService = movimientoService;
+        this.toastr = toastr;
+        //public users: Observable<any[]>;
+        this.showingUsers = null;
+        this.onReset = new rxjs__WEBPACK_IMPORTED_MODULE_5__["Subject"]();
+        this.file = null;
+    }
+    ngOnInit() {
+        this.userForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
+            userName: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]),
+            userLastname: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]),
+            userMail: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null, [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]),
+            userRole: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            userImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required])
+        });
+        //this.users = new Array<User>();
+        this.users = this.userService.GetAll2();
+        console.log(this.userService.GetAll2());
+        //this.users = this.userService.listado;
+        //this.showingUsers = this.users;
+        this.haySeleccionado = false;
+        this.usuarioSeleccionado = null;
+        this.ClearFilters();
+    }
+    addUser() {
+        let user;
+        this.userService.buscarEmail(this.userForm.value.userMail).then(resultado => {
+            if (resultado) {
+                this.toastr.error("Email duplicado");
+                this.Cancel();
+            }
+            else if (!resultado) {
+                user = src_app_models_user__WEBPACK_IMPORTED_MODULE_2__["User"].CreateUserFromAdmin(this.userForm.value.userName, this.userForm.value.userLastname, this.userForm.value.userMail, this.userForm.value.userRole);
+                this.userService.persistirUsuario(user, this.file).then((value) => {
+                    if (value) {
+                        this.Cancel();
+                    }
+                    this.authService.GetCurrentUser().then(usr => {
+                        let mensaje = `El usuario ${usr.email} dió de alta el usuario ${user.email}`;
+                        this.movimientoService.persistirMovimiento(usr, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].alta, mensaje);
+                    });
+                });
+            }
+            ;
+        });
+    }
+    onFileChanged(event) {
+        this.file = event.target.files[0];
+    }
+    changeState(uid, state) {
+        this.userService.GetUserByID(uid).then(usuarioMod => {
+            if (state == "habilitado") {
+                this.userService.updateState(uid, "deshabilitado");
+                this.authService.GetCurrentUser().then(user => {
+                    let mensaje = `El usuario ${user.email} cambio el estado a deshabilitado  del usuario ${usuarioMod.email}`;
+                    this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].deshabilitacion, mensaje);
+                });
+            }
+            if (state == "deshabilitado") {
+                this.userService.updateState(uid, "habilitado");
+                this.authService.GetCurrentUser().then(user => {
+                    let mensaje = `El usuario ${user.email} cambio el estado a habilitado  del usuario ${usuarioMod.email}`;
+                    this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].habilitacion, mensaje);
+                });
+            }
+        });
+    }
+    deleteUser(uid) {
+        this.userService.GetUserByID(uid).then(usuarioMod => {
+            this.userService.delete(uid);
+            this.authService.GetCurrentUser().then(user => {
+                let mensaje = `El usuario ${user.email} dio de baja al usuario ${usuarioMod.email}`;
+                this.movimientoService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].borrado, mensaje);
+            });
+        });
+    }
+    editarUsuario(usuario) {
+        this.usuarioSeleccionado = usuario;
+        this.haySeleccionado = true;
+        this.userForm.controls['userName'].setValue(usuario.name);
+        this.userForm.controls['userLastname'].setValue(usuario.lastname);
+        this.userForm.controls['userMail'].setValue(usuario.email);
+        this.userForm.controls['userRole'].setValue(usuario.role);
+        console.log(this.usuarioSeleccionado);
+    }
+    updateUser() {
+        let rol = this.usuarioSeleccionado.role;
+        this.usuarioSeleccionado.name = this.userForm.value.userName;
+        this.usuarioSeleccionado.lastname = this.userForm.value.userLastname;
+        this.usuarioSeleccionado.email = this.userForm.value.userMail;
+        this.usuarioSeleccionado.role = this.userForm.value.userRole;
+        this.userService.updateUser(this.usuarioSeleccionado, this.file).then(() => {
+            if (rol != this.usuarioSeleccionado.role) {
+                this.userService.SetRole(this.usuarioSeleccionado.email, this.usuarioSeleccionado.role);
+            }
+            // console.log(value);
+            // if (value) {
+            //   this.Cancel();
+            // }
+            this.authService.GetCurrentUser().then(usr => {
+                let mensaje = `El usuario ${usr.email} dió de modificó el usuario ${this.usuarioSeleccionado.email}`;
+                this.movimientoService.persistirMovimiento(usr, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_9__["TipoMovimiento"].alta, mensaje);
+            }).then(() => {
+                this.Cancel();
+            });
+        });
+    }
+    // ##### FILTER FUNCTIONS #####
+    Filter(type) {
+        this.showingUsers = this.users.valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(users => {
+            return users.filter(element => {
+                element = Object.assign(new src_app_models_user__WEBPACK_IMPORTED_MODULE_2__["User"](), element);
+                if (type == 'habilitados' || type == 'suspendidos') {
+                    console.log(type);
+                    if (type == 'suspendidos' && element.state == 'deshabilitado') {
+                        //if (element.state == 'deshabilitado')
+                        return element;
+                    }
+                    else {
+                        if (type == 'habilitados' && element.state == 'habilitado')
+                            return element;
+                    }
+                }
+                else {
+                    if (element.role == type)
+                        return element;
+                }
+            });
+        }));
+    }
+    search() {
+        this.showingUsers = this.users.valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(usuarios => {
+            return usuarios.filter(res => {
+                res = Object.assign(new src_app_models_user__WEBPACK_IMPORTED_MODULE_2__["User"](), res);
+                console.log(res.state);
+                if (res.name.includes(this.busqueda) || res.email.includes(this.busqueda) || this.busqueda == null)
+                    if (!res.deleted)
+                        return res;
+            });
+        }));
+    }
+    Cancel() {
+        this.userForm.reset();
+        this.onReset.next();
+        this.haySeleccionado = false;
+        this.usuarioSeleccionado = null;
+    }
+    ClearFilters() {
+        this.search();
+    }
+};
+ManageUsersComponent.ctorParameters = () => [
+    { type: src_app_services_firebase_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] },
+    { type: src_app_services_firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__["FileService"] },
+    { type: src_app_services_authentication_auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"] },
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_8__["LogService"] },
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_11__["ToastrService"] }
+];
+ManageUsersComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-manage-users',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./manage-users.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/manage-users/manage-users.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./manage-users.component.scss */ "./src/app/components/socio/views/manage-users/manage-users.component.scss")).default]
+    })
+], ManageUsersComponent);
 
 
 
@@ -3348,6 +4517,793 @@ SurveyTableComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./survey-table.component.scss */ "./src/app/components/socio/views/survey-table/survey-table.component.scss")).default]
     })
 ], SurveyTableComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/view-logs/view-logs.component.scss":
+/*!***************************************************************************!*\
+  !*** ./src/app/components/socio/views/view-logs/view-logs.component.scss ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("table {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\ntable th {\n  border: none;\n  text-align: center;\n}\ntable tr {\n  text-align: center;\n}\nh4 {\n  color: darkgrey;\n}\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9zb2Npby92aWV3cy92aWV3LWxvZ3MvQzpcXFVzZXJzXFx0ZmVybmFuZGV6X21lY29uXFxEZXNrdG9wXFxHaXRIdWJcXGNvbWFuZGFMYWI0L3NyY1xcYXBwXFxjb21wb25lbnRzXFxzb2Npb1xcdmlld3NcXHZpZXctbG9nc1xcdmlldy1sb2dzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL3NvY2lvL3ZpZXdzL3ZpZXctbG9ncy92aWV3LWxvZ3MuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUE7RUFDSSw0Q0FBQTtFQUNBLG1CQUFBO0FDSEo7QURLSTtFQUNJLFlBQUE7RUFDQSxrQkFBQTtBQ0hSO0FES0k7RUFDSSxrQkFBQTtBQ0hSO0FET0E7RUFDSSxlQUFBO0FDSko7QURPQTtFQUNJLHlDQUFBO0VBQ0EsZ0JBQUE7RUFDQSxpQkFBQTtBQ0pKIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9zb2Npby92aWV3cy92aWV3LWxvZ3Mvdmlldy1sb2dzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnVzZXIge1xyXG4gICAgLy9jdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbnRhYmxlIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTQsIDI1NCwgMC44NzcpO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMjBweDtcclxuXHJcbiAgICB0aCB7XHJcbiAgICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIH1cclxuICAgIHRyIHtcclxuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICB9XHJcbn1cclxuXHJcbmg0e1xyXG4gICAgY29sb3I6IGRhcmtncmV5O1xyXG59XHJcblxyXG4uYXJpYWwge1xyXG4gICAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgICBmb250LXNpemU6IC45ZW07XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufSIsInRhYmxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NCwgMjU0LCAwLjg3Nyk7XG4gIGJvcmRlci1yYWRpdXM6IDIwcHg7XG59XG50YWJsZSB0aCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxudGFibGUgdHIge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbmg0IHtcbiAgY29sb3I6IGRhcmtncmV5O1xufVxuXG4uYXJpYWwge1xuICBmb250LWZhbWlseTogQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjtcbiAgZm9udC1zaXplOiAwLjllbTtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59Il19 */");
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/view-logs/view-logs.component.ts":
+/*!*************************************************************************!*\
+  !*** ./src/app/components/socio/views/view-logs/view-logs.component.ts ***!
+  \*************************************************************************/
+/*! exports provided: ViewLogsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewLogsComponent", function() { return ViewLogsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+/* harmony import */ var src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+
+
+
+
+
+
+
+
+
+let ViewLogsComponent = class ViewLogsComponent {
+    constructor(logService, toastr) {
+        this.logService = logService;
+        this.toastr = toastr;
+        this.esVisible = false;
+        //public showingLogs: Observable<any[]>;
+        this.showingLogs = null;
+        this.todos = true;
+        this.onReset = new rxjs__WEBPACK_IMPORTED_MODULE_5__["Subject"]();
+    }
+    ngOnInit() {
+        this.logForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
+            typeSocio: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            typeCervecero: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            typeBartender: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            typeCliente: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            typeDelivery: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            typeCocinero: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            typeTodos: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](true),
+            typeMozo: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            fechaInicio: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+            fechaFin: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null),
+        });
+        //this.hola();
+        this.arrayCB = new Array();
+        this.enableDisable();
+        this.cargarArrayCB();
+        //this.logs = new Array<Log>();
+        //this.logs = this.logService.listado;
+        this.logs = this.logService.GetAll2();
+        this.ClearFilters();
+    }
+    search() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            this.setFechas();
+            this.data = new Array();
+            //this.showingLogs = this.logService.GetAll2().valueChanges().pipe(
+            this.showingLogs = this.logs.valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(logs => {
+                return logs.filter(res => {
+                    //this.showingLogs = this.logs.filter(res => {
+                    res = Object.assign(new src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Log"](), res);
+                    // this.showingLogs = this.logs.filter(res => {
+                    if (res['fecha'] > this.fechaInicio && res['fecha'] < this.fechaFin) {
+                        if (res['usuario'].includes(this.busqueda) || this.busqueda == null) {
+                            if (this.logForm.value.typeMozo && res['role'] == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].mozo) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            if (this.logForm.value.typeBartender && res['role'] == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].bartender) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            if (this.logForm.value.typeCervecero && res['role'] == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].cervecero) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            if (this.logForm.value.typeCliente && res['role'] == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].cliente) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            if (this.logForm.value.typeCocinero && res['role'] == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].cocinero) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            if (this.logForm.value.typeDelivery && res['role'] == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].delivery) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            if (this.logForm.value.typeSocio && res['role'] == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].socio) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            if (this.logForm.value.typeTodos) {
+                                this.coincidencias++;
+                                this.data.push(res);
+                                return res;
+                            }
+                            ;
+                        }
+                        ;
+                    }
+                });
+            }));
+            console.log("4" + this.esVisible);
+        });
+    }
+    setFechas() {
+        this.coincidencias = 0;
+        if (this.logForm.value.fechaInicio == null) {
+            this.fechaInicio = 0;
+        }
+        else {
+            this.fechaInicio = Date.parse(this.logForm.value.fechaInicio.toString());
+        }
+        if (this.logForm.value.fechaFin == null) {
+            this.fechaFin = Date.now();
+        }
+        else {
+            this.fechaFin = Date.parse(this.logForm.value.fechaFin.toString());
+        }
+    }
+    Cancel() {
+        this.logForm.reset();
+        this.onReset.next();
+        this.logForm.controls['typeTodos'].setValue(true);
+        this.enableDisable();
+        this.logForm.controls['fechaInicio'].setValue(null);
+        this.logForm.controls['fechaFin'].setValue(null);
+        this.ClearFilters();
+    }
+    enableDisable() {
+        if (this.todos) {
+            this.logForm.controls['typeMozo'].disable();
+            this.logForm.controls['typeCliente'].disable();
+            this.logForm.controls['typeCocinero'].disable();
+            this.logForm.controls['typeBartender'].disable();
+            this.logForm.controls['typeCervecero'].disable();
+            this.logForm.controls['typeDelivery'].disable();
+            this.logForm.controls['typeSocio'].disable();
+            this.logForm.controls['typeMozo'].setValue(false);
+            this.logForm.controls['typeCliente'].setValue(false);
+            this.logForm.controls['typeCocinero'].setValue(false);
+            this.logForm.controls['typeBartender'].setValue(false);
+            this.logForm.controls['typeCervecero'].setValue(false);
+            this.logForm.controls['typeSocio'].setValue(false);
+        }
+        else {
+            this.logForm.controls['typeMozo'].enable();
+            this.logForm.controls['typeCliente'].enable();
+            this.logForm.controls['typeCocinero'].enable();
+            this.logForm.controls['typeBartender'].enable();
+            this.logForm.controls['typeCervecero'].enable();
+            this.logForm.controls['typeDelivery'].enable();
+            this.logForm.controls['typeSocio'].enable();
+        }
+    }
+    cargarArrayCB() {
+        let typeMozo = this.logForm.value.typeMozo;
+        let typeCliente = this.logForm.value.typeCliente;
+        let typeCocinero = this.logForm.value.typeCocinero;
+        let typeBartender = this.logForm.value.typeBartender;
+        let typeCervecero = this.logForm.value.typeCervecero;
+        let typeDelivery = this.logForm.value.typeDelivery;
+        let typeSocio = this.logForm.value.typeSocio;
+        let typeTodos = this.logForm.value.typeTodos;
+        this.arrayCB.push(typeBartender, typeCervecero, typeCliente, typeCocinero, typeDelivery, typeMozo, typeSocio, typeTodos);
+    }
+    sendSettings() {
+        // this.showingLogs = this.logs.filter(res => {
+        this.showingLogs = this.logs.valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(logs => {
+            logs.filter(res => {
+                if (this.logForm.value.typeMozo && res.role == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].mozo) {
+                    return res;
+                }
+                if (this.logForm.value.typeBartender && res.role == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].bartender) {
+                    return res;
+                }
+                if (this.logForm.value.typeCervecero && res.role == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].cervecero) {
+                    return res;
+                }
+                if (this.logForm.value.typeCliente && res.role == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].cliente) {
+                    return res;
+                }
+                if (this.logForm.value.typeCocinero && res.role == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].cocinero) {
+                    return res;
+                }
+                if (this.logForm.value.typeDelivery && res.role == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].delivery) {
+                    return res;
+                }
+                if (this.logForm.value.typeSocio && res.role == src_app_models_log__WEBPACK_IMPORTED_MODULE_2__["Role"].socio) {
+                    return res;
+                }
+                if (this.logForm.value.typeTodos) {
+                    return res;
+                }
+                ;
+            });
+        }));
+    }
+    ClearFilters() {
+        if (this.logForm.value.fechaInicio == null || this.logForm.value.fechaInicio == NaN) {
+            this.fechaInicio = 0;
+        }
+        else {
+            this.fechaInicio = Date.parse(this.logForm.value.fechaInicio.toString());
+        }
+        if (this.logForm.value.fechaFin == null || this.logForm.value.fechaFin == NaN) {
+            this.fechaFin = Date.now();
+        }
+        else {
+            this.fechaFin = Date.parse(this.logForm.value.fechaFin.toString());
+        }
+        console.log("1" + this.esVisible);
+        this.search().then(() => {
+            this.esVisible = true;
+            console.log("2" + this.esVisible);
+        });
+        console.log("3" + this.esVisible);
+    }
+    exportCSV() {
+        this.toastr.info('Exportando logs...');
+        let csvData;
+        let data = this.getData();
+        setTimeout(function () {
+            data.map(row => {
+                csvData += row;
+            });
+            console.log(csvData);
+            let file = new Blob([csvData], { type: 'text/csv' });
+            let fileUrl = URL.createObjectURL(file);
+            let hiddenEl = document.createElement('a');
+            hiddenEl.href = fileUrl;
+            hiddenEl.target = '_blank';
+            hiddenEl.download = 'EstadisticasPedidos.csv';
+            hiddenEl.click();
+        }, 4000);
+    }
+    getData() {
+        let data = [];
+        data.push(['categoria,nombre,cantidad,tipo\n']);
+        this.data.forEach(log => {
+            const datePipe = new _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"]('en-US');
+            const myFormattedDate = datePipe.transform(log.fecha, 'hh:mm dd/MM/yyyy');
+            data.push([log.usuario + ',' + myFormattedDate + ',' + log.observacion + '\n']);
+        });
+        return data;
+    }
+};
+ViewLogsComponent.ctorParameters = () => [
+    { type: src_app_services_firebase_log_service__WEBPACK_IMPORTED_MODULE_3__["LogService"] },
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_7__["ToastrService"] }
+];
+ViewLogsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-view-logs',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./view-logs.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-logs/view-logs.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./view-logs.component.scss */ "./src/app/components/socio/views/view-logs/view-logs.component.scss")).default]
+    })
+], ViewLogsComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.scss":
+/*!*******************************************************************************************!*\
+  !*** ./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.scss ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("h3, h2, h1 {\n  color: lightgrey;\n}\n\nimg {\n  height: 240px;\n  width: 240px;\n}\n\n.card-title {\n  font-weight: bold;\n}\n\n.card {\n  margin: 2rem;\n  align-items: center;\n}\n\ntable {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\n\ntable th {\n  border: none;\n  text-align: center;\n}\n\ntable tr {\n  text-align: center;\n}\n\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9zb2Npby92aWV3cy92aWV3LW9yZGVycy1zdGF0cy9DOlxcVXNlcnNcXHRmZXJuYW5kZXpfbWVjb25cXERlc2t0b3BcXEdpdEh1YlxcY29tYW5kYUxhYjQvc3JjXFxhcHBcXGNvbXBvbmVudHNcXHNvY2lvXFx2aWV3c1xcdmlldy1vcmRlcnMtc3RhdHNcXHZpZXctb3JkZXJzLXN0YXRzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL3NvY2lvL3ZpZXdzL3ZpZXctb3JkZXJzLXN0YXRzL3ZpZXctb3JkZXJzLXN0YXRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZ0JBQUE7QUNDSjs7QURFQTtFQUNJLGFBQUE7RUFDQSxZQUFBO0FDQ0o7O0FES0E7RUFDRyxpQkFBQTtBQ0ZIOztBRElBO0VBQ0ksWUFBQTtFQUNBLG1CQUFBO0FDREo7O0FES0E7RUFDSSw0Q0FBQTtFQUNBLG1CQUFBO0FDRko7O0FESUk7RUFDSSxZQUFBO0VBQ0Esa0JBQUE7QUNGUjs7QURJSTtFQUNJLGtCQUFBO0FDRlI7O0FETUE7RUFDSSx5Q0FBQTtFQUNBLGdCQUFBO0VBQ0EsaUJBQUE7QUNISiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvc29jaW8vdmlld3Mvdmlldy1vcmRlcnMtc3RhdHMvdmlldy1vcmRlcnMtc3RhdHMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJoMywgaDIsIGgxe1xyXG4gICAgY29sb3I6IGxpZ2h0Z3JleTtcclxufVxyXG5cclxuaW1nIHtcclxuICAgIGhlaWdodDogMjQwcHg7XHJcbiAgICB3aWR0aDogMjQwcHg7XHJcbiAgIC8vIGJvcmRlci1yYWRpdXM6IDEwMCU7XHJcbiAgIC8vIGJvcmRlcjogc29saWQgMXB4ICMzMzM7XHJcbiAgIC8vY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG4uY2FyZC10aXRsZSB7XHJcbiAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcbi5jYXJke1xyXG4gICAgbWFyZ2luOiAycmVtOyAgICBcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7ICBcclxufVxyXG5cclxuXHJcbnRhYmxlIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTQsIDI1NCwgMC44NzcpO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMjBweDtcclxuXHJcbiAgICB0aCB7XHJcbiAgICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIH1cclxuICAgIHRyIHtcclxuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICB9XHJcbn1cclxuXHJcbi5hcmlhbCB7XHJcbiAgICBmb250LWZhbWlseTogQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjtcclxuICAgIGZvbnQtc2l6ZTogLjllbTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59IiwiaDMsIGgyLCBoMSB7XG4gIGNvbG9yOiBsaWdodGdyZXk7XG59XG5cbmltZyB7XG4gIGhlaWdodDogMjQwcHg7XG4gIHdpZHRoOiAyNDBweDtcbn1cblxuLmNhcmQtdGl0bGUge1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuLmNhcmQge1xuICBtYXJnaW46IDJyZW07XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG59XG5cbnRhYmxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NCwgMjU0LCAwLjg3Nyk7XG4gIGJvcmRlci1yYWRpdXM6IDIwcHg7XG59XG50YWJsZSB0aCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxudGFibGUgdHIge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5hcmlhbCB7XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xuICBmb250LXNpemU6IDAuOWVtO1xuICBmb250LXdlaWdodDogYm9sZDtcbn0iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.ts":
+/*!*****************************************************************************************!*\
+  !*** ./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.ts ***!
+  \*****************************************************************************************/
+/*! exports provided: ViewOrdersStatsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewOrdersStatsComponent", function() { return ViewOrdersStatsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_services_firebase_order_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/firebase/order.service */ "./src/app/services/firebase/order.service.ts");
+/* harmony import */ var src_app_models_order__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/models/order */ "./src/app/models/order.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+
+
+
+
+
+
+
+
+
+let ViewOrdersStatsComponent = class ViewOrdersStatsComponent {
+    constructor(orderService, toastr) {
+        this.orderService = orderService;
+        this.toastr = toastr;
+        this.cancelledOrders = null;
+        this.delayedOrders = null;
+        this.topBest = null;
+        this.topWorst = null;
+        this.mostrar = false;
+        this.onReset = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
+    }
+    ngOnInit() {
+        this.settingsForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
+            fechaInicio: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](null),
+            fechaFin: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](null),
+        });
+        this.orders = this.orderService.GetAll();
+        this.ClearFilters();
+    }
+    ClearFilters() {
+        this.search();
+    }
+    Cancel() {
+        this.settingsForm.reset();
+        this.onReset.next();
+        this.settingsForm.controls['fechaInicio'].setValue(null);
+        this.settingsForm.controls['fechaFin'].setValue(null);
+        this.search();
+    }
+    search() {
+        if (this.settingsForm.value.fechaInicio == null || this.settingsForm.value.fechaInicio == NaN) {
+            this.fechaInicio = 0;
+        }
+        else {
+            this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
+        }
+        if (this.settingsForm.value.fechaFin == null || this.settingsForm.value.fechaFin == NaN) {
+            this.fechaFin = Date.now();
+        }
+        else {
+            this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
+        }
+        this.showingOrders = this.orderService.GetAll().valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(orders => {
+            return orders.filter(order => {
+                order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_3__["Order"](), order);
+                if (order['timestamp'] > this.fechaInicio && order['timestamp'] < this.fechaFin) {
+                    return order;
+                }
+            });
+        }));
+        this.getDelayed();
+        this.getCancelled();
+        this.getTop();
+    }
+    getCancelled() {
+        this.cancelledOrders = this.showingOrders.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(orders => {
+            return orders.filter(order => {
+                order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_3__["Order"](), order);
+                if (order['state'] == "Cancelado") {
+                    return order;
+                }
+            });
+        }));
+    }
+    getDelayed() {
+        this.delayedOrders = this.showingOrders.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(orders => {
+            return orders.filter(order => {
+                order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_3__["Order"](), order);
+                if (order['delayed'] < 0) {
+                    console.log(order['delayed']);
+                    return order;
+                }
+            });
+        }));
+    }
+    setDate() {
+        console.log(Date.parse(this.settingsForm.value.fechaInicio.toString()));
+        if (this.settingsForm.value.fechaInicio != null) {
+            this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
+        }
+        else {
+            this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
+        }
+    }
+    getTop() {
+        this.lista = new Array();
+        let cantidadNombres = new Array();
+        let cantidad;
+        let copia = this.showingOrders;
+        copia.subscribe(orders => {
+            orders.map(order => {
+                order.items.map(uno => {
+                    this.lista.push(uno['name']);
+                }).map(() => {
+                    cantidadNombres = this.lista.reduce((contadorNombre, nombre) => {
+                        contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
+                        return contadorNombre;
+                    }, {});
+                });
+            });
+            var result = Object.keys(cantidadNombres).map(function (key) {
+                return [String(key), cantidadNombres[key]];
+            });
+            //console.log(result);
+            console.table(result);
+            const mejores = Object.assign([], result);
+            const peores = Object.assign([], result);
+            mejores.sort((a, b) => (a[1] > b[1]) ? -1 : ((b[1] > a[1]) ? 1 : 0));
+            peores.sort((a, b) => (a[1] > b[1]) ? 1 : ((b[1] > a[1]) ? -1 : 0));
+            console.table(mejores);
+            console.table(peores);
+            this.topBest = new Array();
+            this.topWorst = new Array();
+            this.topBest.push(mejores[0], mejores[1], mejores[2]);
+            this.topWorst.push(peores[0], peores[1], peores[2]);
+        });
+    }
+    exportCSV() {
+        this.toastr.info('Exportando estadística...');
+        let csvData;
+        let data = this.getData();
+        setTimeout(function () {
+            data.map(row => {
+                csvData += row;
+            });
+            console.log(csvData);
+            let file = new Blob([csvData], { type: 'text/csv' });
+            let fileUrl = URL.createObjectURL(file);
+            let hiddenEl = document.createElement('a');
+            hiddenEl.href = fileUrl;
+            hiddenEl.target = '_blank';
+            hiddenEl.download = 'EstadisticasPedidos.csv';
+            hiddenEl.click();
+        }, 4000);
+    }
+    getData() {
+        let data = [];
+        data.push(['categoria,nombre,cantidad,tipo\n']);
+        data.push(['puesto1MasVendido' + ',' + this.topBest[0][0] + ',' + this.topBest[0][1] + ',unidades\n']);
+        data.push(['puesto2MasVendido' + ',' + this.topBest[1][0] + ',' + this.topBest[1][1] + ',unidades\n']);
+        data.push(['puesto3MasVendido' + ',' + this.topBest[2][0] + ',' + this.topBest[2][1] + ',unidades\n']);
+        data.push(['puesto1MenosVendido' + ',' + this.topWorst[2][0] + ',' + this.topWorst[2][1] + ',unidades\n']);
+        data.push(['puesto2MenosVendido' + ',' + this.topWorst[1][0] + ',' + this.topWorst[1][1] + ',unidades\n']);
+        data.push(['puesto3MenosVendido' + ',' + this.topWorst[0][0] + ',' + this.topWorst[0][1] + ',unidades\n']);
+        this.orderService.GetAllDelayedOrders_InArray().then(orders => {
+            data.push(['pedidosNoEntregadosEnTiempoEstipulado\n' + 'codigo,fecha,demora\n']);
+            orders.filter(order => {
+                if (order.timestamp > this.fechaInicio && order.timestamp < this.fechaFin) {
+                    const datePipe = new _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"]('en-US');
+                    const myFormattedDate = datePipe.transform(order.timestamp, 'hh:mm dd/MM/yyyy');
+                    let diff = Math.floor(order.delayed / (1000 * 60));
+                    let res;
+                    if (diff < 0)
+                        res = 'Pasado por ' + (diff * -1) + ' minutos.';
+                    else
+                        res = diff + ' minutos.';
+                    data.push([order.codeID + ',' + myFormattedDate + ',' + res + '\n']);
+                }
+            });
+        }).then(() => {
+            this.orderService.GetAllCancelledOrders_InArray().then(orders => {
+                data.push(['pedidosCancelados\n' + 'codigo,fecha,estado\n']);
+                orders.filter(order => {
+                    if (order.timestamp > this.fechaInicio && order.timestamp < this.fechaFin) {
+                        const datePipe = new _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"]('en-US');
+                        const myFormattedDate = datePipe.transform(order.timestamp, 'hh:mm dd/MM/yyyy');
+                        data.push([order.codeID + ',' + myFormattedDate + ',' + order.state + '\n']);
+                    }
+                });
+            });
+        });
+        return data;
+    }
+};
+ViewOrdersStatsComponent.ctorParameters = () => [
+    { type: src_app_services_firebase_order_service__WEBPACK_IMPORTED_MODULE_2__["OrderService"] },
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_7__["ToastrService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], ViewOrdersStatsComponent.prototype, "fechaInicio", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], ViewOrdersStatsComponent.prototype, "fechaFin", void 0);
+ViewOrdersStatsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-view-orders-stats',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./view-orders-stats.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./view-orders-stats.component.scss */ "./src/app/components/socio/views/view-orders-stats/view-orders-stats.component.scss")).default]
+    })
+], ViewOrdersStatsComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.scss":
+/*!*******************************************************************************************!*\
+  !*** ./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.scss ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("h3, h2, h1 {\n  color: lightgrey;\n  margin: 2rem;\n}\n\nimg {\n  height: 240px;\n  width: 240px;\n}\n\n.card-title {\n  font-weight: bold;\n}\n\n.card {\n  margin: 2rem;\n  align-items: center;\n}\n\ntable {\n  background-color: rgba(255, 254, 254, 0.877);\n  border-radius: 20px;\n}\n\ntable th {\n  border: none;\n  text-align: center;\n}\n\ntable tr {\n  text-align: center;\n}\n\n.arial {\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 0.9em;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9zb2Npby92aWV3cy92aWV3LXRhYmxlcy1zdGF0cy9DOlxcVXNlcnNcXHRmZXJuYW5kZXpfbWVjb25cXERlc2t0b3BcXEdpdEh1YlxcY29tYW5kYUxhYjQvc3JjXFxhcHBcXGNvbXBvbmVudHNcXHNvY2lvXFx2aWV3c1xcdmlldy10YWJsZXMtc3RhdHNcXHZpZXctdGFibGVzLXN0YXRzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL3NvY2lvL3ZpZXdzL3ZpZXctdGFibGVzLXN0YXRzL3ZpZXctdGFibGVzLXN0YXRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZ0JBQUE7RUFDQSxZQUFBO0FDQ0o7O0FERUE7RUFDSSxhQUFBO0VBQ0EsWUFBQTtBQ0NKOztBREtBO0VBQ0csaUJBQUE7QUNGSDs7QURJQTtFQUNJLFlBQUE7RUFDQSxtQkFBQTtBQ0RKOztBREtBO0VBQ0ksNENBQUE7RUFDQSxtQkFBQTtBQ0ZKOztBRElJO0VBQ0ksWUFBQTtFQUNBLGtCQUFBO0FDRlI7O0FESUk7RUFDSSxrQkFBQTtBQ0ZSOztBRE1BO0VBQ0kseUNBQUE7RUFDQSxnQkFBQTtFQUNBLGlCQUFBO0FDSEoiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL3NvY2lvL3ZpZXdzL3ZpZXctdGFibGVzLXN0YXRzL3ZpZXctdGFibGVzLXN0YXRzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaDMsIGgyLCBoMXtcclxuICAgIGNvbG9yOiBsaWdodGdyZXk7XHJcbiAgICBtYXJnaW46IDJyZW07XHJcbn1cclxuXHJcbmltZyB7XHJcbiAgICBoZWlnaHQ6IDI0MHB4O1xyXG4gICAgd2lkdGg6IDI0MHB4O1xyXG4gICAvLyBib3JkZXItcmFkaXVzOiAxMDAlO1xyXG4gICAvLyBib3JkZXI6IHNvbGlkIDFweCAjMzMzO1xyXG4gICAvL2N1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxuLmNhcmQtdGl0bGUge1xyXG4gICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG4uY2FyZHtcclxuICAgIG1hcmdpbjogMnJlbTsgICAgXHJcbiAgICBhbGlnbi1pdGVtczogY2VudGVyOyAgXHJcbn1cclxuXHJcblxyXG50YWJsZSB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU0LCAyNTQsIDAuODc3KTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcblxyXG4gICAgdGgge1xyXG4gICAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICB9XHJcbiAgICB0ciB7XHJcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgfVxyXG59XHJcblxyXG4uYXJpYWwge1xyXG4gICAgZm9udC1mYW1pbHk6IEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XHJcbiAgICBmb250LXNpemU6IC45ZW07XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufSIsImgzLCBoMiwgaDEge1xuICBjb2xvcjogbGlnaHRncmV5O1xuICBtYXJnaW46IDJyZW07XG59XG5cbmltZyB7XG4gIGhlaWdodDogMjQwcHg7XG4gIHdpZHRoOiAyNDBweDtcbn1cblxuLmNhcmQtdGl0bGUge1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuLmNhcmQge1xuICBtYXJnaW46IDJyZW07XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG59XG5cbnRhYmxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NCwgMjU0LCAwLjg3Nyk7XG4gIGJvcmRlci1yYWRpdXM6IDIwcHg7XG59XG50YWJsZSB0aCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxudGFibGUgdHIge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5hcmlhbCB7XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xuICBmb250LXNpemU6IDAuOWVtO1xuICBmb250LXdlaWdodDogYm9sZDtcbn0iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.ts":
+/*!*****************************************************************************************!*\
+  !*** ./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.ts ***!
+  \*****************************************************************************************/
+/*! exports provided: ViewTablesStatsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewTablesStatsComponent", function() { return ViewTablesStatsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var src_app_services_firebase_order_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/firebase/order.service */ "./src/app/services/firebase/order.service.ts");
+/* harmony import */ var src_app_models_order__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/models/order */ "./src/app/models/order.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var src_app_models_survey__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/models/survey */ "./src/app/models/survey.ts");
+/* harmony import */ var src_app_services_firebase_survey_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/firebase/survey.service */ "./src/app/services/firebase/survey.service.ts");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+
+
+
+
+
+
+
+
+
+
+let ViewTablesStatsComponent = class ViewTablesStatsComponent {
+    constructor(orderService, surveyService, toastr) {
+        this.orderService = orderService;
+        this.surveyService = surveyService;
+        this.toastr = toastr;
+        this.mesaMasUsada = null;
+        this.mesaMenosUsada = null;
+        this.mesaMayorFacturacion = null;
+        this.mesaMenorFacturacion = null;
+        this.facturaMayorImporte = null;
+        this.facturaMenorImporte = null;
+        this.onReset = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+    }
+    ngOnInit() {
+        this.surveys = this.surveyService.GetAll().valueChanges();
+        this.settingsForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            fechaInicio: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null),
+            fechaFin: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](null),
+        });
+        this.orders = this.orderService.GetAll();
+        this.ClearFilters();
+    }
+    SelectSurvey(surv) {
+        this.survey = surv;
+    }
+    ClearFilters() {
+        this.search();
+    }
+    Cancel() {
+        this.settingsForm.reset();
+        this.onReset.next();
+        this.settingsForm.controls['fechaInicio'].setValue(null);
+        this.settingsForm.controls['fechaFin'].setValue(null);
+        this.search();
+    }
+    search() {
+        this.setNulls();
+        if (this.settingsForm.value.fechaInicio == null || this.settingsForm.value.fechaInicio == NaN) {
+            this.fechaInicio = 0;
+        }
+        else {
+            this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
+        }
+        if (this.settingsForm.value.fechaFin == null || this.settingsForm.value.fechaFin == NaN) {
+            this.fechaFin = Date.now();
+        }
+        else {
+            this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
+        }
+        this.showingOrders = this.orderService.GetAll().valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(orders => {
+            return orders.filter(order => {
+                order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["Order"](), order);
+                if (order['timestamp'] > this.fechaInicio && order['timestamp'] < this.fechaFin) {
+                    return order;
+                }
+            });
+        }));
+        this.surveysGood = this.surveyService.GetAll2().valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(surveys => {
+            return surveys.filter(survey => {
+                survey = Object.assign(new src_app_models_survey__WEBPACK_IMPORTED_MODULE_7__["Survey"](), survey);
+                if (survey['order']['timestamp'] > this.fechaInicio && survey['order']['timestamp'] < this.fechaFin) {
+                    if (((survey['cookScore'] + survey['restaurantScore'] + survey['tableScore'] + survey['waiterScore']) / 4) >= 7)
+                        return survey;
+                }
+                //console.log(surveys);
+            });
+        }));
+        this.surveysBad = this.surveyService.GetAll2().valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(surveys => {
+            return surveys.filter(survey => {
+                survey = Object.assign(new src_app_models_survey__WEBPACK_IMPORTED_MODULE_7__["Survey"](), survey);
+                if (survey['order']['timestamp'] > this.fechaInicio && survey['order']['timestamp'] < this.fechaFin) {
+                    if (((survey['cookScore'] + survey['restaurantScore'] + survey['tableScore'] + survey['waiterScore']) / 4) <= 4)
+                        return survey;
+                }
+                //console.log(surveys);
+            });
+        }));
+        this.getTops();
+    }
+    setNulls() {
+        this.mesaMasUsada = null;
+        this.mesaMenosUsada = null;
+        this.mesaMayorFacturacion = null;
+        this.mesaMenorFacturacion = null;
+        this.facturaMayorImporte = null;
+        this.facturaMenorImporte = null;
+        this.lista = null;
+        this.arrayAcumulador = null;
+    }
+    getTops() {
+        this.lista = new Array();
+        let cantidadNombres = new Array();
+        let cantidad;
+        let copia = this.showingOrders;
+        this.facturaMayorImporte = new src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["Order"]();
+        this.facturaMenorImporte = new src_app_models_order__WEBPACK_IMPORTED_MODULE_5__["Order"]();
+        this.arrayAcumulador = new Array();
+        copia.subscribe(orders => {
+            orders.map(order => {
+                if (order) {
+                    this.sumarIngresos(order);
+                    this.lista.push(order.tableID);
+                    this.mayorMenorImporte(order);
+                }
+            }).map(() => {
+                cantidadNombres = this.lista.reduce((contadorNombre, nombre) => {
+                    contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
+                    return contadorNombre;
+                }, {});
+            });
+            var result = Object.keys(cantidadNombres).map(function (key) {
+                return [String(key), cantidadNombres[key]];
+            });
+            this.getMayoryMenorFacturación();
+            cantidad = result.length;
+            this.mesaMasUsada = result[0];
+            this.mesaMenosUsada = result[cantidad - 1];
+            // console.log(this.mesaMenosUsada);
+            // console.log(this.mesaMasUsada);
+            // console.log(this.facturaMenorImporte);
+            // console.log(this.facturaMayorImporte);
+            // console.log(this.mesaMenorFacturacion);
+            // console.log(this.mesaMayorFacturacion);
+        });
+    }
+    mayorMenorImporte(order) {
+        if (this.facturaMayorImporte == null || this.facturaMenorImporte == null) {
+            this.facturaMayorImporte = order;
+            this.facturaMenorImporte = order;
+        }
+        else {
+            if (order.totalPrice > this.facturaMayorImporte.totalPrice) {
+                this.facturaMayorImporte = order;
+            }
+            if (order.totalPrice < this.facturaMayorImporte.totalPrice) {
+                this.facturaMenorImporte = order;
+            }
+        }
+    }
+    sumarIngresos(order) {
+        if (this.arrayAcumulador[order.tableID] == null) {
+            this.arrayAcumulador[order.tableID] = order.totalPrice;
+        }
+        else {
+            this.arrayAcumulador[order.tableID] = this.arrayAcumulador[order.tableID] + order.totalPrice;
+        }
+    }
+    getMayoryMenorFacturación() {
+        this.arrayAcumulador.forEach(elemento => {
+            console.log(elemento);
+            if (this.mesaMayorFacturacion == null || this.mesaMenorFacturacion == null) {
+                this.mesaMenorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+                this.mesaMayorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+            }
+            else {
+                if (elemento < this.mesaMenorFacturacion) {
+                    this.mesaMenorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+                }
+                if (elemento > this.mesaMayorFacturacion) {
+                    this.mesaMayorFacturacion = this.arrayAcumulador[this.arrayAcumulador.indexOf(elemento)];
+                }
+            }
+        });
+    }
+    setDate() {
+        console.log(Date.parse(this.settingsForm.value.fechaInicio.toString()));
+        if (this.settingsForm.value.fechaInicio != null) {
+            this.fechaInicio = Date.parse(this.settingsForm.value.fechaInicio.toString());
+        }
+        else {
+            this.fechaFin = Date.parse(this.settingsForm.value.fechaFin.toString());
+        }
+    }
+    exportCSV() {
+        this.toastr.info('Exportando estadística...');
+        let csvData = 'categoria,numDeMesa,cantidad,tipo\n';
+        csvData += 'masUsada' + ',' + this.mesaMasUsada[0] + ',' + this.mesaMasUsada[1] + ',veces\n';
+        csvData += 'menosUsada' + ',' + this.mesaMenosUsada[0] + ',' + this.mesaMenosUsada[1] + ',veces\n';
+        csvData += 'mayorRecaudacion' + ',' + this.arrayAcumulador.indexOf(this.mesaMayorFacturacion) + ',' + this.mesaMayorFacturacion + ',pesos\n';
+        csvData += 'menorRecaudacion' + ',' + this.arrayAcumulador.indexOf(this.mesaMenorFacturacion) + ',' + this.mesaMenorFacturacion + ',pesos\n';
+        csvData += 'mayorFactura' + ',' + this.facturaMayorImporte.tableID + ',' + this.facturaMayorImporte.totalPrice + ',pesos\n';
+        csvData += 'menorFactura' + ',' + this.facturaMenorImporte.tableID + ',' + this.facturaMenorImporte.totalPrice + ',pesos\n';
+        console.log(csvData);
+        let file = new Blob([csvData], { type: 'text/csv' });
+        let fileUrl = URL.createObjectURL(file);
+        let hiddenEl = document.createElement('a');
+        hiddenEl.href = fileUrl;
+        hiddenEl.target = '_blank';
+        hiddenEl.download = 'EstadisticasMesas.csv';
+        hiddenEl.click();
+    }
+};
+ViewTablesStatsComponent.ctorParameters = () => [
+    { type: src_app_services_firebase_order_service__WEBPACK_IMPORTED_MODULE_4__["OrderService"] },
+    { type: src_app_services_firebase_survey_service__WEBPACK_IMPORTED_MODULE_8__["SurveyService"] },
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_9__["ToastrService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], ViewTablesStatsComponent.prototype, "fechaInicio", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], ViewTablesStatsComponent.prototype, "fechaFin", void 0);
+ViewTablesStatsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-view-tables-stats',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./view-tables-stats.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./view-tables-stats.component.scss */ "./src/app/components/socio/views/view-tables-stats/view-tables-stats.component.scss")).default]
+    })
+], ViewTablesStatsComponent);
 
 
 
@@ -3556,6 +5512,81 @@ AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/models/log.ts":
+/*!*******************************!*\
+  !*** ./src/app/models/log.ts ***!
+  \*******************************/
+/*! exports provided: Log, Role, TipoMovimiento, TargetMovimiento */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Log", function() { return Log; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Role", function() { return Role; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TipoMovimiento", function() { return TipoMovimiento; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TargetMovimiento", function() { return TargetMovimiento; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class Log {
+    constructor() {
+        this.id = "";
+        this.usuario = "";
+        this.role = null;
+        this.target = null;
+        this.tipo = null;
+        this.fecha = null;
+        this.observacion = "";
+    }
+    static CreateLogWithParams(usuario, role, target, tipo, observacion) {
+        let movimiento = new Log();
+        movimiento.usuario = usuario;
+        movimiento.role = role;
+        movimiento.target = target;
+        movimiento.tipo = tipo;
+        movimiento.observacion = observacion;
+        movimiento.fecha = Date.now();
+        return movimiento;
+    }
+}
+var Role;
+(function (Role) {
+    Role["socio"] = "socio";
+    Role["mozo"] = "mozo";
+    Role["cocinero"] = "cocinero";
+    Role["cervecero"] = "cervecero";
+    Role["bartender"] = "bartender";
+    Role["cliente"] = "cliente";
+    Role["delivery"] = "delivery";
+    //noEspecifica = 'No Especifica'
+})(Role || (Role = {}));
+var TipoMovimiento;
+(function (TipoMovimiento) {
+    TipoMovimiento["alta"] = "Alta";
+    TipoMovimiento["habilitacion"] = "Habilitacion";
+    TipoMovimiento["deshabilitacion"] = "Deshabilitacion";
+    TipoMovimiento["modificacion"] = "Modificacion";
+    TipoMovimiento["ingreso"] = "Ingreso";
+    TipoMovimiento["egreso"] = "Egreso";
+    TipoMovimiento["entrega"] = "Entrega";
+    TipoMovimiento["suspension"] = "Suspension";
+    TipoMovimiento["reincorporacion"] = "Reincorporacion";
+    TipoMovimiento["borrado"] = "Borrado";
+    TipoMovimiento["preparacion"] = "En preparaci\u00F3n";
+    TipoMovimiento["finalizacion"] = "Finaliz\u00F3";
+    //noEspecifica = 'No Especifica'
+})(TipoMovimiento || (TipoMovimiento = {}));
+var TargetMovimiento;
+(function (TargetMovimiento) {
+    TargetMovimiento["usuario"] = "Usuario";
+    TargetMovimiento["producto"] = "Producto";
+    TargetMovimiento["pedido"] = "Pedido";
+    TargetMovimiento["mesa"] = "Mesa";
+    //noEspecifica = 'No Especifica'
+})(TargetMovimiento || (TargetMovimiento = {}));
+
+
+/***/ }),
+
 /***/ "./src/app/models/order.ts":
 /*!*********************************!*\
   !*** ./src/app/models/order.ts ***!
@@ -3583,10 +5614,17 @@ class Order {
         this.timeLeft = undefined;
         this.timestamp = Date.now();
         this.completed = false;
+        this.delayed = null;
     }
     CompleteOrder() {
         this.completed = true;
         this.state = OrderState.served;
+        if (this.timeLeft != null) {
+            let resta = (Date.parse(this.timeLeft)) - Date.now();
+            if (resta < 0) {
+                this.delayed = resta;
+            }
+        }
     }
     CalculateTimeInMinutes() {
         let minutes = 0;
@@ -3683,6 +5721,7 @@ var OrderState;
     OrderState["readyToServe"] = "Listo para servir";
     OrderState["served"] = "Servido";
     OrderState["paidOut"] = "Pagado";
+    OrderState["cancelled"] = "Cancelado";
 })(OrderState || (OrderState = {}));
 
 
@@ -3707,19 +5746,20 @@ class Product {
     constructor() {
         this.codeID = "";
         this.name = "";
-        this.pathImg = "";
+        this.image = "";
         this.price = -1;
         this.foodTypes = [];
         this.state = FoodState.pending;
+        this.demand = 0;
     }
     IsFoodType(type) {
         return this.foodTypes.includes(type);
     }
-    static Create(code, name, pathImg, price, foodTypes, cook, description) {
+    static Create(code, name, image, price, foodTypes, cook, description) {
         let newProd = new Product();
         newProd.codeID = code;
         newProd.name = name;
-        newProd.pathImg = pathImg;
+        newProd.image = image;
         newProd.price = price;
         newProd.foodTypes = foodTypes;
         newProd.cook = cook;
@@ -3843,8 +5883,10 @@ class User {
         this.lastname = "";
         this.password = "";
         this.email = "";
-        this.role = Role.socio;
-        this.image = 'assets/img/default-profile.png';
+        this.role = null;
+        this.image = null;
+        this.deleted = true;
+        this.state = 'deshabilitado';
     }
     static CreateUserWithParams(name, lastname, email, password, role) {
         let user = new User();
@@ -3853,6 +5895,20 @@ class User {
         user.password = password;
         user.email = email;
         user.role = role;
+        user.deleted = false;
+        user.state = 'habilitado';
+        user.image = 'https://firebasestorage.googleapis.com/v0/b/tplab4-aa5ae.appspot.com/o/imagenesUsuarios%2Fdefault-profile.png?alt=media&token=e03046d0-3237-4039-8bd3-a1ba051c0645';
+        return user;
+    }
+    static CreateUserFromAdmin(name, lastname, email, role) {
+        let user = new User();
+        user.name = name;
+        user.lastname = lastname;
+        user.password = email;
+        user.email = email;
+        user.role = role;
+        user.deleted = false;
+        user.state = 'habilitado';
         return user;
     }
 }
@@ -3864,6 +5920,7 @@ var Role;
     Role["cervecero"] = "cervecero";
     Role["bartender"] = "bartender";
     Role["cliente"] = "cliente";
+    Role["delivery"] = "delivery";
 })(Role || (Role = {}));
 
 
@@ -3916,6 +5973,47 @@ NeatDatePipe = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         name: 'neatDate'
     })
 ], NeatDatePipe);
+
+
+
+/***/ }),
+
+/***/ "./src/app/pipes/sort-pipe.pipe.ts":
+/*!*****************************************!*\
+  !*** ./src/app/pipes/sort-pipe.pipe.ts ***!
+  \*****************************************/
+/*! exports provided: SortPipePipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SortPipePipe", function() { return SortPipePipe; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let SortPipePipe = class SortPipePipe {
+    transform(array, args) {
+        if (array != null) {
+            return array.sort((a, b) => {
+                if (a[args] < b[args]) {
+                    return -1;
+                }
+                else if (a[args] > b[args]) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            });
+        }
+    }
+};
+SortPipePipe = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Pipe"])({
+        name: 'sortPipe'
+    })
+], SortPipePipe);
 
 
 
@@ -4018,6 +6116,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var q__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! q */ "./node_modules/q/q.js");
 /* harmony import */ var q__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(q__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _firebase_log_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../firebase/log.service */ "./src/app/services/firebase/log.service.ts");
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+
+
 
 
 
@@ -4028,11 +6130,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AuthService = class AuthService {
-    constructor(afsAuth, db, router, userService) {
+    constructor(afsAuth, db, router, userService, logService) {
         this.afsAuth = afsAuth;
         this.db = db;
         this.router = router;
         this.userService = userService;
+        this.logService = logService;
     }
     RegisterWithEmail(user) {
         return new Promise((resolve, reject) => {
@@ -4045,19 +6148,58 @@ let AuthService = class AuthService {
                 .catch(error => console.log(reject(error)));
         });
     }
+    // public RegisterWithEmailAdmin(user: User, file: File) {
+    // 	var logueado:User;
+    // 	this.GetCurrentUser().then(usr =>{
+    // 		logueado=user;
+    // 		this.afsAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+    // 		 .then(userData => {				
+    // 			 //this.userService.Add(user);
+    // 			this.LoginWithEmail(logueado.email, logueado.password);
+    // 		 	this.userService.persistirUsuario(user, file).then(value =>{
+    // 		 		if(value){
+    // 		 			//location.reload();
+    // 		 		}
+    // 		 	}).catch(error => console.log(reject(error)));					
+    // 		 	console.log('Register successful');
+    // 		 })
+    // 		 .catch(error => console.log(reject(error)))
+    // 	})
+    // }
+    RegisterWithEmailAdmin(mail) {
+        this.userService.GetUserByEmail(mail).then(user => {
+            const pass = user.password;
+            this.RegisterWithEmail(user).then(() => {
+                this.LoginWithEmail(mail, pass);
+            });
+        });
+    }
     LoginWithEmail(email, pwd) {
         return new Promise((resolve, reject) => {
             this.afsAuth.auth.signInWithEmailAndPassword(email, pwd)
                 .then(userData => {
-                resolve(userData);
-                console.log('Login success', userData);
-                this.RedirectForRole(email);
+                this.userService.GetUserByEmail(userData.user.email).then(user => {
+                    resolve(userData);
+                    console.log('Login success', userData);
+                    this.RedirectForRole(email);
+                    this.userService.GetUserByEmail(email).then(user => {
+                        let mensaje = `El usuario ${user.email} inició sesión`;
+                        this.logService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_10__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_10__["TipoMovimiento"].ingreso, mensaje);
+                    });
+                });
             })
                 .catch(error => reject(error));
         });
     }
     LogoutEmail() {
-        this.afsAuth.auth.signOut();
+        this.GetCurrentUser()
+            .then(user => {
+            let mensaje = `El usuario ${user.email} cerró sesión`;
+            this.logService.persistirMovimiento(user, src_app_models_log__WEBPACK_IMPORTED_MODULE_10__["TargetMovimiento"].usuario, src_app_models_log__WEBPACK_IMPORTED_MODULE_10__["TipoMovimiento"].egreso, mensaje)
+                .then(() => {
+                this.afsAuth.auth.signOut();
+            });
+        });
     }
     GetCurrentUser() {
         return this.GetCurrentEmail().then(email => {
@@ -4108,13 +6250,117 @@ AuthService.ctorParameters = () => [
     { type: _angular_fire_auth__WEBPACK_IMPORTED_MODULE_2__["AngularFireAuth"] },
     { type: angularfire2_firestore__WEBPACK_IMPORTED_MODULE_3__["AngularFirestore"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
-    { type: _firebase_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"] }
+    { type: _firebase_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"] },
+    { type: _firebase_log_service__WEBPACK_IMPORTED_MODULE_9__["LogService"] }
 ];
 AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     })
 ], AuthService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/firebase/log.service.ts":
+/*!**************************************************!*\
+  !*** ./src/app/services/firebase/log.service.ts ***!
+  \**************************************************/
+/*! exports provided: LogService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogService", function() { return LogService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var src_app_models_log__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/models/log */ "./src/app/models/log.ts");
+/* harmony import */ var _firestorage_file_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../firestorage/file.service */ "./src/app/services/firestorage/file.service.ts");
+/* harmony import */ var _angular_fire_functions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/fire/functions */ "./node_modules/@angular/fire/functions/es2015/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/classes/helpers/common-helper */ "./src/app/classes/helpers/common-helper.ts");
+
+
+
+
+
+
+
+
+let LogService = class LogService {
+    constructor(db, afsFunc, fileService) {
+        this.db = db;
+        this.afsFunc = afsFunc;
+        this.fileService = fileService;
+        this.listado = new Array();
+        this.movimientos = this.db.collection('movimientos');
+        this.traerMovimientosArray();
+    }
+    GetAll3() {
+        return this.db.collection("movimientos").valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(logs => {
+            return logs.filter(res => {
+                res = Object.assign(new src_app_models_log__WEBPACK_IMPORTED_MODULE_3__["Log"](), res);
+                return res;
+            });
+        }));
+    }
+    GetAll2() {
+        return this.db.collection("movimientos");
+    }
+    GetAll() {
+        return this.db.collection("movimientos");
+    }
+    traerMovimientosArray() {
+        let listadoObservable = null;
+        listadoObservable = this.traerMovimientos();
+        listadoObservable.subscribe(movs => {
+            movs.forEach(unMov => {
+                let m = new src_app_models_log__WEBPACK_IMPORTED_MODULE_3__["Log"];
+                m.id = unMov.id;
+                m.role = unMov.role;
+                m.target = unMov.target;
+                m.usuario = unMov.usuario;
+                m.tipo = unMov.tipo;
+                m.fecha = unMov.fecha;
+                m.observacion = unMov.observacion;
+                this.listado.push(m);
+            });
+        });
+    }
+    traerMovimientos() {
+        return this.movimientos.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(actions => {
+            return actions.map(action => {
+                const datos = action.payload.doc.data();
+                const id = action.payload.doc.id;
+                return Object.assign({ id }, datos);
+            });
+        }));
+    }
+    persistirMovimiento(usuario, target, tipo, observacion) {
+        let movimiento = src_app_models_log__WEBPACK_IMPORTED_MODULE_3__["Log"].CreateLogWithParams(usuario.email, usuario.role, target, tipo, observacion);
+        return this.movimientos.add(src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_7__["CommonHelper"].ConvertToObject(movimiento)).then(doc => {
+            this.movimientos.doc(doc.id).update({ id: doc.id });
+            console.log("persistio");
+        }).then(() => {
+            return true;
+        }).catch(() => {
+            return false;
+        });
+    }
+};
+LogService.ctorParameters = () => [
+    { type: angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] },
+    { type: _angular_fire_functions__WEBPACK_IMPORTED_MODULE_5__["AngularFireFunctions"] },
+    { type: _firestorage_file_service__WEBPACK_IMPORTED_MODULE_4__["FileService"] }
+];
+LogService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], LogService);
 
 
 
@@ -4137,6 +6383,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_models_order__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/models/order */ "./src/app/models/order.ts");
 /* harmony import */ var src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/classes/helpers/common-helper */ "./src/app/classes/helpers/common-helper.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../firestorage/file.service */ "./src/app/services/firestorage/file.service.ts");
+
 
 
 
@@ -4144,8 +6392,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let OrderService = class OrderService {
-    constructor(db) {
+    constructor(db, fileService) {
         this.db = db;
+        this.fileService = fileService;
+        this.primerosTres = new Array();
+        this.ultimosTres = new Array();
+        this.listado = new Array();
+        this.ordenes = this.db.collection('pedidos');
+        this.traerOrdenesArray();
     }
     Add(order) {
         this.db.collection("pedidos").add(src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_4__["CommonHelper"].ConvertToObject(order));
@@ -4208,6 +6462,18 @@ let OrderService = class OrderService {
             return false;
         });
     }
+    UpdateImage(order, image) {
+        return this.fileService.subirFotoPedido(image, order.id).then(() => {
+            return true;
+        });
+    }
+    UpdateImageURL(order, url) {
+        this.GetByCodeID(order.codeID).then(ord => {
+            this.fileService.updatePhotoUrlOrders(url, ord.id);
+        }).catch(() => {
+            console.log("no se pudo actualizar url de imagen");
+        });
+    }
     GetByCodeID(code) {
         let documents = this.db.collection("pedidos", ref => ref.where('codeID', '==', code));
         return documents.get().toPromise().then(doc => {
@@ -4220,6 +6486,13 @@ let OrderService = class OrderService {
                 else
                     reject('No se encontró el pedido.');
             });
+        });
+    }
+    setOrderImage(code, image) {
+        this.GetByCodeID(code).then(ord => {
+            this.UpdateImage(ord, image);
+        }).catch(() => {
+            console.log("no se pudo subir");
         });
     }
     GetByCodeUser(code) {
@@ -4236,15 +6509,279 @@ let OrderService = class OrderService {
             });
         });
     }
+    GetAllCancelled() {
+        return this.db.collection("pedidos").valueChanges()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(orders => {
+            return orders.filter(order => {
+                order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_3__["Order"](), order);
+                if (order['state'] == "Cancelado")
+                    return order;
+            });
+        }));
+    }
+    GetAllDelayed() {
+        return this.db.collection("pedidos").valueChanges()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(orders => {
+            return orders.filter(order => {
+                order = Object.assign(new src_app_models_order__WEBPACK_IMPORTED_MODULE_3__["Order"](), order);
+                if (order['delayed'] < 0) {
+                    return order;
+                }
+            });
+        }));
+    }
+    ;
+    GetAll() {
+        return this.db.collection("pedidos");
+    }
+    // public GetTopBest(fechaInicio: number, fechaFin: number): Promise<boolean> {
+    // 	let listado = new Array<any>();
+    // 	return this.GetAllCompletedOrders_InArray().then(orders => {
+    // 		orders.forEach(order => {	
+    // 			if(order.timestamp > fechaInicio && order.timestamp < fechaFin)	{
+    // 				order.items.forEach(element => {
+    // 					listado.push(element.name);
+    // 				});
+    // 			}				
+    // 		})
+    // 	}).then(() => {
+    // 		let cantidadNombres = new Array<any>();
+    // 		cantidadNombres = listado.reduce((contadorNombre, nombre) => {
+    // 			contadorNombre[nombre] = (contadorNombre[nombre] || 0) + 1;
+    // 			return contadorNombre;
+    // 		}, {});
+    // 		var result = Object.keys(cantidadNombres).map(function (key) {
+    // 			return [String(key), cantidadNombres[key]];
+    // 		});
+    // 		const cantidad = result.length;
+    // 		console.log(cantidad);
+    // 		this.primerosTres.push(result[0], result[1], result[2]);
+    // 		this.ultimosTres.push(result[cantidad - 3], result[cantidad - 2], result[cantidad - 1]);
+    // 	}).then(() => {
+    // 		return true;
+    // 	}
+    // 	).catch(() => {
+    // 		return false;
+    // 	}
+    // 	)
+    // }
+    traerOrdenesArray() {
+        this.db.collection("pedidos").get().toPromise()
+            .then(doc => {
+            let orders = [];
+            doc.docs.forEach(el => {
+                orders.push(el.data());
+            });
+            return orders;
+        });
+    }
+    GetAllCancelledOrders_InArray() {
+        return this.db.collection("pedidos").get().toPromise()
+            .then(doc => {
+            let orders = [];
+            doc.docs.forEach(el => {
+                let ela = el.data();
+                if (ela['state'] == 'Cancelado') {
+                    orders.push(ela);
+                }
+            });
+            return orders;
+        });
+    }
+    GetAllDelayedOrders_InArray() {
+        return this.db.collection("pedidos").get().toPromise()
+            .then(doc => {
+            let orders = [];
+            doc.docs.forEach(el => {
+                let ela = el.data();
+                if (ela['delayed'] != null) {
+                    orders.push(ela);
+                }
+            });
+            return orders;
+        });
+    }
 };
 OrderService.ctorParameters = () => [
-    { type: angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] }
+    { type: angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] },
+    { type: _firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__["FileService"] }
 ];
 OrderService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     })
 ], OrderService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/firebase/product.service.ts":
+/*!******************************************************!*\
+  !*** ./src/app/services/firebase/product.service.ts ***!
+  \******************************************************/
+/*! exports provided: ProductService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductService", function() { return ProductService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _angular_fire_functions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/functions */ "./node_modules/@angular/fire/functions/es2015/index.js");
+/* harmony import */ var src_app_models_product__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/models/product */ "./src/app/models/product.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../firestorage/file.service */ "./src/app/services/firestorage/file.service.ts");
+/* harmony import */ var src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/classes/helpers/common-helper */ "./src/app/classes/helpers/common-helper.ts");
+
+
+
+
+
+
+//import { getLocaleFirstDayOfWeek } from '@angular/common';
+//import { runInThisContext } from 'vm';
+
+
+let ProductService = class ProductService {
+    constructor(db, afsFunc, fileService) {
+        this.db = db;
+        this.afsFunc = afsFunc;
+        this.fileService = fileService;
+        //public listado: Product[];
+        //public listado: Array<Product>;
+        this.listado = new Array();
+        this.primerosTres = new Array();
+        this.ultimosTres = new Array();
+        this.productos = this.db.collection('productos');
+        this.traerProductosArray();
+        console.log(this.listado);
+    }
+    //  private CreateTestProducts(): Product[]
+    //  {
+    //  	return [
+    //  		Product.Create('B-CER-QUIL', 'Cerveza Quilmes', 'assets/img/B-CER-QUIL.jpg', 50, [FoodType.bebida, FoodType.alcohol], Cook.cervecero, "Bebida con alcohol, no recomendada si vas a conducir"),
+    //  		Product.Create('C-COM-MCFR', 'Milanesa con fritas', 'assets/img/C-COM-MCFR.jpg', 300, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de papas fritas"),
+    //  		Product.Create('C-COM-MACF', 'Milanesa a caballo con fritas', 'assets/img/C-COM-MACF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de huevo frito y papas fritas"),
+    //  		Product.Create('C-COM-MNAF', 'Milanesa napo con fritas', 'assets/img/C-COM-MNAF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa con salsa de tomate, jamón y muzzarella acompañada de papas fritas"),
+    //  		Product.Create('B-GAS-COCA', 'Coca-Cola', 'assets/img/B-GAS-COCA.jpg', 60, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol gasificada de extractos naturales"),
+    //  		Product.Create('B-AGU-BONA', 'Bon Aqua', 'assets/img/B-AGU-BONA.jpg', 45, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol y sin gas de origenes naturales"),
+    //  		Product.Create('B-TRA-DDFR', 'Daikiri de frutilla', 'assets/img/B-TRA-DDFR.jpg', 70, [FoodType.bebida, FoodType.alcohol, FoodType.postre], Cook.bartender, "Bebida con alcohol, no recomendada si vas a manejar"),
+    //  		Product.Create('C-COM-ENCE', 'Ensalada el Cesar', 'assets/img/C-COM-ENCE.jpg', 150, [FoodType.comida, FoodType.vegano], Cook.cocinero, " Ensalada de lechuga romana y croûtons con jugo de limón, aceite de oliva, huevo, salsa Worcestershire, anchoas, ajo, mostaza de Dijon, queso parmesano y pimienta negra"),
+    //  		Product.Create('C-COM-EMPA', 'Empanada', 'assets/img/C-COM-EMPA.jpg', 50, [FoodType.comida], Cook.cocinero, " Empanada de pollo"),
+    //  		Product.Create('B-VIN-VINO', 'Vino', 'assets/img/B-VIN-VINO.jpg', 550, [FoodType.bebida, FoodType.alcohol], Cook.bartender, "Bebida con alcohol, no recomendada si vas a conducir"),
+    //  	];
+    //  }
+    // private CreateTestProducts() {
+    //     let lista = [
+    //         Product.Create('B-CER-QUIL', 'Cerveza Quilmes', 'assets/img/B-CER-QUIL.jpg', 50, [FoodType.bebida, FoodType.alcohol], Cook.cervecero, "Bebida con alcohol, no recomendada si vas a conducir"),
+    //         Product.Create('C-COM-MCFR', 'Milanesa con fritas', 'assets/img/C-COM-MCFR.jpg', 300, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de papas fritas"),
+    //         Product.Create('C-COM-MACF', 'Milanesa a caballo con fritas', 'assets/img/C-COM-MACF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa de ternera acompañada de huevo frito y papas fritas"),
+    //         Product.Create('C-COM-MNAF', 'Milanesa napo con fritas', 'assets/img/C-COM-MNAF.jpg', 350, [FoodType.comida], Cook.cocinero, "Milanesa con salsa de tomate, jamón y muzzarella acompañada de papas fritas"),
+    //         Product.Create('B-GAS-COCA', 'Coca-Cola', 'assets/img/B-GAS-COCA.jpg', 60, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol gasificada de extractos naturales"),
+    //         Product.Create('B-AGU-BONA', 'Bon Aqua', 'assets/img/B-AGU-BONA.jpg', 45, [FoodType.bebida, FoodType.vegano, FoodType.celiaco], Cook.bartender, "Bebida sin alcohol y sin gas de origenes naturales"),
+    //         Product.Create('B-TRA-DDFR', 'Daikiri de frutilla', 'assets/img/B-TRA-DDFR.jpg', 70, [FoodType.bebida, FoodType.alcohol, FoodType.postre], Cook.bartender, "Bebida con alcohol, no recomendada si vas a manejar"),
+    //         Product.Create('C-COM-ENCE', 'Ensalada el Cesar', 'assets/img/C-COM-ENCE.jpg', 150, [FoodType.comida, FoodType.vegano], Cook.cocinero, " Ensalada de lechuga romana y croûtons con jugo de limón, aceite de oliva, huevo, salsa Worcestershire, anchoas, ajo, mostaza de Dijon, queso parmesano y pimienta negra"),
+    //         Product.Create('C-COM-EMPA', 'Empanada', 'assets/img/C-COM-EMPA.jpg', 50, [FoodType.comida], Cook.cocinero, " Empanada de pollo"),
+    //         Product.Create('B-VIN-VINO', 'Vino', 'assets/img/B-VIN-VINO.jpg', 550, [FoodType.bebida, FoodType.alcohol], Cook.bartender, "Bebida con alcohol, no recomendada si vas a conducir"),
+    //     ];
+    //     lista.forEach(elProd => {
+    //         console.log(elProd);
+    //         this.persistirProducto(elProd);
+    //     })
+    // }
+    GetAll() {
+        return this.db.collection("productos");
+    }
+    GetAll2() {
+        return this.db.collection("productos");
+    }
+    traerProductos() {
+        return this.productos.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(actions => {
+            return actions.map(action => {
+                const datos = action.payload.doc.data();
+                const id = action.payload.doc.id;
+                return Object.assign({ id }, datos);
+            });
+        }));
+    }
+    traerProductosArray() {
+        let listadoObservable = null;
+        listadoObservable = this.traerProductos();
+        console.log("traerProductosArray ListadoObservable");
+        listadoObservable.subscribe(prods => {
+            prods.forEach(unProd => {
+                let p = new src_app_models_product__WEBPACK_IMPORTED_MODULE_4__["Product"];
+                p.codeID = unProd.codeID;
+                p.cook = unProd.cook;
+                p.description = unProd.description;
+                p.foodTypes = unProd.foodTypes;
+                p.name = unProd.name;
+                p.image = unProd.image;
+                p.price = parseInt(unProd.price);
+                p.state = unProd.state;
+                p.worker = unProd.worker;
+                this.listado.push(p);
+            });
+        });
+    }
+    persistirProducto(producto, foto) {
+        return this.productos.add(src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_7__["CommonHelper"].ConvertToObject(producto)).then(doc => {
+            this.productos.doc(doc.id).update({ codeID: doc.id });
+            //this.productos.doc(doc.id).update({ pathImg: doc.id });
+            console.log(foto);
+            if (foto) {
+                //this.fileService.subirFoto(foto, producto.name);
+                this.fileService.subirFotoProducto(foto, doc.id);
+            }
+        }).then(() => {
+            //location.reload();
+            return true;
+        }).catch(() => {
+            return false;
+        });
+    }
+    updateState(uid, state) {
+        this.productos.doc(uid).update({ state: state });
+    }
+    updateProd(producto, foto) {
+        return this.productos.doc(producto.codeID).update({
+            name: producto.name,
+            price: producto.price,
+            foodTypes: producto.foodTypes,
+            cook: producto.cook,
+            description: producto.description
+        }).then(() => {
+            if (foto) {
+                this.fileService.subirFotoProducto(foto, producto.codeID);
+            }
+        }).then(() => {
+            return true;
+        }).catch(() => {
+            return false;
+        });
+    }
+    GetProductByID(id) {
+        let docRef = this.db.collection('productos', ref => ref.where('codeID', '==', id));
+        return docRef.get().toPromise().then(doc => {
+            let product = doc.docs[0].data();
+            product.codeID = doc.docs[0].id;
+            return product;
+        });
+    }
+};
+ProductService.ctorParameters = () => [
+    { type: angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] },
+    { type: _angular_fire_functions__WEBPACK_IMPORTED_MODULE_3__["AngularFireFunctions"] },
+    { type: _firestorage_file_service__WEBPACK_IMPORTED_MODULE_6__["FileService"] }
+];
+ProductService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], ProductService);
 
 
 
@@ -4276,12 +6813,18 @@ let SurveyService = class SurveyService {
     GetAll() {
         return this.db.collection('encuestas');
     }
+    GetAll2() {
+        return this.db.collection('encuestas');
+    }
     Add(surv) {
         return new Promise((resolve, reject) => {
             this.db.collection('encuestas').add(src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_3__["CommonHelper"].ConvertToObject(surv))
                 .then(() => resolve())
                 .catch(() => reject());
         });
+    }
+    getAllGood() {
+        return this.db.collection('encuestas', ref => ref.where('commentType', '==', true));
     }
 };
 SurveyService.ctorParameters = () => [
@@ -4389,16 +6932,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
 /* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _angular_fire_functions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/functions */ "./node_modules/@angular/fire/functions/es2015/index.js");
-/* harmony import */ var src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/classes/helpers/common-helper */ "./src/app/classes/helpers/common-helper.ts");
+/* harmony import */ var src_app_models_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/models/user */ "./src/app/models/user.ts");
+/* harmony import */ var src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/classes/helpers/common-helper */ "./src/app/classes/helpers/common-helper.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _firestorage_file_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../firestorage/file.service */ "./src/app/services/firestorage/file.service.ts");
+
+
+
 
 
 
 
 
 let UserService = class UserService {
-    constructor(db, afsFunc) {
+    constructor(db, afsFunc, fileService) {
         this.db = db;
         this.afsFunc = afsFunc;
+        this.fileService = fileService;
+        //public listado: Product[];
+        //public listado: Array<Product>;
+        this.listado = new Array();
+        this.usuarios = this.db.collection('usuarios');
+        this.traerUsuariosArray();
     }
     GetAll_InArray() {
         return this.db.collection('usuarios').get().toPromise()
@@ -4412,12 +6967,22 @@ let UserService = class UserService {
             return users;
         });
     }
+    GetAll() {
+        return this.db.collection("usuarios").valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(actions => {
+            return actions.map(action => {
+                return action = Object.assign(new src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["User"](), action);
+            });
+        }));
+    }
+    GetAll2() {
+        return this.db.collection("usuarios");
+    }
     SetRole(email, role) {
         this.SetRoleInFirebase(email, role);
         this.SetRoleInCloudFunctions(email, role);
     }
     Add(user) {
-        this.db.collection("usuarios").add(src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_4__["CommonHelper"].ConvertToObject(user));
+        this.db.collection("usuarios").add(src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_5__["CommonHelper"].ConvertToObject(user));
     }
     SetRoleInCloudFunctions(email, role) {
         const setRoleFunction = this.afsFunc.httpsCallable('setRole');
@@ -4435,9 +7000,25 @@ let UserService = class UserService {
     GetUserByEmail(email) {
         let docRef = this.db.collection('usuarios', ref => ref.where('email', '==', email));
         return docRef.get().toPromise().then(doc => {
-            let user = doc.docs[0].data();
-            user.id = doc.docs[0].id;
-            return user;
+            if (!doc.empty) {
+                let user = doc.docs[0].data();
+                user.id = doc.docs[0].id;
+                return user;
+            }
+            else {
+                return null;
+            }
+        });
+    }
+    buscarEmail(email) {
+        let docRef = this.db.collection('usuarios', ref => ref.where('email', '==', email));
+        return docRef.get().toPromise().then(doc => {
+            if (!doc.empty) {
+                return true;
+            }
+            else {
+                return false;
+            }
         });
     }
     GetAllWaiters() {
@@ -4452,18 +7033,110 @@ let UserService = class UserService {
             return waiters;
         });
     }
+    GetUserByID(id) {
+        let docRef = this.db.collection('usuarios', ref => ref.where('id', '==', id));
+        return docRef.get().toPromise().then(doc => {
+            let user = doc.docs[0].data();
+            user.id = doc.docs[0].id;
+            return user;
+        });
+    }
+    // public ModifyProfileImage(email: string, image: string): Promise<void>
+    // {
+    // 	return this.GetUserByEmail(email).then(doc => {
+    // 		let user = doc;
+    // 		user.image = image;
+    // 		console.log('new token', image);
+    // 		this.db.collection('usuarios').doc(doc.id).update(user);
+    // 	})
+    // }
     ModifyProfileImage(email, image) {
         return this.GetUserByEmail(email).then(doc => {
             let user = doc;
-            user.image = image;
-            console.log('new token', image);
-            this.db.collection('usuarios').doc(doc.id).update(user);
+            this.fileService.subirFotoUsuarios(image, user.id);
         });
+    }
+    traerUsuariosArray() {
+        let listadoObservable = null;
+        listadoObservable = this.traerUsuarios();
+        console.log("traerUsuariosArray ListadoObservable");
+        listadoObservable.subscribe(usrs => {
+            usrs.forEach(unUser => {
+                let u = new src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["User"];
+                u.id = unUser.id;
+                u.name = unUser.name;
+                u.lastname = unUser.lastname;
+                u.email = unUser.email;
+                u.image = unUser.image;
+                u.role = unUser.role;
+                u.state = unUser.state;
+                u.deleted = unUser.deleted;
+                u.password = unUser.password;
+                if (!u.deleted) {
+                    if (u.role != src_app_models_user__WEBPACK_IMPORTED_MODULE_4__["Role"].cliente)
+                        this.listado.push(u);
+                }
+            });
+        });
+    }
+    traerUsuarios() {
+        return this.usuarios.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(actions => {
+            return actions.map(action => {
+                const datos = action.payload.doc.data();
+                const id = action.payload.doc.id;
+                return Object.assign({ id }, datos);
+            });
+        }));
+    }
+    persistirUsuario(usuario, foto) {
+        let idGenerado;
+        return this.usuarios.add(src_app_classes_helpers_common_helper__WEBPACK_IMPORTED_MODULE_5__["CommonHelper"].ConvertToObject(usuario)).then(doc => {
+            this.usuarios.doc(doc.id).update({ id: doc.id });
+            idGenerado = doc.id;
+        })
+            .then(() => {
+            if (foto) {
+                return this.fileService.subirFotoUsuarios(foto, idGenerado).then(() => {
+                    return true;
+                });
+            }
+            else {
+                return this.fileService.subirFotoGenericaUsuarios(idGenerado).then(() => {
+                    return true;
+                });
+            }
+        }).catch(() => {
+            return false;
+        });
+    }
+    updateState(uid, state) {
+        this.usuarios.doc(uid).update({ state: state });
+    }
+    delete(uid) {
+        this.usuarios.doc(uid).update({ deleted: true });
+    }
+    updateUser(usuario, foto) {
+        let retorno = this.usuarios.doc(usuario.id).update({
+            name: usuario.name,
+            lastname: usuario.lastname,
+        })
+            .then(() => {
+            if (foto) {
+                return this.fileService.subirFotoUsuarios(foto, usuario.id).then(() => {
+                    return true;
+                });
+            }
+        }).catch(() => {
+            return false;
+        });
+        console.log(retorno);
+        return retorno;
     }
 };
 UserService.ctorParameters = () => [
     { type: angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] },
-    { type: _angular_fire_functions__WEBPACK_IMPORTED_MODULE_3__["AngularFireFunctions"] }
+    { type: _angular_fire_functions__WEBPACK_IMPORTED_MODULE_3__["AngularFireFunctions"] },
+    { type: _firestorage_file_service__WEBPACK_IMPORTED_MODULE_7__["FileService"] }
 ];
 UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -4490,13 +7163,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/es2015/index.js");
 /* harmony import */ var q__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! q */ "./node_modules/q/q.js");
 /* harmony import */ var q__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(q__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(angularfire2_firestore__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
 
 let FileService = class FileService {
-    constructor(storage) {
+    constructor(angularFirestore, storage) {
+        this.angularFirestore = angularFirestore;
         this.storage = storage;
+        this.products = this.angularFirestore.collection('productos');
+        this.users = this.angularFirestore.collection('usuarios');
+        this.orders = this.angularFirestore.collection('pedidos');
     }
     Upload(fileName, file) {
         return this.storage.upload(fileName, file).
@@ -4506,8 +7186,78 @@ let FileService = class FileService {
     GetImageURL(fileName) {
         return this.storage.ref(fileName).getDownloadURL().toPromise().then(URL => Object(q__WEBPACK_IMPORTED_MODULE_3__["resolve"])(URL));
     }
+    subirFotoProducto(foto, uid) {
+        const pathFoto = `imagenesProductos/${uid}`;
+        const tarea = this.storage.upload(pathFoto, foto);
+        tarea.then(() => {
+            this.storage
+                .ref(pathFoto)
+                .getDownloadURL().subscribe(url => {
+                this.updatePhotoUrlProduct(url, uid);
+            });
+        });
+    }
+    updatePhotoUrlProduct(url, uid) {
+        this.products.doc(uid).update({ image: url });
+    }
+    subirFotoUsuarios(foto, uid) {
+        const pathFoto = `imagenesUsuarios/${uid}`;
+        const tarea = this.storage.upload(pathFoto, foto);
+        return tarea.then(() => {
+            this.storage
+                .ref(pathFoto)
+                .getDownloadURL().subscribe(url => {
+                this.updatePhotoUrlUsers(url, uid);
+                //this.updatePhotoUrlUsers(url, uid).then(()=>{
+                //location.reload();
+                //});
+            });
+        }).then(() => {
+            //location.reload();
+            return true;
+        }).catch(() => {
+            return false;
+        });
+        ;
+    }
+    subirFotoGenericaUsuarios(uid) {
+        const url = 'https://firebasestorage.googleapis.com/v0/b/tplab4-aa5ae.appspot.com/o/imagenesUsuarios%2Fdefault-profile.png?alt=media&token=e03046d0-3237-4039-8bd3-a1ba051c0645';
+        return this.users.doc(uid).update({ image: url }).then(() => {
+            return true;
+        });
+    }
+    updatePhotoUrlUsers(url, uid) {
+        return this.users.doc(uid).update({ image: url }).then(() => {
+            return true;
+        });
+    }
+    updatePhotoUrlOrders(url, uid) {
+        console.log(url);
+        console.log(uid);
+        return this.orders.doc(uid).update({ image: url }).then(() => {
+            return true;
+        });
+    }
+    subirFotoPedido(foto, uid) {
+        const pathFoto = `imagenesPedidos/${uid}`;
+        const tarea = this.storage.upload(pathFoto, foto);
+        console.log("uid" + uid);
+        return tarea.then(() => {
+            this.storage
+                .ref(pathFoto)
+                .getDownloadURL().subscribe(url => {
+                this.updatePhotoUrlOrders(url, uid);
+            });
+        }).then(() => {
+            return true;
+        }).catch(() => {
+            return false;
+        });
+        ;
+    }
 };
 FileService.ctorParameters = () => [
+    { type: angularfire2_firestore__WEBPACK_IMPORTED_MODULE_4__["AngularFirestore"] },
     { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__["AngularFireStorage"] }
 ];
 FileService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
