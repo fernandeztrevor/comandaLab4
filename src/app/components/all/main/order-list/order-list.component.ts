@@ -51,7 +51,7 @@ export class OrderListComponent implements OnInit {
 
 				this.orders = this.orderService.GetAllByCook(cook as Cook).pipe(
 					map(orders => {
-						return orders.filter(order => {							
+						return orders.filter(order => {
 							order = Object.assign(new Order(), order);
 							console.log(order['state']);
 							if (order['state'] != cancelado) {
@@ -63,7 +63,17 @@ export class OrderListComponent implements OnInit {
 				);
 				break;
 			case Role.socio:
-				this.orders = this.orderService.GetAllOrderByTime().valueChanges();
+				this.orders = this.orderService.GetAllOrderByTime().valueChanges().pipe(
+					map(orders => {
+						return orders.filter(order => {
+							order = Object.assign(new Order(), order);
+							if (order['state'] != cancelado) {
+								this.showingOrders = false;
+								return order;
+							}
+						});
+					})
+				);
 
 				break;
 			case Role.cliente:
