@@ -9,14 +9,14 @@
 					<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                         <input type="text" formControlName="name" class="form-control separate-top-input align-center" placeholder="Nombre" autofocus>
                         <input type="text" formControlName="lastname" class="form-control separate-top-input align-center" placeholder="Apellido">
-						<input type="text" formControlName="email" class="form-control separate-top-input align-center" placeholder="Email">
+						<input type="email" formControlName="email" class="form-control separate-top-input align-center" placeholder="Email">
                         <input type="password" formControlName="password" class="form-control separate-top-input align-center" placeholder="Contraseña">
 						<input type="password" formControlName="repPassword" class="form-control separate-top-input align-center" placeholder="Repita la contraseña">
 						<div class="row mar-top-2">
 							<div class="col-2"></div>
 							<div class="col-8 align-center">
-								<!-- <ngx-recaptcha2  formControlName="captcha" #captchaElem [siteKey]="'6LdyPcgUAAAAABC2X0t5JiKItsjuBIXC8_rQAy7r'" [useGlobalDomain]="false"></ngx-recaptcha2> -->
-								<ngx-recaptcha2 formControlName="captcha" #captchaElem [siteKey]="'6Lef0cgUAAAAAO0_mOu5t8UWgk1jVhJQjkgCSmG_'" [useGlobalDomain]="false"></ngx-recaptcha2>
+								<ngx-recaptcha2  formControlName="captcha" #captchaElem [siteKey]="'6LdyPcgUAAAAABC2X0t5JiKItsjuBIXC8_rQAy7r'" [useGlobalDomain]="false"></ngx-recaptcha2>
+								<!-- <ngx-recaptcha2 formControlName="captcha" #captchaElem [siteKey]="'6Lef0cgUAAAAAO0_mOu5t8UWgk1jVhJQjkgCSmG_'" [useGlobalDomain]="false"></ngx-recaptcha2> -->
 							</div>
 							<div class="col-2"></div>
 						</div>
